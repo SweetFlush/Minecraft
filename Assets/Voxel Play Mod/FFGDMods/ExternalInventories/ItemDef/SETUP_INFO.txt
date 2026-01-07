@@ -1,0 +1,2 @@
+To have this correctly save and load, move the "chest" folder to this location:
+Assets\Voxel Play\Resources\Worlds\Earth\Voxels\Other

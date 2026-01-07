@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b11f622d92bb46c38fd5a3a2a3198f5, type: 3}
+  m_Name: Custom Biome High
+  m_EditorClassIdentifier: 
+  zones:
+  - altitudeMin: 16
+    altitudeMax: 255
+    moistureMin: 0
+    moistureMax: 1
+  showInBiomeMap: 1
+  biomeMapColor: {r: 1, g: 0, b: 0, a: 1}
+  voxelTop: {fileID: 11400000, guid: ad851e8ba3e93e24b927a39491cace6c, type: 2}
+  noteTopAdditional:
+    dummy: 0
+  voxelTopAdditional: []
+  voxelDirt: {fileID: 11400000, guid: 360f68e43ea12f6469ff32a76cebf492, type: 2}
+  noteDirtAdditional:
+    dummy: 0
+  voxelDirtAdditional: []
+  voxelLakeBed: {fileID: 11400000, guid: 360f68e43ea12f6469ff32a76cebf492, type: 2}
+  ores:
+  - ore: {fileID: 11400000, guid: 0d398490c4c55439893b1e1c9057d551, type: 2}
+    probabilityMin: 0.8
+    probabilityMax: 1
+    depthMin: 2
+    depthMax: 10
+    veinMinSize: 1
+    veinMaxSize: 3
+    veinsCountMin: 0
+    veinsCountMax: 1
+  treeDensity: 0.02
+  trees:
+  - tree: {fileID: 11400000, guid: 1af1c96406a464ba691634e6eba6c424, type: 2}
+    probability: 0.3
+  - tree: {fileID: 11400000, guid: ad31ee142b4b54b279be0cc50d1a9bdb, type: 2}
+    probability: 0.3
+  - tree: {fileID: 11400000, guid: b7ab1a26fff29474eac472dd242d84bb, type: 2}
+    probability: 0.3
+  vegetationDensity: 0.05
+  vegetation:
+  - vegetation: {fileID: 11400000, guid: 3614d41f021724a6581516352d4315b3, type: 2}
+    probability: 0.3
+  underwaterVegetationDensity: 0.05
+  underwaterVegetation: []
+  undergroundVegDensity: 0.05
+  undergroundVegetation: []
+  undergroundCeilingVegDensity: 0.05
+  undergroundCeilingVegetation: []

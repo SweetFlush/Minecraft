@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6bc0394321fe37489684930418ba1f5, type: 3}
+  m_Name: PlanksRecipe
+  m_EditorClassIdentifier: 
+  MyCraftingOutputResult:
+    _CraftingOutput: {fileID: 11400000, guid: 29552f4f6b8024db1b0382f84d1bb493, type: 2}
+    _Quantity: 10
+  RequiredItems:
+  - {fileID: 11400000, guid: 21addfaf50ac2434bb83956fd35fa46f, type: 2}
+  PatternCraftableObj:
+  - {fileID: 11400000, guid: 21addfaf50ac2434bb83956fd35fa46f, type: 2}
+  PatternSizeX: 1
+  PatternSizeY: 1
