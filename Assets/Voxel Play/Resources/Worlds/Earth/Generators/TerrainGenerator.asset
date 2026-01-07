@@ -19,12 +19,36 @@ MonoBehaviour:
   steps:
   - enabled: 1
     operation: 0
-    description: FlatTerrain
-    noiseTexture: {fileID: 2800000, guid: 8ccf61011fd3d4896888e80152ba2d2e, type: 3}
+    description: 
+    noiseTexture: {fileID: 2800000, guid: a098096f8833147feac87b2948d79b92, type: 3}
     terrainData: {fileID: 0}
-    frecuency: 0.162
+    frecuency: 0.1
     offset: {x: 0, y: 0}
-    noiseRangeMin: 0.149
+    noiseRangeMin: 0
+    noiseRangeMax: 0.8
+    octaves: 0
+    persistence: 0
+    lacunarity: 0
+    inputIndex0: 0
+    inputIndex1: 0
+    threshold: 0
+    thresholdShift: 0
+    thresholdParam: 0
+    param: 0
+    param2: 0
+    param3: 0
+    weight0: 0
+    weight1: 0
+    min: 0
+    max: 0
+  - enabled: 1
+    operation: 1
+    description: 
+    noiseTexture: {fileID: 2800000, guid: 6dd155b02d17142c79ea0aaf630bf92b, type: 3}
+    terrainData: {fileID: 0}
+    frecuency: 0.5
+    offset: {x: 0, y: 0}
+    noiseRangeMin: 0
     noiseRangeMax: 1
     octaves: 0
     persistence: 0
@@ -42,22 +66,238 @@ MonoBehaviour:
     min: 0
     max: 0
   - enabled: 1
-    operation: 203
-    description: Threshold
-    noiseTexture: {fileID: 2800000, guid: 8ccf61011fd3d4896888e80152ba2d2e, type: 3}
+    operation: 300
+    description: 
+    noiseTexture: {fileID: 0}
     terrainData: {fileID: 0}
-    frecuency: 0.5
+    frecuency: 0
     offset: {x: 0, y: 0}
     noiseRangeMin: 0
-    noiseRangeMax: 1
+    noiseRangeMax: 0
+    octaves: 0
+    persistence: 0
+    lacunarity: 0
+    inputIndex0: 0
+    inputIndex1: 1
+    threshold: 0
+    thresholdShift: 0
+    thresholdParam: 0
+    param: 0
+    param2: 0
+    param3: 0
+    weight0: 1
+    weight1: -0.3
+    min: 0
+    max: 0
+  - enabled: 1
+    operation: 104
+    description: 
+    noiseTexture: {fileID: 0}
+    terrainData: {fileID: 0}
+    frecuency: 0
+    offset: {x: 0, y: 0}
+    noiseRangeMin: 0
+    noiseRangeMax: 0
     octaves: 0
     persistence: 0
     lacunarity: 0
     inputIndex0: 0
     inputIndex1: 0
-    threshold: 0.5
-    thresholdShift: -0.5
-    thresholdParam: 0.5
+    threshold: 0
+    thresholdShift: 0
+    thresholdParam: 0
+    param: 0.6
+    param2: 0
+    param3: 0
+    weight0: 0
+    weight1: 0
+    min: 0
+    max: 0
+  - enabled: 1
+    operation: 202
+    description: 
+    noiseTexture: {fileID: 0}
+    terrainData: {fileID: 0}
+    frecuency: 0
+    offset: {x: 0, y: 0}
+    noiseRangeMin: 0
+    noiseRangeMax: 0
+    octaves: 0
+    persistence: 0
+    lacunarity: 0
+    inputIndex0: 0
+    inputIndex1: 0
+    threshold: 0
+    thresholdShift: 0
+    thresholdParam: 0
+    param: 3.8
+    param2: 0
+    param3: 0
+    weight0: 0
+    weight1: 0
+    min: 0
+    max: 1
+  - enabled: 1
+    operation: 104
+    description: 
+    noiseTexture: {fileID: 0}
+    terrainData: {fileID: 0}
+    frecuency: 0
+    offset: {x: 0, y: 0}
+    noiseRangeMin: 0
+    noiseRangeMax: 0
+    octaves: 0
+    persistence: 0
+    lacunarity: 0
+    inputIndex0: 0
+    inputIndex1: 0
+    threshold: 0
+    thresholdShift: 0
+    thresholdParam: 0
+    param: 0.065
+    param2: 0
+    param3: 0
+    weight0: 0
+    weight1: 0
+    min: 0
+    max: 0
+  - enabled: 1
+    operation: 204
+    description: 
+    noiseTexture: {fileID: 0}
+    terrainData: {fileID: 0}
+    frecuency: 0
+    offset: {x: 0, y: 0}
+    noiseRangeMin: 0
+    noiseRangeMax: 0
+    octaves: 0
+    persistence: 0
+    lacunarity: 0
+    inputIndex0: 0
+    inputIndex1: 0
+    threshold: 0.11
+    thresholdShift: 0
+    thresholdParam: 0.05
+    param: 0
+    param2: 0
+    param3: 0
+    weight0: 0
+    weight1: 0
+    min: 0
+    max: 0
+  - enabled: 1
+    operation: 0
+    description: 
+    noiseTexture: {fileID: 2800000, guid: 6dd155b02d17142c79ea0aaf630bf92b, type: 3}
+    terrainData: {fileID: 0}
+    frecuency: 0.3
+    offset: {x: 0, y: 0}
+    noiseRangeMin: 0
+    noiseRangeMax: 0.4
+    octaves: 0
+    persistence: 0
+    lacunarity: 0
+    inputIndex0: 0
+    inputIndex1: 0
+    threshold: 0
+    thresholdShift: 0
+    thresholdParam: 0
+    param: 0
+    param2: 0
+    param3: 0
+    weight0: 0
+    weight1: 0
+    min: 0
+    max: 0
+  - enabled: 1
+    operation: 104
+    description: 
+    noiseTexture: {fileID: 0}
+    terrainData: {fileID: 0}
+    frecuency: 0
+    offset: {x: 0, y: 0}
+    noiseRangeMin: 0
+    noiseRangeMax: 0
+    octaves: 0
+    persistence: 0
+    lacunarity: 0
+    inputIndex0: 7
+    inputIndex1: 0
+    threshold: 0
+    thresholdShift: 0
+    thresholdParam: 0
+    param: 0.8
+    param2: 0
+    param3: 0
+    weight0: 0
+    weight1: 0
+    min: 0
+    max: 0
+  - enabled: 1
+    operation: 301
+    description: 
+    noiseTexture: {fileID: 0}
+    terrainData: {fileID: 0}
+    frecuency: 0
+    offset: {x: 0, y: 0}
+    noiseRangeMin: 0
+    noiseRangeMax: 0
+    octaves: 0
+    persistence: 0
+    lacunarity: 0
+    inputIndex0: 8
+    inputIndex1: 6
+    threshold: 0
+    thresholdShift: 0
+    thresholdParam: 0
+    param: 0
+    param2: 0
+    param3: 0
+    weight0: 1
+    weight1: 1
+    min: 0
+    max: 0
+  - enabled: 1
+    operation: 204
+    description: 
+    noiseTexture: {fileID: 0}
+    terrainData: {fileID: 0}
+    frecuency: 0
+    offset: {x: 0, y: 0}
+    noiseRangeMin: 0
+    noiseRangeMax: 0
+    octaves: 0
+    persistence: 0
+    lacunarity: 0
+    inputIndex0: 9
+    inputIndex1: 0
+    threshold: 0.12
+    thresholdShift: 0
+    thresholdParam: 7
+    param: 0
+    param2: 0
+    param3: 0
+    weight0: 0
+    weight1: 0
+    min: 0
+    max: 0
+  - enabled: 1
+    operation: 105
+    description: 
+    noiseTexture: {fileID: 0}
+    terrainData: {fileID: 0}
+    frecuency: 0
+    offset: {x: 0, y: 0}
+    noiseRangeMin: 0
+    noiseRangeMax: 0
+    octaves: 0
+    persistence: 0
+    lacunarity: 0
+    inputIndex0: 0
+    inputIndex1: 0
+    threshold: 0.14
+    thresholdShift: 0
+    thresholdParam: 0
     param: 0
     param2: 0
     param3: 0

@@ -30,7 +30,11 @@ MonoBehaviour:
   voxelDirt: {fileID: 11400000, guid: a3c0aab5688d04654be194830ecd76f3, type: 2}
   noteDirtAdditional:
     dummy: 0
-  voxelDirtAdditional: []
+  voxelDirtAdditional:
+  - voxelDefinition: {fileID: 11400000, guid: 613cd0fd62328486a88ccb95dd776dc5, type: 2}
+    probability: 1
+    altitudeMin: 0
+    altitudeMax: 50
   voxelLakeBed: {fileID: 11400000, guid: a3c0aab5688d04654be194830ecd76f3, type: 2}
   ores:
   - ore: {fileID: 11400000, guid: bb5aad962142c4568aa59bffed2349fa, type: 2}
