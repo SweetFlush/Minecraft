@@ -275,9 +275,6 @@ namespace Autohand
                     lineRenderer.SetPosition(i, Vector3.Lerp(transform.position, endPosition, i / lineSegements));
                 }
             }
-
-
-
         }
 
         protected virtual RaycastHit CreateRaycast(float dist)

@@ -1,27 +1,28 @@
-using System.Text;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
-using System;
 using Random = UnityEngine.Random;
 
 //#define DEBUG_RAYCAST
 
-namespace VoxelPlay {
+namespace VoxelPlay
+{
 
-    public enum ColliderTypes {
+    public enum ColliderTypes
+    {
         AnyCollider = 0,
         OnlyVoxels = 1,
         IgnorePlayer = 2
     }
 
-    public enum ParticleBurstStyle {
+    public enum ParticleBurstStyle
+    {
         Explosion = 0
     }
 
 
-    public struct VoxelHitInfo {
+    public struct VoxelHitInfo
+    {
 
         /// <summary>
         /// 광선 적중의 월드 공간 위치
@@ -35,14 +36,18 @@ namespace VoxelPlay {
         /// <summary>
         /// 적중 위치까지의 거리
         /// </summary>
-        public float distance {
-            get {
-                if (lastSqrDistance != sqrDistance) {
+        public float distance
+        {
+            get
+            {
+                if (lastSqrDistance != sqrDistance)
+                {
                     computedDistance = Mathf.Sqrt(sqrDistance);
                 }
                 return computedDistance;
             }
-            set {
+            set
+            {
                 computedDistance = value;
                 sqrDistance = computedDistance * computedDistance;
                 lastSqrDistance = sqrDistance;
@@ -73,11 +78,16 @@ namespace VoxelPlay {
         /// <summary>
         /// 히트 개체의 중심입니다.복셀인 경우 voxelCenter와 같습니다.사용자 정의 복셀인 경우 placeholder.bounds.center를 사용합니다.
         /// </summary>
-        public Vector3d center {
-            get {
-                if (placeholder != null) {
+        public Vector3d center
+        {
+            get
+            {
+                if (placeholder != null)
+                {
                     return placeholder.GetWorldSpaceBounds().center;
-                } else {
+                }
+                else
+                {
                     return voxelCenter;
                 }
             }
@@ -110,7 +120,8 @@ namespace VoxelPlay {
         public Item item;
 
 
-        public void Clear () {
+        public void Clear()
+        {
             placeholder = null;
             chunk = null;
             voxelIndex = -1;
@@ -121,8 +132,10 @@ namespace VoxelPlay {
         /// <summary>
         /// 이 위치의 복셀 복사본을 반환합니다.
         /// </summary>
-        public Voxel GetVoxelNow () {
-            if (chunk != null && voxelIndex >= 0) {
+        public Voxel GetVoxelNow()
+        {
+            if (chunk != null && voxelIndex >= 0)
+            {
                 return chunk.voxels[voxelIndex];
             }
             return Voxel.Empty;
@@ -130,7 +143,8 @@ namespace VoxelPlay {
 
     }
 
-    public partial class VoxelPlayEnvironment : MonoBehaviour {
+    public partial class VoxelPlayEnvironment : MonoBehaviour
+    {
         const int DEFAULT_DESTROYED_VOXEL_PARTICLE_AMOUNT = 20;
 
         Dictionary<Vector3d, bool> tempVoxelPositions;
@@ -138,34 +152,45 @@ namespace VoxelPlay {
 
         int destroyedVoxelParticlesAmount = DEFAULT_DESTROYED_VOXEL_PARTICLE_AMOUNT;
 
-        void InitPhysics () {
+        void InitPhysics()
+        {
 
-            if (tempVoxelPositions == null) {
+            if (tempVoxelPositions == null)
+            {
                 tempVoxelPositions = new Dictionary<Vector3d, bool>(100);
-            } else {
+            }
+            else
+            {
                 tempVoxelPositions.Clear();
             }
 
-            if (layerVoxels == layerParticles) {
+            if (layerVoxels == layerParticles)
+            {
                 layerParticles = layerVoxels + 1;
             }
             Physics.IgnoreLayerCollision(layerVoxels, layerVoxels);
         }
 
-        bool RayCastFast (Vector3d origin, Vector3 direction, out VoxelHitInfo hitInfo, float maxDistance = 0, bool createChunksIfNeeded = false, byte minOpaque = 0, ColliderTypes colliderTypes = ColliderTypes.AnyCollider, int layerMask = -1, QueryTriggerInteraction queryTriggerInteraction = QueryTriggerInteraction.UseGlobal, bool useMicroVoxels = false, HashSet<int> allowedVoxelDefinitions = null, bool ignoreWater = false) {
+        bool RayCastFast(Vector3d origin, Vector3 direction, out VoxelHitInfo hitInfo, float maxDistance = 0, bool createChunksIfNeeded = false, byte minOpaque = 0, ColliderTypes colliderTypes = ColliderTypes.AnyCollider, int layerMask = -1, QueryTriggerInteraction queryTriggerInteraction = QueryTriggerInteraction.UseGlobal, bool useMicroVoxels = false, HashSet<int> allowedVoxelDefinitions = null, bool ignoreWater = false)
+        {
 
             bool voxelHit = RayCastFastVoxel(origin, direction, out hitInfo, maxDistance, createChunksIfNeeded, minOpaque, useMicroVoxels, allowedVoxelDefinitions, ignoreWater);
-            if ((colliderTypes & ColliderTypes.OnlyVoxels) == 0) {
-                if (voxelHit) {
+            if ((colliderTypes & ColliderTypes.OnlyVoxels) == 0)
+            {
+                if (voxelHit)
+                {
                     maxDistance = hitInfo.distance - 0.01f;
                 }
                 // Cast a normal raycast to detect normal gameobjects within ray
-                if (Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance, layerMask, queryTriggerInteraction)) {
+                if (Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance, layerMask, queryTriggerInteraction))
+                {
 
                     // ensures this is not a normal voxel in which case keep current hitInfo data
                     Transform parent = hit.collider.transform.parent;
-                    if (parent != chunksRoot && parent != fxRoot) {
-                        if ((colliderTypes & ColliderTypes.IgnorePlayer) != 0 && (UnityEngine.Object)characterController != null && characterController.transform.root == hit.collider.transform.root) {
+                    if (parent != chunksRoot && parent != fxRoot)
+                    {
+                        if ((colliderTypes & ColliderTypes.IgnorePlayer) != 0 && (UnityEngine.Object)characterController != null && characterController.transform.root == hit.collider.transform.root)
+                        {
                             return voxelHit;
                         }
                         hitInfo.distance = hit.distance;
@@ -174,8 +199,10 @@ namespace VoxelPlay {
                         hitInfo.collider = hit.collider;
 
                         // Check if gameobject is an item
-                        if (hit.collider.TryGetComponent(out Item item)) {
-                            if (item.itemChunk != null) {
+                        if (hit.collider.TryGetComponent(out Item item))
+                        {
+                            if (item.itemChunk != null)
+                            {
                                 hitInfo.chunk = item.itemChunk;
                                 hitInfo.voxelIndex = item.itemVoxelIndex;
                                 hitInfo.voxel = item.itemChunk.voxels[hitInfo.voxelIndex];
@@ -189,7 +216,8 @@ namespace VoxelPlay {
                         // Check if gameobject is a dynamic voxel
                         hitInfo.voxelIndex = -1;
                         VoxelPlaceholder placeholder = hit.collider.GetComponentInParent<VoxelPlaceholder>();
-                        if (placeholder != null) {
+                        if (placeholder != null)
+                        {
                             hitInfo.chunk = placeholder.chunk;
                             hitInfo.voxelIndex = placeholder.voxelIndex;
                             hitInfo.voxel = placeholder.chunk.voxels[placeholder.voxelIndex];
@@ -203,7 +231,8 @@ namespace VoxelPlay {
                 }
             }
 
-            if (useMicroVoxels && hitInfo.voxel.type != null && hitInfo.voxel.type.supportsMicroVoxels) {
+            if (useMicroVoxels && hitInfo.voxel.type != null && hitInfo.voxel.type.supportsMicroVoxels)
+            {
                 // allow highlight of microvoxel
                 hitInfo.voxelCenter = ComputeMicroVoxelCenter(hitInfo.point, hitInfo.normal);
             }
@@ -211,7 +240,8 @@ namespace VoxelPlay {
             return voxelHit;
         }
 
-        Vector3d ComputeMicroVoxelCenter (Vector3d hitPoint, Vector3 normal) {
+        Vector3d ComputeMicroVoxelCenter(Vector3d hitPoint, Vector3 normal)
+        {
             hitPoint -= normal * MicroVoxels.SIZE * 0.5f;
             Vector3Int microVoxelCoords = FastMath.FloorToInt(hitPoint.x / MicroVoxels.SIZE, hitPoint.y / MicroVoxels.SIZE, hitPoint.z / MicroVoxels.SIZE);
             float microVoxelCenterX = (microVoxelCoords.x + 0.5f) * MicroVoxels.SIZE;
@@ -220,7 +250,8 @@ namespace VoxelPlay {
             return new Vector3(microVoxelCenterX, microVoxelCenterY, microVoxelCenterZ);
         }
 
-        Vector3d ComputeMicroVoxelCenter (Vector3d hitPoint, Transform hitTransform) {
+        Vector3d ComputeMicroVoxelCenter(Vector3d hitPoint, Transform hitTransform)
+        {
             Vector3 localHitPoint = hitTransform.InverseTransformPoint(hitPoint);
             Vector3Int microVoxelCoords = FastMath.FloorToInt(localHitPoint.x / MicroVoxels.SIZE, localHitPoint.y / MicroVoxels.SIZE, localHitPoint.z / MicroVoxels.SIZE);
             float microVoxelCenterX = (microVoxelCoords.x + 0.5f) * MicroVoxels.SIZE;
@@ -230,7 +261,8 @@ namespace VoxelPlay {
             return hitTransform.TransformPoint(microVoxelCenterLocal);
         }
 
-        bool RayCastFastVoxel (Vector3d origin, Vector3 direction, out VoxelHitInfo hitInfo, float maxDistance = 0, bool createChunksIfNeeded = false, byte minOpaque = 0, bool useMicroVoxels = false, HashSet<int> allowedVoxelDefinitions = null, bool ignoreWater = false) {
+        bool RayCastFastVoxel(Vector3d origin, Vector3 direction, out VoxelHitInfo hitInfo, float maxDistance = 0, bool createChunksIfNeeded = false, byte minOpaque = 0, bool useMicroVoxels = false, HashSet<int> allowedVoxelDefinitions = null, bool ignoreWater = false)
+        {
 
 #if DEBUG_RAYCAST
 												GameObject o;
@@ -248,25 +280,34 @@ namespace VoxelPlay {
             Vector3 viewSign = new Vector3((viewDirSign.x + 1f) * 0.5f, (viewDirSign.y + 1f) * 0.5f, (viewDirSign.z + 1f) * 0.5f); // 0 = left, 1 = right
 
             float vxz, vzy, vxy;
-            if (direction.y != 0) {
+            if (direction.y != 0)
+            {
                 float a = direction.x / direction.y;
                 float b = direction.z / direction.y;
                 vxz = Mathf.Sqrt(1f + a * a + b * b);
-            } else {
+            }
+            else
+            {
                 vxz = 1000000f;
             }
-            if (direction.x != 0) {
+            if (direction.x != 0)
+            {
                 float a = direction.z / direction.x;
                 float b = direction.y / direction.x;
                 vzy = Mathf.Sqrt(1f + a * a + b * b);
-            } else {
+            }
+            else
+            {
                 vzy = 1000000f;
             }
-            if (direction.z != 0) {
+            if (direction.z != 0)
+            {
                 float a = direction.x / direction.z;
                 float b = direction.y / direction.z;
                 vxy = Mathf.Sqrt(1f + a * a + b * b);
-            } else {
+            }
+            else
+            {
                 vxy = 1000000f;
             }
 
@@ -279,7 +320,8 @@ namespace VoxelPlay {
             Vector3d normal = Vector3d.zero;
             Vector3d db;
 
-            while (chunkCount++ < 500) { // safety counter to avoid any potential infinite loop
+            while (chunkCount++ < 500)
+            { // safety counter to avoid any potential infinite loop
 
                 // Check max distance
                 double distSqr = (position.x - origin.x) * (position.x - origin.x) + (position.y - origin.y) * (position.y - origin.y) + (position.z - origin.z) * (position.z - origin.z);
@@ -298,9 +340,12 @@ namespace VoxelPlay {
                 FastMath.FloorToInt(position.x / CHUNK_SIZE, position.y / CHUNK_SIZE, position.z / CHUNK_SIZE, out int chunkX, out int chunkY, out int chunkZ);
 
                 chunk = null;
-                if (createChunksIfNeeded) {
+                if (createChunksIfNeeded)
+                {
                     GetChunkOrCreate(chunkX, chunkY, chunkZ, out chunk);
-                } else {
+                }
+                else
+                {
                     int x00 = WORLD_SIZE_DEPTH * WORLD_SIZE_HEIGHT * (chunkX + WORLD_SIZE_WIDTH);
                     int y00 = WORLD_SIZE_DEPTH * (chunkY + WORLD_SIZE_HEIGHT);
                     int hash = x00 + y00 + chunkZ;
@@ -311,12 +356,14 @@ namespace VoxelPlay {
                 chunkY *= CHUNK_SIZE;
                 chunkZ *= CHUNK_SIZE;
 
-                if (chunk) {
+                if (chunk)
+                {
                     // Ray-march through chunk
                     Voxel[] voxels = chunk.voxels;
                     Vector3d inPosition = position;
 
-                    for (int k = 0; k < CHUNK_SIZE * 4; k++) {
+                    for (int k = 0; k < CHUNK_SIZE * 4; k++)
+                    {
 
 #if DEBUG_RAYCAST
 																								o = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -331,23 +378,27 @@ namespace VoxelPlay {
                         int py = fy - chunkY;
                         int pz = fz - chunkZ;
                         int px = fx - chunkX;
-                        if (px < 0 || px >= CHUNK_SIZE || py < 0 || py >= CHUNK_SIZE || pz < 0 || pz >= CHUNK_SIZE) {
+                        if (px < 0 || px >= CHUNK_SIZE || py < 0 || py >= CHUNK_SIZE || pz < 0 || pz >= CHUNK_SIZE)
+                        {
                             break;
                         }
 
                         int voxelIndex = py * ONE_Y_ROW + pz * ONE_Z_ROW + px;
                         int voxelTypeIndex = voxels[voxelIndex].typeIndex;
-                        if (voxelTypeIndex > Voxel.HoleTypeIndex && (minOpaque == 255 || voxels[voxelIndex].opaque >= minOpaque) && !VoxelIsHidden(chunk, voxelIndex) && (allowedVoxelDefinitions == null || allowedVoxelDefinitions.Contains(voxelTypeIndex))) {
+                        if (voxelTypeIndex > Voxel.HoleTypeIndex && (minOpaque == 255 || voxels[voxelIndex].opaque >= minOpaque) && !VoxelIsHidden(chunk, voxelIndex) && (allowedVoxelDefinitions == null || allowedVoxelDefinitions.Contains(voxelTypeIndex)))
+                        {
 
                             VoxelDefinition vd = voxelDefinitions[voxels[voxelIndex].typeIndex];
                             VoxelPlaceholder placeholder = null;
                             bool ignoresRaycast = vd.ignoresRayCast;
 #if UNITY_EDITOR
-                            if (!Application.isPlaying) {
+                            if (!Application.isPlaying)
+                            {
                                 ignoresRaycast = false;
                             }
 #endif
-                            if (!ignoresRaycast && (!ignoreWater || vd.renderType != RenderType.Water) && (vd.renderType != RenderType.Custom || (!vd.prefabUsesCollider && RayIntersectsCustomVoxel(origin, direction, chunk, voxelIndex, out placeholder)))) {
+                            if (!ignoresRaycast && (!ignoreWater || vd.renderType != RenderType.Water) && (vd.renderType != RenderType.Custom || (!vd.prefabUsesCollider && RayIntersectsCustomVoxel(origin, direction, chunk, voxelIndex, out placeholder))))
+                            {
 
                                 // Check max distance
                                 distSqr = (inPosition.x - origin.x) * (inPosition.x - origin.x) + (inPosition.y - origin.y) * (inPosition.y - origin.y) + (inPosition.z - origin.z) * (inPosition.z - origin.z);
@@ -358,29 +409,39 @@ namespace VoxelPlay {
 
                                 // Check water level or grass height
                                 float voxelHeight = 0;
-                                if (vd.renderType == RenderType.Water) {
+                                if (vd.renderType == RenderType.Water)
+                                {
                                     voxelHeight = voxels[voxelIndex].GetWaterLevel() / 15f;
-                                } else if (vd.renderType == RenderType.CutoutCross) {
+                                }
+                                else if (vd.renderType == RenderType.CutoutCross)
+                                {
                                     voxelHeight = vd.scale.y;
-                                } else {
-                                    if (useMicroVoxels && chunk.usesMicroVoxels && chunk.microVoxels.TryGetValue(voxelIndex, out MicroVoxels mv)) {
+                                }
+                                else
+                                {
+                                    if (useMicroVoxels && chunk.usesMicroVoxels && chunk.microVoxels.TryGetValue(voxelIndex, out MicroVoxels mv))
+                                    {
                                         if (RayIntersectsMicroVoxel(origin, inPosition, direction, chunk, voxelIndex, mv, viewDirSign, viewSign, v3, maxDistanceSqr, out hitInfo)) return true;
                                         hit = false;
                                     }
                                 }
 
-                                if (hit) {
+                                if (hit)
+                                {
                                     Vector3d voxelCenter = new Vector3d(chunkX + px + 0.5, chunkY + py + 0.5, chunkZ + pz + 0.5);
                                     Vector3d localHitPos = inPosition - voxelCenter;
-                                    if (voxelHeight > 0 && voxelHeight < 1f && direction.y != 0) {
+                                    if (voxelHeight > 0 && voxelHeight < 1f && direction.y != 0)
+                                    {
                                         t = localHitPos.y + 0.5 - voxelHeight;
-                                        if (t > 0) {
+                                        if (t > 0)
+                                        {
                                             t = t * Math.Sqrt(1 + (direction.x * direction.x + direction.z * direction.z) / (direction.y * direction.y));
                                             localHitPos += (float)t * direction;
                                             hit = localHitPos.x >= -0.5 && localHitPos.x <= 0.5 && localHitPos.z >= -0.5 && localHitPos.z <= 0.5;
                                         }
                                     }
-                                    if (hit) {
+                                    if (hit)
+                                    {
                                         hitInfo = new VoxelHitInfo();
                                         hitInfo.chunk = chunk;
                                         hitInfo.voxel = voxels[voxelIndex];
@@ -389,21 +450,35 @@ namespace VoxelPlay {
                                         hitInfo.voxelIndex = voxelIndex;
                                         hitInfo.voxelCenter = voxelCenter;
                                         hitInfo.placeholder = placeholder;
-                                        if (vd.renderType == RenderType.CutoutCross) {
+                                        if (vd.renderType == RenderType.CutoutCross)
+                                        {
                                             hitInfo.normal = -direction;
-                                        } else {
+                                        }
+                                        else
+                                        {
                                             double topFace = vd.renderType == RenderType.Water ? voxelHeight - 0.505 : 0.495;
-                                            if (localHitPos.y >= topFace) {
+                                            if (localHitPos.y >= topFace)
+                                            {
                                                 hitInfo.normal = Misc.vector3up;
-                                            } else if (localHitPos.y <= -0.495) {
+                                            }
+                                            else if (localHitPos.y <= -0.495)
+                                            {
                                                 hitInfo.normal = Misc.vector3down;
-                                            } else if (localHitPos.x < -0.495) {
+                                            }
+                                            else if (localHitPos.x < -0.495)
+                                            {
                                                 hitInfo.normal = Misc.vector3left;
-                                            } else if (localHitPos.x > 0.495) {
+                                            }
+                                            else if (localHitPos.x > 0.495)
+                                            {
                                                 hitInfo.normal = Misc.vector3right;
-                                            } else if (localHitPos.z < -0.495) {
+                                            }
+                                            else if (localHitPos.z < -0.495)
+                                            {
                                                 hitInfo.normal = Misc.vector3back;
-                                            } else if (localHitPos.z > 0.495) {
+                                            }
+                                            else if (localHitPos.z > 0.495)
+                                            {
                                                 hitInfo.normal = Misc.vector3forward;
                                             }
                                         }
@@ -434,12 +509,14 @@ namespace VoxelPlay {
                         normal.x = viewDirSignOffset.x;
                         normal.y = 0;
                         normal.z = 0;
-                        if (db.y < t) {
+                        if (db.y < t)
+                        {
                             t = db.y;
                             normal.x = 0;
                             normal.y = viewDirSignOffset.y;
                         }
-                        if (db.z < t) {
+                        if (db.z < t)
+                        {
                             t = db.z;
                             normal.x = 0;
                             normal.y = 0;
@@ -464,12 +541,14 @@ namespace VoxelPlay {
                 normal.x = viewDirSignOffset.x;
                 normal.y = 0;
                 normal.z = 0;
-                if (db.y < t) {
+                if (db.y < t)
+                {
                     t = db.y;
                     normal.x = 0;
                     normal.y = viewDirSignOffset.y;
                 }
-                if (db.z < t) {
+                if (db.z < t)
+                {
                     t = db.z;
                     normal.x = 0;
                     normal.y = 0;
@@ -487,7 +566,8 @@ namespace VoxelPlay {
         /// <summary>
         /// 광선이 사용자 정의 복셀의 AABB 볼륨과 교차하는지 확인합니다.
         /// </summary>
-        bool RayIntersectsCustomVoxel (Vector3d origin, Vector3 direction, VoxelChunk chunk, int voxelIndex, out VoxelPlaceholder placeholder) {
+        bool RayIntersectsCustomVoxel(Vector3d origin, Vector3 direction, VoxelChunk chunk, int voxelIndex, out VoxelPlaceholder placeholder)
+        {
             placeholder = GetVoxelPlaceholder(chunk, voxelIndex, false);
             if (placeholder == null) return true;
 
@@ -496,7 +576,8 @@ namespace VoxelPlay {
             return ray.Intersects(bounds);
         }
 
-        bool RayIntersectsMicroVoxel (Vector3d origin, Vector3d inPosition, Vector3 direction, VoxelChunk chunk, int voxelIndex, MicroVoxels mv, Vector3 viewDirSign, Vector3 viewSign, Vector3 v3, double maxDistanceSqr, out VoxelHitInfo hitInfo) {
+        bool RayIntersectsMicroVoxel(Vector3d origin, Vector3d inPosition, Vector3 direction, VoxelChunk chunk, int voxelIndex, MicroVoxels mv, Vector3 viewDirSign, Vector3 viewSign, Vector3 v3, double maxDistanceSqr, out VoxelHitInfo hitInfo)
+        {
 
             hitInfo = new VoxelHitInfo();
 
@@ -515,7 +596,8 @@ namespace VoxelPlay {
             int rotation = chunk.voxels[voxelIndex].GetTextureRotation();
 
             // Ray-march through microvoxels
-            for (int k = 0; k < MicroVoxels.COUNT_PER_AXIS * 2; k++) {
+            for (int k = 0; k < MicroVoxels.COUNT_PER_AXIS * 2; k++)
+            {
                 if (inPosition.x < voxelPosition.x || inPosition.x > voxelPosition.x + 1 || inPosition.y < voxelPosition.y || inPosition.y > voxelPosition.y + 1 || inPosition.z < voxelPosition.z || inPosition.z > voxelPosition.z + 1) break;
 
                 // Check max distance
@@ -529,7 +611,8 @@ namespace VoxelPlay {
                 Vector3d microVoxelCenter = GetMicroVoxelPosition(inPosition);
 
                 bool hit = mv.IsOccupied(microVoxelindex);
-                if (hit) {
+                if (hit)
+                {
                     Vector3d localHitPos = inPosition - microVoxelCenter;
 
                     hitInfo = new VoxelHitInfo();
@@ -539,17 +622,28 @@ namespace VoxelPlay {
                     hitInfo.sqrDistance = (float)distSqr;
                     hitInfo.voxelIndex = voxelIndex;
                     const double limit = 0.495 * MicroVoxels.SIZE; // accounts for the 0.002 offset used by the parent raycast step
-                    if (localHitPos.y >= limit) {
+                    if (localHitPos.y >= limit)
+                    {
                         hitInfo.normal = Misc.vector3up;
-                    } else if (localHitPos.y <= -limit) {
+                    }
+                    else if (localHitPos.y <= -limit)
+                    {
                         hitInfo.normal = Misc.vector3down;
-                    } else if (localHitPos.x < -limit) {
+                    }
+                    else if (localHitPos.x < -limit)
+                    {
                         hitInfo.normal = Misc.vector3left;
-                    } else if (localHitPos.x > limit) {
+                    }
+                    else if (localHitPos.x > limit)
+                    {
                         hitInfo.normal = Misc.vector3right;
-                    } else if (localHitPos.z < -limit) {
+                    }
+                    else if (localHitPos.z < -limit)
+                    {
                         hitInfo.normal = Misc.vector3back;
-                    } else if (localHitPos.z > limit) {
+                    }
+                    else if (localHitPos.z > limit)
+                    {
                         hitInfo.normal = Misc.vector3forward;
                     }
                     hitInfo.voxelCenter = microVoxelCenter;
@@ -572,12 +666,14 @@ namespace VoxelPlay {
                 normal.x = viewDirSignOffset.x;
                 normal.y = 0;
                 normal.z = 0;
-                if (db.y < t) {
+                if (db.y < t)
+                {
                     t = db.y;
                     normal.x = 0;
                     normal.y = viewDirSignOffset.y;
                 }
-                if (db.z < t) {
+                if (db.z < t)
+                {
                     t = db.z;
                     normal.x = 0;
                     normal.y = 0;
@@ -593,7 +689,8 @@ namespace VoxelPlay {
         }
 
 
-        int LineCastFastVoxel (Vector3d startPosition, Vector3d endPosition, VoxelIndex[] indices, int startIndex = 0, byte minOpaque = 0) {
+        int LineCastFastVoxel(Vector3d startPosition, Vector3d endPosition, VoxelIndex[] indices, int startIndex = 0, byte minOpaque = 0)
+        {
 
 #if DEBUG_RAYCAST
                                                 GameObject o;
@@ -609,25 +706,34 @@ namespace VoxelPlay {
             Vector3 viewSign = new Vector3((viewDirSign.x + 1f) * 0.5f, (viewDirSign.y + 1f) * 0.5f, (viewDirSign.z + 1f) * 0.5f); // 0 = left, 1 = right
 
             float vxz, vzy, vxy;
-            if (direction.y != 0) {
+            if (direction.y != 0)
+            {
                 float a = direction.x / direction.y;
                 float b = direction.z / direction.y;
                 vxz = Mathf.Sqrt(1f + a * a + b * b);
-            } else {
+            }
+            else
+            {
                 vxz = 1000000f;
             }
-            if (direction.x != 0) {
+            if (direction.x != 0)
+            {
                 float a = direction.z / direction.x;
                 float b = direction.y / direction.x;
                 vzy = Mathf.Sqrt(1f + a * a + b * b);
-            } else {
+            }
+            else
+            {
                 vzy = 1000000f;
             }
-            if (direction.z != 0) {
+            if (direction.z != 0)
+            {
                 float a = direction.x / direction.z;
                 float b = direction.y / direction.z;
                 vxy = Mathf.Sqrt(1f + a * a + b * b);
-            } else {
+            }
+            else
+            {
                 vxy = 1000000f;
             }
 
@@ -639,7 +745,8 @@ namespace VoxelPlay {
             double t;
             Vector3d normal = Vector3d.zero, db;
 
-            while (chunkCount++ < 500) { // safety counter to avoid any potential infinite loop
+            while (chunkCount++ < 500)
+            { // safety counter to avoid any potential infinite loop
 
                 // Check max distance
                 double distSqr = (position.x - startPosition.x) * (position.x - startPosition.x) + (position.y - startPosition.y) * (position.y - startPosition.y) + (position.z - startPosition.z) * (position.z - startPosition.z);
@@ -666,19 +773,21 @@ namespace VoxelPlay {
                 chunkY *= CHUNK_SIZE;
                 chunkZ *= CHUNK_SIZE;
 
-                if (chunk) {
+                if (chunk)
+                {
                     // Ray-march through chunk
                     Voxel[] voxels = chunk.voxels;
                     Vector3d inPosition = position;
 
-                    for (int k = 0; k < 64; k++) {
+                    for (int k = 0; k < 64; k++)
+                    {
 
 #if DEBUG_RAYCAST
-                                                                                                o = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                                                                                                o.transform.localScale = Misc.Vector3one * 0.1f;
-                                                                                                o.transform.position = inPosition;
-                                                                                                DestroyImmediate(o.GetComponent<Collider>());
-                                                                                                o.GetComponent<Renderer>().material.color = Color.yellow;
+                        o = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                        o.transform.localScale = Misc.Vector3one * 0.1f;
+                        o.transform.position = inPosition;
+                        DestroyImmediate(o.GetComponent<Collider>());
+                        o.GetComponent<Renderer>().material.color = Color.yellow;
 #endif
 
                         // Check voxel content
@@ -687,20 +796,24 @@ namespace VoxelPlay {
                         int py = fy - chunkY;
                         int pz = fz - chunkZ;
                         int px = fx - chunkX;
-                        if (px < 0 || px >= CHUNK_SIZE || py < 0 || py >= CHUNK_SIZE || pz < 0 || pz >= CHUNK_SIZE) {
+                        if (px < 0 || px >= CHUNK_SIZE || py < 0 || py >= CHUNK_SIZE || pz < 0 || pz >= CHUNK_SIZE)
+                        {
                             break;
                         }
 
                         int voxelIndex = py * ONE_Y_ROW + pz * ONE_Z_ROW + px;
-                        if ((minOpaque == 255 || voxels[voxelIndex].opaque >= minOpaque) && voxels[voxelIndex].typeIndex > Voxel.HoleTypeIndex) {
-                            if (startIndex >= indices.Length) {
+                        if ((minOpaque == 255 || voxels[voxelIndex].opaque >= minOpaque) && voxels[voxelIndex].typeIndex > Voxel.HoleTypeIndex)
+                        {
+                            if (startIndex >= indices.Length)
+                            {
                                 chunkCount = int.MaxValue;
                                 break;
                             }
 
                             // Check max distance
                             distSqr = (inPosition.x - startPosition.x) * (inPosition.x - startPosition.x) + (inPosition.y - startPosition.y) * (inPosition.y - startPosition.y) + (inPosition.z - startPosition.z) * (inPosition.z - startPosition.z);
-                            if (distSqr > maxDistanceSqr) {
+                            if (distSqr > maxDistanceSqr)
+                            {
                                 chunkCount = int.MaxValue;
                                 break;
                             }
@@ -723,12 +836,14 @@ namespace VoxelPlay {
                         normal.x = viewDirSignOffset.x;
                         normal.y = 0;
                         normal.z = 0;
-                        if (db.y < t) {
+                        if (db.y < t)
+                        {
                             t = db.y;
                             normal.x = 0;
                             normal.y = viewDirSignOffset.y;
                         }
-                        if (db.z < t) {
+                        if (db.z < t)
+                        {
                             t = db.z;
                             normal.x = 0;
                             normal.y = 0;
@@ -753,12 +868,14 @@ namespace VoxelPlay {
                 normal.x = viewDirSignOffset.x;
                 normal.y = 0;
                 normal.z = 0;
-                if (db.y < t) {
+                if (db.y < t)
+                {
                     t = db.y;
                     normal.x = 0;
                     normal.y = viewDirSignOffset.y;
                 }
-                if (db.z < t) {
+                if (db.z < t)
+                {
                     t = db.z;
                     normal.x = 0;
                     normal.y = 0;
@@ -775,7 +892,8 @@ namespace VoxelPlay {
 
 
 
-        int LineCastFastChunk (Vector3d startPosition, Vector3d endPosition, VoxelChunk[] chunks, int startIndex = 0) {
+        int LineCastFastChunk(Vector3d startPosition, Vector3d endPosition, VoxelChunk[] chunks, int startIndex = 0)
+        {
 
 #if DEBUG_RAYCAST
 			GameObject o;
@@ -791,25 +909,34 @@ namespace VoxelPlay {
             Vector3 viewSign = new Vector3((viewDirSign.x + 1f) * 0.5f, (viewDirSign.y + 1f) * 0.5f, (viewDirSign.z + 1f) * 0.5f); // 0 = left, 1 = right
 
             float vxz, vzy, vxy;
-            if (direction.y != 0) {
+            if (direction.y != 0)
+            {
                 float a = direction.x / direction.y;
                 float b = direction.z / direction.y;
                 vxz = Mathf.Sqrt(1f + a * a + b * b);
-            } else {
+            }
+            else
+            {
                 vxz = 1000000f;
             }
-            if (direction.x != 0) {
+            if (direction.x != 0)
+            {
                 float a = direction.z / direction.x;
                 float b = direction.y / direction.x;
                 vzy = Mathf.Sqrt(1f + a * a + b * b);
-            } else {
+            }
+            else
+            {
                 vzy = 1000000f;
             }
-            if (direction.z != 0) {
+            if (direction.z != 0)
+            {
                 float a = direction.x / direction.z;
                 float b = direction.y / direction.z;
                 vxy = Mathf.Sqrt(1f + a * a + b * b);
-            } else {
+            }
+            else
+            {
                 vxy = 1000000f;
             }
 
@@ -822,7 +949,8 @@ namespace VoxelPlay {
             double t;
             Vector3d normal = Vector3d.zero, db;
 
-            while (chunkCount++ < 500) { // safety counter to avoid any potential infinite loop
+            while (chunkCount++ < 500)
+            { // safety counter to avoid any potential infinite loop
 
                 // Check max distance
                 double distSqr = (position.x - startPosition.x) * (position.x - startPosition.x) + (position.y - startPosition.y) * (position.y - startPosition.y) + (position.z - startPosition.z) * (position.z - startPosition.z);
@@ -840,8 +968,10 @@ namespace VoxelPlay {
                 chunkY *= CHUNK_SIZE;
                 chunkZ *= CHUNK_SIZE;
 
-                if (chunk) {
-                    if (startIndex >= chunks.Length) {
+                if (chunk)
+                {
+                    if (startIndex >= chunks.Length)
+                    {
                         break;
                     }
                     chunks[startIndex++] = chunk;
@@ -859,12 +989,14 @@ namespace VoxelPlay {
                 normal.x = viewDirSignOffset.x;
                 normal.y = 0;
                 normal.z = 0;
-                if (db.y < t) {
+                if (db.y < t)
+                {
                     t = db.y;
                     normal.x = 0;
                     normal.y = viewDirSignOffset.y;
                 }
-                if (db.z < t) {
+                if (db.z < t)
+                {
                     t = db.z;
                     normal.x = 0;
                     normal.y = 0;
@@ -881,41 +1013,51 @@ namespace VoxelPlay {
 
 
 
-        bool HitVoxelFast (Vector3d origin, Vector3 direction, int damage, out VoxelHitInfo hitInfo, float maxDistance = 0, int damageRadius = 1, bool addParticles = true, bool playSound = true, int layerMask = -1, QueryTriggerInteraction queryTriggerInteraction = QueryTriggerInteraction.UseGlobal, int microVoxels = 0, float microVoxelDestroyProb = 1) {
+        bool HitVoxelFast(Vector3d origin, Vector3 direction, int damage, out VoxelHitInfo hitInfo, float maxDistance = 0, int damageRadius = 1, bool addParticles = true, bool playSound = true, int layerMask = -1, QueryTriggerInteraction queryTriggerInteraction = QueryTriggerInteraction.UseGlobal, int microVoxels = 0, float microVoxelDestroyProb = 1)
+        {
 
             RayCastFast(origin, direction, out hitInfo, maxDistance, false, 0, ColliderTypes.IgnorePlayer, layerMask, queryTriggerInteraction, microVoxels > 0);
             VoxelChunk chunk = hitInfo.chunk;
-            if ((object)chunk == null || hitInfo.voxelIndex < 0) {
+            if ((object)chunk == null || hitInfo.voxelIndex < 0)
+            {
                 lastHitInfo.chunk = null;
                 lastHitInfo.voxelIndex = -1;
                 return false;
             }
 
             lastHitInfo = hitInfo;
-            if (microVoxels > 0) {
+            if (microVoxels > 0)
+            {
                 DamageMicroVoxelFast(ref hitInfo, microVoxels, microVoxelDestroyProb, addParticles);
                 return true;
             }
 
             DamageVoxelFast(ref hitInfo, damage, addParticles, playSound);
 
-            if (damageRadius > 1) {
+            if (damageRadius > 1)
+            {
                 Vector3d otherPos;
                 Vector3d explosionPosition = hitInfo.voxelCenter + hitInfo.normal * damageRadius;
                 damageRadius--;
 
-                for (int y = -damageRadius; y <= damageRadius; y++) {
+                for (int y = -damageRadius; y <= damageRadius; y++)
+                {
                     otherPos.y = lastHitInfo.voxelCenter.y + y;
-                    for (int z = -damageRadius; z <= damageRadius; z++) {
+                    for (int z = -damageRadius; z <= damageRadius; z++)
+                    {
                         otherPos.z = lastHitInfo.voxelCenter.z + z;
-                        for (int x = -damageRadius; x <= damageRadius; x++) {
+                        for (int x = -damageRadius; x <= damageRadius; x++)
+                        {
                             if (x == 0 && z == 0 && y == 0)
                                 continue;
                             otherPos.x = lastHitInfo.voxelCenter.x + x;
-                            if (GetVoxelIndex(otherPos, out VoxelChunk otherChunk, out int otherIndex, false)) {
-                                if (GetVoxelVisibility(otherChunk, otherIndex)) {
+                            if (GetVoxelIndex(otherPos, out VoxelChunk otherChunk, out int otherIndex, false))
+                            {
+                                if (GetVoxelVisibility(otherChunk, otherIndex))
+                                {
                                     FastVector.NormalizedDirection(ref explosionPosition, ref otherPos, out direction);
-                                    if (RayCast(explosionPosition, direction, out hitInfo, damageRadius)) {
+                                    if (RayCast(explosionPosition, direction, out hitInfo, damageRadius))
+                                    {
                                         DamageVoxelFast(ref hitInfo, damage, addParticles, playSound);
                                     }
                                 }
@@ -929,18 +1071,23 @@ namespace VoxelPlay {
         }
 
 
-        int DamageAreaFast (Vector3d origin, int damage, int damageRadius = 1, bool distanceAttenuation = true, bool addParticles = true, List<VoxelIndex> results = null, bool playSound = false, bool showDamageCracks = false, bool canAddRecoverableVoxel = true) {
-            if (captureEvents && OnVoxelAfterAreaDamage != null) {
-                if (results == null) {
+        int DamageAreaFast(Vector3d origin, int damage, int damageRadius = 1, bool distanceAttenuation = true, bool addParticles = true, List<VoxelIndex> results = null, bool playSound = false, bool showDamageCracks = false, bool canAddRecoverableVoxel = true)
+        {
+            if (captureEvents && OnVoxelAfterAreaDamage != null)
+            {
+                if (results == null)
+                {
                     results = new List<VoxelIndex>();
                 }
             }
 
             bool hasResults = results != null;
-            if (hasResults) {
+            if (hasResults)
+            {
                 results.Clear();
             }
-            if (damageRadius < 0 || damage < 1) {
+            if (damageRadius < 0 || damage < 1)
+            {
                 return 0;
             }
 
@@ -948,23 +1095,27 @@ namespace VoxelPlay {
             List<VoxelIndex> tempVoxelIndicesDamageArea = BufferPool<VoxelIndex>.Get();
             VoxelHitInfo hitInfo = new VoxelHitInfo();
             GetVoxelIndices(origin, damageRadius, tempVoxelIndicesDamageArea);
-            if (captureEvents && OnVoxelBeforeAreaDamage != null) {
+            if (captureEvents && OnVoxelBeforeAreaDamage != null)
+            {
                 OnVoxelBeforeAreaDamage(tempVoxelIndicesDamageArea);
             }
             int count = tempVoxelIndicesDamageArea.Count;
 
             float damageRadiusSqr = damageRadius * damageRadius;
             destroyedVoxelParticlesAmount = 5;
-            for (int k = 0; k < count; k++) {
+            for (int k = 0; k < count; k++)
+            {
                 VoxelIndex vi = tempVoxelIndicesDamageArea[k];
                 VoxelChunk otherChunk = vi.chunk;
                 int otherIndex = vi.voxelIndex;
                 int dam = damage;
-                if (distanceAttenuation && vi.sqrDistance > 1) {
+                if (distanceAttenuation && vi.sqrDistance > 1)
+                {
                     float atten = (damageRadiusSqr - vi.sqrDistance) / damageRadiusSqr;
                     dam = (int)(damage * atten);
                 }
-                if (dam > 0) {
+                if (dam > 0)
+                {
                     // Approximates a theorical hit point
                     FastVector.NormalizedDirection(ref vi.position, ref origin, out hitInfo.normal);
                     hitInfo.chunk = otherChunk;
@@ -975,7 +1126,8 @@ namespace VoxelPlay {
                     hitInfo.point = Vector3d.Snap(hitInfo.voxelCenter + hitInfo.normal * 0.5f);
 
                     int damageTaken = DamageVoxelFast(ref hitInfo, dam, addParticles, playSound, showDamageCracks, canAddRecoverableVoxel);
-                    if (hasResults) {
+                    if (hasResults)
+                    {
                         VoxelIndex di = vi;
                         di.damageTaken = damageTaken;
                         results.Add(di);
@@ -985,7 +1137,8 @@ namespace VoxelPlay {
             }
 
             BufferPool<VoxelIndex>.Release(tempVoxelIndicesDamageArea);
-            if (captureEvents && OnVoxelAfterAreaDamage != null) {
+            if (captureEvents && OnVoxelAfterAreaDamage != null)
+            {
                 OnVoxelAfterAreaDamage(results);
             }
             destroyedVoxelParticlesAmount = DEFAULT_DESTROYED_VOXEL_PARTICLE_AMOUNT;
@@ -1000,7 +1153,8 @@ namespace VoxelPlay {
         /// <param name="damage">손상.</param>
         /// <param name="addParticles">If set to <c>진실</c> add particles.</param>
         /// <param name="canAddRecoverableVoxel">true인 경우 복셀이 파괴될 때 부동 복구 가능한 복셀을 삭제할 수 있습니다.</param>
-        int DamageVoxelFast (ref VoxelHitInfo hitInfo, int damage, bool addParticles, bool playSound, bool showDamageCracks = true, bool canAddRecoverableVoxel = true) {
+        int DamageVoxelFast(ref VoxelHitInfo hitInfo, int damage, bool addParticles, bool playSound, bool showDamageCracks = true, bool canAddRecoverableVoxel = true)
+        {
 
             VoxelChunk chunk = hitInfo.chunk;
             if (hitInfo.voxel.typeIndex == 0 || hitInfo.voxelIndex < 0)
@@ -1009,22 +1163,30 @@ namespace VoxelPlay {
             VoxelDefinition voxelType = voxelDefinitions[hitInfo.voxel.typeIndex];
             byte voxelTypeResistancePoints = voxelType.resistancePoints;
 
-            if (damage < 255) {
-                if (voxelTypeResistancePoints == 0) {
+            if (damage < 255)
+            {
+                if (voxelTypeResistancePoints == 0)
+                {
                     damage = 0;
-                } else if (voxelTypeResistancePoints == 255) {
-                    if (playSound) {
+                }
+                else if (voxelTypeResistancePoints == 255)
+                {
+                    if (playSound)
+                    {
                         PlayImpactSound(hitInfo.voxel.type.impactSound, hitInfo.voxelCenter);
                     }
                     damage = 0;
                 }
             }
 
-            if (captureEvents) {
-                if (OnVoxelDamaged != null) {
+            if (captureEvents)
+            {
+                if (OnVoxelDamaged != null)
+                {
                     OnVoxelDamaged(chunk, hitInfo.voxelIndex, ref damage);
                 }
-                if (OnVoxelDamagedHitInfo != null) {
+                if (OnVoxelDamagedHitInfo != null)
+                {
                     OnVoxelDamagedHitInfo(hitInfo, ref damage);
                 }
             }
@@ -1036,10 +1198,12 @@ namespace VoxelPlay {
             bool destroyed = voxelType.resistancePoints <= damage;
             int resistancePointsLeft = 0;
             VoxelPlaceholder placeholder = null;
-            if (!destroyed) {
+            if (!destroyed)
+            {
                 placeholder = GetVoxelPlaceholder(chunk, hitInfo.voxelIndex, true);
                 resistancePointsLeft = placeholder.resistancePointsLeft - damage;
-                if (resistancePointsLeft <= 0) {
+                if (resistancePointsLeft <= 0)
+                {
                     resistancePointsLeft = 0;
                     destroyed = true;
                 }
@@ -1052,18 +1216,24 @@ namespace VoxelPlay {
             int particlesAmount;
             int voxelLight;
 
-            if (destroyed) {
+            if (destroyed)
+            {
 
                 // Add recoverable voxel on the scene (not for vegetation)
-                if (canAddRecoverableVoxel) {
-                    if (voxelType.renderType != RenderType.Invisible && voxelType.canBeCollected && !buildMode) {
-                        if (Random.value <= voxelType.dropProbability) {
+                if (canAddRecoverableVoxel)
+                {
+                    if (voxelType.renderType != RenderType.Invisible && voxelType.canBeCollected && !buildMode)
+                    {
+                        if (Random.value <= voxelType.dropProbability)
+                        {
                             bool create = true;
 
-                            if (captureEvents && OnVoxelBeforeDropItem != null) {
+                            if (captureEvents && OnVoxelBeforeDropItem != null)
+                            {
                                 OnVoxelBeforeDropItem(chunk, hitInfo, out create);
                             }
-                            if (create) {
+                            if (create)
+                            {
                                 CreateRecoverableVoxel(hitInfo.voxelCenter, voxelType, hitInfo.voxel.color);
                             }
                         }
@@ -1074,8 +1244,10 @@ namespace VoxelPlay {
                 VoxelDestroyFast(chunk, hitInfo.voxelIndex);
 
                 // Check if grass is on top and remove it as well
-                if (GetVoxelIndex(hitInfo.voxelCenter + Misc.vector3up, out VoxelChunk topChunk, out int topIndex, false)) {
-                    if (topChunk.voxels[topIndex].typeIndex != 0 && voxelDefinitions[topChunk.voxels[topIndex].typeIndex].renderType == RenderType.CutoutCross) {
+                if (GetVoxelIndex(hitInfo.voxelCenter + Misc.vector3up, out VoxelChunk topChunk, out int topIndex, false))
+                {
+                    if (topChunk.voxels[topIndex].typeIndex != 0 && voxelDefinitions[topChunk.voxels[topIndex].typeIndex].renderType == RenderType.CutoutCross)
+                    {
                         byte light = topChunk.voxels[topIndex].lightOrTorch;
                         topChunk.voxels[topIndex].Clear(light);
                         RegisterChunkChanges(topChunk);
@@ -1085,14 +1257,17 @@ namespace VoxelPlay {
                 // Max particles
                 particlesAmount = destroyedVoxelParticlesAmount;
 
-                if (playSound) {
+                if (playSound)
+                {
                     PlayDestructionSound(voxelType.destructionSound, hitInfo.voxelCenter);
                 }
 
                 // Gets light at the destroyed voxel position
                 voxelLight = GetVoxelLightPacked(hitInfo.voxelCenter);
 
-            } else {
+            }
+            else
+            {
 
                 // Gets voxel light near surface
                 voxelLight = GetVoxelLightPacked(hitInfo.point + hitInfo.normal * 0.5f);
@@ -1101,29 +1276,37 @@ namespace VoxelPlay {
                 float lifePerc = (float)resistancePointsLeft / voxelTypeResistancePoints;
                 int textureIndex = FastMath.FloorToInt(world.voxelDamageTextures.Length * lifePerc);
 
-                if (showDamageCracks && voxelType.showDamageCracks) {
-                    if (placeholder.damageIndicator == null) {
-                        if (damagedVoxelPrefab == null) {
+                if (showDamageCracks && voxelType.showDamageCracks)
+                {
+                    if (placeholder.damageIndicator == null)
+                    {
+                        if (damagedVoxelPrefab == null)
+                        {
                             damagedVoxelPrefab = Resources.Load<GameObject>("VoxelPlay/Prefabs/DamagedVoxel");
                         }
                         GameObject g = Instantiate(damagedVoxelPrefab);
                         g.name = DAMAGE_INDICATOR;
                         Transform tDamageIndicator = g.transform;
                         placeholder.damageIndicator = tDamageIndicator.GetComponent<Renderer>();
-                        if (placeholder.modelMeshFilter != null && placeholder.modelMeshFilter.sharedMesh != null) {
+                        if (placeholder.modelMeshFilter != null && placeholder.modelMeshFilter.sharedMesh != null)
+                        {
                             tDamageIndicator.SetParent(placeholder.modelMeshFilter.transform, false);
                             Mesh mesh = placeholder.modelMeshFilter.sharedMesh;
                             tDamageIndicator.localPosition = mesh.bounds.center;
                             tDamageIndicator.localScale = mesh.bounds.size * 1.001f;
-                        } else {
+                        }
+                        else
+                        {
                             tDamageIndicator.SetParent(placeholder.transform, false);
                             tDamageIndicator.localPosition = placeholder.bounds.center;
                             tDamageIndicator.localScale = placeholder.bounds.size * 1.001f;
                         }
                     }
 
-                    if (world.voxelDamageTextures.Length > 0) {
-                        if (textureIndex >= world.voxelDamageTextures.Length) {
+                    if (world.voxelDamageTextures.Length > 0)
+                    {
+                        if (textureIndex >= world.voxelDamageTextures.Length)
+                        {
                             textureIndex = world.voxelDamageTextures.Length - 1;
                         }
                         Material mi = placeholder.damageIndicatorMaterial; // gets a copy of material the first time it's used
@@ -1139,22 +1322,27 @@ namespace VoxelPlay {
                 // Sets health recovery for the voxel
                 placeholder.StartHealthRecovery(world.damageDuration);
 
-                if (playSound) {
+                if (playSound)
+                {
                     PlayImpactSound(voxelType.impactSound, hitInfo.voxelCenter);
                 }
             }
 
             // Add random particles
-            if (addParticles && damageParticles) {
+            if (addParticles && damageParticles)
+            {
                 Vector3 camForward = cameraMain.transform.forward;
                 AddParticlesAtHitPoint(particlesAmount, camForward, destroyed, hitInfo, voxelLight);
             }
 
-            if (captureEvents) {
-                if (OnVoxelAfterDamaged != null) {
+            if (captureEvents)
+            {
+                if (OnVoxelAfterDamaged != null)
+                {
                     OnVoxelAfterDamaged(chunk, hitInfo.voxelIndex, damage);
                 }
-                if (OnVoxelAfterDamagedHitInfo != null) {
+                if (OnVoxelAfterDamagedHitInfo != null)
+                {
                     OnVoxelAfterDamagedHitInfo(hitInfo, damage);
                 }
             }
@@ -1165,15 +1353,18 @@ namespace VoxelPlay {
         /// <summary>
         /// 주어진 위치에 여러 개의 입자를 생성하고 스타일에 따라 이동합니다.
         /// </summary>
-        public virtual void ParticleBurst (Vector3d position, ParticleBurstStyle style, int particleCount, float intensity, VoxelDefinition materialVoxelDefinition = null, Gradient colors = null) {
-            if (materialVoxelDefinition == null) {
+        public virtual void ParticleBurst(Vector3d position, ParticleBurstStyle style, int particleCount, float intensity, VoxelDefinition materialVoxelDefinition = null, Gradient colors = null)
+        {
+            if (materialVoxelDefinition == null)
+            {
                 Voxel voxel = GetVoxel(position, false);
                 materialVoxelDefinition = voxel.type;
             }
 
             // Add random particles
             float now = Time.time;
-            for (int k = 0; k < particleCount; k++) {
+            for (int k = 0; k < particleCount; k++)
+            {
                 int ppeIndex = GetParticleFromPool();
                 if (ppeIndex < 0)
                     return;
@@ -1182,11 +1373,14 @@ namespace VoxelPlay {
                 Renderer particleRenderer = particlePool[ppeIndex].renderer;
                 float startScale, endScale;
                 float rnd;
-                if (materialVoxelDefinition.renderType == RenderType.CutoutCross) {   // smaller particles for vegetation
+                if (materialVoxelDefinition.renderType == RenderType.CutoutCross)
+                {   // smaller particles for vegetation
                     rnd = Random.Range(0.03f, 0.04f);
                     startScale = rnd; ;
                     endScale = rnd * 0.6f;
-                } else {
+                }
+                else
+                {
                     rnd = Random.Range(0.04f, 0.1f);
                     startScale = rnd * 4f;
                     endScale = rnd;
@@ -1212,7 +1406,8 @@ namespace VoxelPlay {
                 particlePos = position;
                 FastVector.Add(ref particlePos, ref expelDir, 0.6f);
 
-                switch (style) {
+                switch (style)
+                {
                     case ParticleBurstStyle.Explosion:
                         rnd = Random.value * 125f;
                         rb.AddForce(expelDir * rnd * intensity);
@@ -1238,10 +1433,12 @@ namespace VoxelPlay {
         /// 해당 위치에서 충격음을 재생합니다.
         /// </summary>
         /// <param name="sound">Voxel Play Environment 구성 요소에 정의된 기본 충격 사운드를 사용하려면 맞춤 오디오 클립을 사용하거나 null을 전달하세요.</param>
-        public virtual void PlayImpactSound (AudioClip sound, Vector3 position) {
+        public virtual void PlayImpactSound(AudioClip sound, Vector3 position)
+        {
             if (sound == null)
                 sound = defaultImpactSound;
-            if (sound != null) {
+            if (sound != null)
+            {
                 AudioSource.PlayClipAtPoint(sound, position);
             }
         }
@@ -1250,10 +1447,12 @@ namespace VoxelPlay {
         /// 해당 위치에서 복셀 빌드 사운드를 재생합니다.
         /// </summary>
         /// <param name="sound">Voxel Play Environment 구성 요소에 정의된 기본 빌드 사운드를 사용하려면 맞춤 오디오 클립을 사용하거나 null을 전달하세요.</param>
-        public virtual void PlayBuildSound (AudioClip sound, Vector3 position) {
+        public virtual void PlayBuildSound(AudioClip sound, Vector3 position)
+        {
             if (sound == null)
                 sound = defaultBuildSound;
-            if (sound != null) {
+            if (sound != null)
+            {
                 AudioSource.PlayClipAtPoint(sound, position);
             }
         }
@@ -1262,10 +1461,12 @@ namespace VoxelPlay {
         /// 해당 위치에서 복셀 파괴 소리를 재생합니다.
         /// </summary>
         /// <param name="sound">Voxel Play Environment 구성 요소에 정의된 기본 파괴 사운드를 사용하려면 맞춤 오디오 클립을 사용하거나 null을 전달하세요.</param>
-        public virtual void PlayDestructionSound (AudioClip sound, Vector3 position) {
+        public virtual void PlayDestructionSound(AudioClip sound, Vector3 position)
+        {
             if (sound == null)
                 sound = defaultDestructionSound;
-            if (sound != null) {
+            if (sound != null)
+            {
                 AudioSource.PlayClipAtPoint(sound, position);
             }
         }
@@ -1276,9 +1477,11 @@ namespace VoxelPlay {
         /// </summary>
         /// <returns><c>진실</c>, if collision was checked, <c>거짓</c> otherwise.</returns>
         /// <param name="position">위치.</param>
-        public virtual bool CheckCollision (Vector3d position) {
+        public virtual bool CheckCollision(Vector3d position)
+        {
             FastMath.FloorToInt(position.x / CHUNK_SIZE, position.y / CHUNK_SIZE, position.z / CHUNK_SIZE, out int x, out int y, out int z);
-            if (GetChunkOrCreate(x, y, z, out VoxelChunk chunk)) {
+            if (GetChunkOrCreate(x, y, z, out VoxelChunk chunk))
+            {
                 Voxel[] voxels = chunk.voxels;
                 int py = (int)(position.y - y * CHUNK_SIZE);
                 int pz = (int)(position.z - z * CHUNK_SIZE);
@@ -1293,28 +1496,43 @@ namespace VoxelPlay {
         /// <summary>
         /// 기본 적중 데이터에서 VoxelHitInfo 구조를 반환합니다.
         /// </summary>
-        public bool BuildVoxelHitInfo (out VoxelHitInfo hitInfo, Vector3d voxelCenter, Vector3d hitPoint, Vector3 normal = default(Vector3)) {
-            hitInfo = new VoxelHitInfo {
+        public bool BuildVoxelHitInfo(out VoxelHitInfo hitInfo, Vector3d voxelCenter, Vector3d hitPoint, Vector3 normal = default(Vector3))
+        {
+            hitInfo = new VoxelHitInfo
+            {
                 voxelCenter = voxelCenter,
                 point = hitPoint
             };
-            if (normal == default(Vector3)) {
+            if (normal == default(Vector3))
+            {
                 Vector3d localHitPos = hitPoint - voxelCenter;
-                if (localHitPos.y >= 0.495) {
+                if (localHitPos.y >= 0.495)
+                {
                     hitInfo.normal = Misc.vector3up;
-                } else if (localHitPos.y <= -0.495) {
+                }
+                else if (localHitPos.y <= -0.495)
+                {
                     hitInfo.normal = Misc.vector3down;
-                } else if (localHitPos.x < -0.495) {
+                }
+                else if (localHitPos.x < -0.495)
+                {
                     hitInfo.normal = Misc.vector3left;
-                } else if (localHitPos.x > 0.495) {
+                }
+                else if (localHitPos.x > 0.495)
+                {
                     hitInfo.normal = Misc.vector3right;
-                } else if (localHitPos.z < -0.495) {
+                }
+                else if (localHitPos.z < -0.495)
+                {
                     hitInfo.normal = Misc.vector3back;
-                } else if (localHitPos.z > 0.495) {
+                }
+                else if (localHitPos.z > 0.495)
+                {
                     hitInfo.normal = Misc.vector3forward;
                 }
             }
-            if (!GetVoxelIndex(voxelCenter, out hitInfo.chunk, out hitInfo.voxelIndex)) {
+            if (!GetVoxelIndex(voxelCenter, out hitInfo.chunk, out hitInfo.voxelIndex))
+            {
                 return false;
             }
             hitInfo.voxel = hitInfo.chunk.voxels[hitInfo.voxelIndex];
@@ -1329,24 +1547,38 @@ namespace VoxelPlay {
         /// <summary>
         /// 기본 적중 데이터에서 VoxelHitInfo 구조를 반환합니다.
         /// </summary>
-        public bool BuildVoxelHitInfo (out VoxelHitInfo hitInfo, VoxelChunk chunk, int voxelIndex, Vector3d voxelCenter, Vector3d hitPoint, Vector3 normal = default(Vector3)) {
-            hitInfo = new VoxelHitInfo {
+        public bool BuildVoxelHitInfo(out VoxelHitInfo hitInfo, VoxelChunk chunk, int voxelIndex, Vector3d voxelCenter, Vector3d hitPoint, Vector3 normal = default(Vector3))
+        {
+            hitInfo = new VoxelHitInfo
+            {
                 voxelCenter = voxelCenter,
                 point = hitPoint
             };
-            if (normal == default(Vector3)) {
+            if (normal == default(Vector3))
+            {
                 Vector3d localHitPos = hitPoint - voxelCenter;
-                if (localHitPos.y >= 0.495) {
+                if (localHitPos.y >= 0.495)
+                {
                     hitInfo.normal = Misc.vector3up;
-                } else if (localHitPos.y <= -0.495) {
+                }
+                else if (localHitPos.y <= -0.495)
+                {
                     hitInfo.normal = Misc.vector3down;
-                } else if (localHitPos.x < -0.495) {
+                }
+                else if (localHitPos.x < -0.495)
+                {
                     hitInfo.normal = Misc.vector3left;
-                } else if (localHitPos.x > 0.495) {
+                }
+                else if (localHitPos.x > 0.495)
+                {
                     hitInfo.normal = Misc.vector3right;
-                } else if (localHitPos.z < -0.495) {
+                }
+                else if (localHitPos.z < -0.495)
+                {
                     hitInfo.normal = Misc.vector3back;
-                } else if (localHitPos.z > 0.495) {
+                }
+                else if (localHitPos.z > 0.495)
+                {
                     hitInfo.normal = Misc.vector3forward;
                 }
             }
