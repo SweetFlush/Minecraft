@@ -39,8 +39,10 @@ namespace Autohand
         }
 
         private float _currDistance;
-        public float CurrentDistance {
-            get {
+        public float CurrentDistance
+        {
+            get
+            {
                 return (_currTarget == null ? float.MaxValue : _currDistance);
             }
         }
@@ -81,8 +83,9 @@ namespace Autohand
 #else
                     var canvases = FindObjectsOfType<Canvas>();
 #endif
-                    foreach(var canvas in canvases) {
-                        if(canvas.renderMode == RenderMode.WorldSpace)
+                    foreach (var canvas in canvases)
+                    {
+                        if (canvas.renderMode == RenderMode.WorldSpace)
                             canvas.worldCamera = cam;
                     }
 
@@ -95,7 +98,7 @@ namespace Autohand
         protected virtual void OnEnable()
         {
 
-            if(lineRenderer != null)
+            if (lineRenderer != null)
                 lineRenderer.positionCount = (int)lineSegements;
             if (inputModule.Instance != null)
                 pointerIndex = inputModule.Instance.AddPointer(this);
@@ -104,12 +107,13 @@ namespace Autohand
 
         protected virtual void OnDisable()
         {
-            if(inputModule) inputModule.Instance?.RemovePointer(this);
+            if (inputModule) inputModule.Instance?.RemovePointer(this);
         }
 
-        protected virtual void OnDestroy() {
+        protected virtual void OnDestroy()
+        {
             beingDestroyed = true;
-            if(cam != null)
+            if (cam != null)
                 Destroy(cam.gameObject);
             cam = null;
         }
@@ -121,22 +125,24 @@ namespace Autohand
 
         protected internal virtual void Preprocess()
         {
-            if(beingDestroyed) return;
+            if (beingDestroyed) return;
 
             UICamera.farClipPlane = raycastLength;
             UICamera.transform.position = transform.position;
             UICamera.transform.forward = currentSmoothForward;
         }
 
-        public virtual void Press() {
+        public virtual void Press()
+        {
             // Handle the UI events
-            if(inputModule) inputModule.ProcessPress(pointerIndex);
+            if (inputModule) inputModule.ProcessPress(pointerIndex);
 
             // Show the ray when they attemp to press
-            if(!autoShowTarget && hover) ShowRay(true);
+            if (!autoShowTarget && hover) ShowRay(true);
 
             PointerEventData data = inputModule.GetData(pointerIndex);
-            if(data != null && data.selectedObject != null) {
+            if (data != null && data.selectedObject != null)
+            {
                 StartSelect?.Invoke(data.pointerCurrentRaycast.worldPosition, data.selectedObject);
             }
         }
@@ -144,11 +150,11 @@ namespace Autohand
         public virtual void Release()
         {
             // Handle the UI events
-            if(inputModule) inputModule.ProcessRelease(pointerIndex);
+            if (inputModule) inputModule.ProcessRelease(pointerIndex);
 
             PointerEventData data = inputModule.GetData(pointerIndex);
             var selectedObject = data.selectedObject;
-            if(selectedObject != null) 
+            if (selectedObject != null)
                 StopSelect?.Invoke(data.pointerCurrentRaycast.worldPosition, selectedObject);
         }
 
@@ -166,7 +172,8 @@ namespace Autohand
                 else if (!(inputModule = AutoHandExtensions.CanFindObjectOfType<AutoInputModule>()))
                 {
                     EventSystem system = AutoHandExtensions.CanFindObjectOfType<EventSystem>();
-                    if(system == null) {
+                    if (system == null)
+                    {
                         system = new GameObject().AddComponent<EventSystem>();
                         system.name = "UI Input Event System";
                     }
@@ -178,7 +185,8 @@ namespace Autohand
 
         protected virtual void LateUpdate()
         {
-            if(useSmoothing) {
+            if (useSmoothing)
+            {
                 var currentAngleDistance = Vector3.Angle(currentSmoothForward, transform.forward);
                 currentSmoothForward = Vector3.RotateTowards(currentSmoothForward, transform.forward, Time.deltaTime * forwardPointerSmoothing + Time.deltaTime * forwardPointerSmoothing * currentAngleDistance, 1000f);
                 currentSmoothForward.Normalize();
@@ -191,29 +199,33 @@ namespace Autohand
 
         protected virtual void UpdateLine()
         {
-
             PointerEventData data = inputModule.GetData(pointerIndex);
             float targetLength = data.pointerCurrentRaycast.gameObject == null ? raycastLength : data.pointerCurrentRaycast.distance;
 
-            if(targetLength > 0) {
+            if (targetLength > 0)
+            {
                 _currTarget = data.pointerCurrentRaycast.gameObject;
                 _currDistance = targetLength;
             }
-            else {
+            else
+            {
                 _currTarget = null;
             }
 
-            if (data.pointerCurrentRaycast.gameObject != null && !hover){
+            if (data.pointerCurrentRaycast.gameObject != null && !hover)
+            {
                 lastHit = CreateRaycast(targetLength);
                 Vector3 endPosition = transform.position + (currentSmoothForward * targetLength);
                 if (lastHit.collider) endPosition = lastHit.point;
 
 
-                if(lastHit.collider != null) {
+                if (lastHit.collider != null)
+                {
                     currentSmoothForward = transform.forward;
                     StartPoint?.Invoke(lastHit.point, lastHit.transform.gameObject);
                 }
-                else {
+                else
+                {
                     currentSmoothForward = transform.forward;
                     StartPoint?.Invoke(endPosition, null);
                 }
@@ -224,7 +236,8 @@ namespace Autohand
 
                 hover = true;
             }
-            else if (data.pointerCurrentRaycast.gameObject == null && hover){
+            else if (data.pointerCurrentRaycast.gameObject == null && hover)
+            {
                 lastHit = CreateRaycast(targetLength);
                 Vector3 endPosition = transform.position + (currentSmoothForward * targetLength);
                 if (lastHit.collider) endPosition = lastHit.point;
@@ -239,7 +252,8 @@ namespace Autohand
                 hover = false;
             }
 
-            if(hover) {
+            if (hover)
+            {
                 lastHit = CreateRaycast(targetLength);
 
                 Vector3 endPosition = transform.position + (currentSmoothForward * targetLength);
@@ -248,15 +262,17 @@ namespace Autohand
                 hitPointMarker.transform.position = endPosition;
                 hitPointMarker.transform.forward = data.pointerCurrentRaycast.worldNormal;
 
-                if(lastHit.collider) {
+                if (lastHit.collider)
+                {
                     endPosition = lastHit.point;
                     hitPointMarker.transform.forward = lastHit.collider.transform.forward;
                     hitPointMarker.transform.position = endPosition + hitPointMarker.transform.forward * 0.002f;
                 }
 
                 //Handle the line renderer
-                for(int i = 0; i < lineSegements; i++) {
-                    lineRenderer.SetPosition(i, Vector3.Lerp(transform.position, endPosition, i/ lineSegements));
+                for (int i = 0; i < lineSegements; i++)
+                {
+                    lineRenderer.SetPosition(i, Vector3.Lerp(transform.position, endPosition, i / lineSegements));
                 }
             }
 
@@ -264,7 +280,8 @@ namespace Autohand
 
         }
 
-        protected virtual RaycastHit CreateRaycast(float dist){
+        protected virtual RaycastHit CreateRaycast(float dist)
+        {
             RaycastHit hit;
             Ray ray = new Ray(transform.position, currentSmoothForward);
             Physics.Raycast(ray, out hit, dist, UILayer);
@@ -272,10 +289,11 @@ namespace Autohand
             return hit;
         }
 
-        protected virtual void ShowRay(bool show) {
-            if(hitPointMarker != null)
+        protected virtual void ShowRay(bool show)
+        {
+            if (hitPointMarker != null)
                 hitPointMarker.SetActive(show);
-            if(lineRenderer != null)
+            if (lineRenderer != null)
                 lineRenderer.enabled = show;
         }
 
