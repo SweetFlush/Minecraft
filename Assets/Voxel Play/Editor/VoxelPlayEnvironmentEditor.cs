@@ -399,7 +399,7 @@ namespace VoxelPlay {
             bool updateCurvatureMacro = false;
             bool prevBool = false;
 
-            // General settings
+            // 일반 설정
             bool isURPActive = GraphicsSettings.currentRenderPipeline != null;
             if (isURPActive != VoxelPlayEnvironment.supportsURP) {
                 refreshChunks = true;
@@ -430,7 +430,7 @@ namespace VoxelPlay {
 
             EditorGUILayout.BeginHorizontal();
             WorldDefinition wd = (WorldDefinition)world.objectReferenceValue;
-            EditorGUILayout.PropertyField(world, new GUIContent("World", "The world definition asset. This asset contains the definition of biomes, voxels, items and other world-specific options."));
+            EditorGUILayout.PropertyField(world, new GUIContent("World", "월드 정의 에셋입니다. 이 에셋에는 바이옴, 복셀, 아이템 등 월드별 옵션 정의가 포함됩니다."));
             if (wd != world.objectReferenceValue)
                 rebuildWorld = true;
             if (GUILayout.Button("Create", GUILayout.Width(50))) {
@@ -461,7 +461,7 @@ namespace VoxelPlay {
                         cachedWorldEditor = Editor.CreateEditor(world.objectReferenceValue);
                     }
 
-                    // Drawing the world editor
+                    // 월드 에디터를 그립니다.
                     EditorGUILayout.BeginVertical(boxStyle);
                     EditorGUI.BeginChangeCheck();
                     cachedWorldEditor.OnInspectorGUI();
@@ -486,7 +486,7 @@ namespace VoxelPlay {
                             cachedTerrainGeneratorEditor = Editor.CreateEditor(terrainGenerator);
                         }
 
-                        // Drawing the world editor
+                        // 월드 에디터를 그립니다.
                         EditorGUI.BeginChangeCheck();
                         EditorGUILayout.BeginVertical(boxStyle);
                         cachedTerrainGeneratorEditor.OnInspectorGUI();
@@ -516,7 +516,7 @@ namespace VoxelPlay {
                     EditorGUILayout.BeginVertical(boxStyle);
 
                     EditorGUI.BeginChangeCheck();
-                    EditorGUILayout.PropertyField(renderInEditor, new GUIContent("Render In Editor", "Enable world rendering in Editor. If disabled, world will only be visible during play mode."));
+                    EditorGUILayout.PropertyField(renderInEditor, new GUIContent("Render In Editor", "에디터에서 월드 렌더링을 활성화합니다. 비활성화하면 플레이 모드에서만 보입니다."));
                     if (EditorGUI.EndChangeCheck()) {
                         env.NotifyCameraMove();
                         if (!renderInEditor.boolValue && !Application.isPlaying) {
@@ -528,21 +528,21 @@ namespace VoxelPlay {
 
                     if (!renderInEditor.boolValue) GUI.enabled = false;
 
-                    EditorGUILayout.PropertyField(generateAroundCamera, new GUIContent("   Automatic", "Render the world around SceneView camera position as it moves."));
+                    EditorGUILayout.PropertyField(generateAroundCamera, new GUIContent("   Automatic", "SceneView 카메라 위치를 따라 주변 월드를 렌더링합니다."));
 
-                    EditorGUILayout.PropertyField(renderInEditorLowPriority, new GUIContent("   Low Priority", "When enabled, rendering in editor will only execute when scene camera is static."));
+                    EditorGUILayout.PropertyField(renderInEditorLowPriority, new GUIContent("   Low Priority", "활성화하면 씬 카메라가 정지해 있을 때만 에디터 렌더링을 수행합니다."));
                     if (wd != world.objectReferenceValue) {
                         rebuildWorld = true;
                     }
 
                     EditorGUI.BeginChangeCheck();
-                    EditorGUILayout.PropertyField(renderInEditorDetail, new GUIContent("   Render Detail", "Select the amount of detail to be rendered in Editor time."));
+                    EditorGUILayout.PropertyField(renderInEditorDetail, new GUIContent("   Render Detail", "에디터에서 렌더링할 디테일 수준을 선택합니다."));
                     if (EditorGUI.EndChangeCheck()) {
                         rebuildWorld = true;
                     }
 
                     EditorGUI.BeginChangeCheck();
-                    GUIContent[] options = new GUIContent[] { new GUIContent("File", "Load/Save/Export operations."), new GUIContent("Terrain", "Tools to edit/customize the terrain."), new GUIContent("Sculpt", "Tools to place/remove/edit voxels in the world."), new GUIContent("Other", "Other world management tools.") };
+                    GUIContent[] options = new GUIContent[] { new GUIContent("File", "불러오기/저장/내보내기 작업입니다."), new GUIContent("Terrain", "지형을 편집/커스터마이즈하는 도구입니다."), new GUIContent("Sculpt", "월드에서 복셀을 배치/제거/편집하는 도구입니다."), new GUIContent("Other", "기타 월드 관리 도구입니다.") };
                     GUIStyle style = new GUIStyle(GUI.skin.button);
                     style.fontStyle = FontStyle.Bold;
                     env.worldManagementSelectedTool = GUILayout.SelectionGrid(env.worldManagementSelectedTool, options, 4, style);
@@ -609,8 +609,8 @@ namespace VoxelPlay {
                                 }
                                 EditorGUILayout.EndHorizontal();
 
-                                EditorGUILayout.PropertyField(saveFilename, new GUIContent("Current File", "The name for the current saved world file."));
-                                EditorGUILayout.PropertyField(sceneEditorAutomaticBackup, new GUIContent("Automatic Backup", "When enabled, a backup will be created before updaing the savegame files."));
+                                EditorGUILayout.PropertyField(saveFilename, new GUIContent("Current File", "현재 저장된 월드 파일 이름입니다."));
+                                EditorGUILayout.PropertyField(sceneEditorAutomaticBackup, new GUIContent("Automatic Backup", "활성화하면 저장 게임 파일을 업데이트하기 전에 백업을 생성합니다."));
                                 break;
 
                             case 1:
@@ -682,15 +682,15 @@ namespace VoxelPlay {
                 }
             }
 
-            // Voxel Generation
+            // 복셀 생성
             if (GUILayout.Button(new GUIContent(" Voxel Generation", Resources.Load("VoxelPlay/Inspector/voxelGeneration") as Texture2D), leftAlignStyle)) {
                 ToggleSection(ref expandVoxelGenerationSection);
             }
             if (expandVoxelGenerationSection) {
-                EditorGUILayout.PropertyField(enableGeneration, new GUIContent("Enable Generation", "Enables/disables world/voxel generation updates."));
-                EditorGUILayout.PropertyField(maxChunks, new GUIContent("Chunks Pool Size", "Number of total chunks allowed in memory."));
+                EditorGUILayout.PropertyField(enableGeneration, new GUIContent("Enable Generation", "월드/복셀 생성 업데이트를 활성/비활성합니다."));
+                EditorGUILayout.PropertyField(maxChunks, new GUIContent("Chunks Pool Size", "메모리에 허용되는 총 청크 수입니다."));
                 EditorGUILayout.LabelField("   Recommended >=", env.maxChunksRecommended.ToString());
-                EditorGUILayout.IntSlider(prewarmChunksInEditor, 1000, maxChunks.intValue, new GUIContent("   Prewarm In Editor", "Number of chunks that will be reserved during start in Unity Editor before game starts. In the final build, all chunks are reserved before game starts to provide a smooth gameplay experience."));
+                EditorGUILayout.IntSlider(prewarmChunksInEditor, 1000, maxChunks.intValue, new GUIContent("   Prewarm In Editor", "유니티 에디터에서 게임 시작 전에 예약할 청크 수입니다. 최종 빌드에서는 게임 시작 전에 모든 청크가 예약되어 원활한 플레이 경험을 제공합니다."));
                 EditorGUILayout.BeginHorizontal();
                 chunkNewSize = EditorGUILayout.IntPopup("Chunk Size", chunkNewSize, chunkSizeOptions, chunkSizeValues);
                 GUI.enabled = chunkNewSize != VoxelPlayEnvironment.CHUNK_SIZE;
@@ -708,10 +708,10 @@ namespace VoxelPlay {
                 }
                 GUI.enabled = true;
                 EditorGUILayout.EndHorizontal();
-                EditorGUILayout.PropertyField(microVoxelsSnap, new GUIContent("MicroVoxels Snap", "When enabled, microvoxels space will snap to the nearest microvoxel position."));
+                EditorGUILayout.PropertyField(microVoxelsSnap, new GUIContent("MicroVoxels Snap", "활성화하면 마이크로복셀 공간이 가장 가까운 마이크로복셀 위치로 스냅됩니다."));
 
 
-                EditorGUILayout.PropertyField(onlyRenderInFrustum, new GUIContent("Only Render In Frustum", "When enabled, only chunks inside the camera frustum will be rendered."));
+                EditorGUILayout.PropertyField(onlyRenderInFrustum, new GUIContent("Only Render In Frustum", "활성화하면 카메라 프러스텀 안의 청크만 렌더링됩니다."));
 #if UNITY_WEBGL
 				GUI.enabled = false;
 				EditorGUILayout.BeginHorizontal ();
@@ -720,63 +720,63 @@ namespace VoxelPlay {
 				EditorGUILayout.EndHorizontal ();
 				GUI.enabled = true;
 #else
-                EditorGUILayout.PropertyField(multiThreadGeneration, new GUIContent("Multi Thread Generation", "When enabled, uses a dedicated background thread for chunk generation (only in build, deactivated while running inside Unity Editor)."));
+                EditorGUILayout.PropertyField(multiThreadGeneration, new GUIContent("Multi Thread Generation", "활성화하면 청크 생성을 전용 백그라운드 스레드로 처리합니다(빌드에서만, 에디터 실행 중에는 비활성)."));
 #endif
-                EditorGUILayout.PropertyField(visibleChunksDistance, new GUIContent("Visible Chunk Distance", "Measured in number of chunks."));
+                EditorGUILayout.PropertyField(visibleChunksDistance, new GUIContent("Visible Chunk Distance", "청크 수 기준으로 측정합니다."));
                 EditorGUI.indentLevel++;
-                EditorGUILayout.PropertyField(adjustCameraFarClip, new GUIContent("Adjust Cam Far Clip", "Adjusts camera's far clipping plane to visible chunk distance automatically."));
-                EditorGUILayout.PropertyField(distanceAnchor, new GUIContent("Distance Anchor", "Where the distance is computed from. Usually this is the camera (in first person view) or the character (in third person view)."));
-                EditorGUILayout.PropertyField(unloadFarChunks, new GUIContent("Unload Far Chunks", "Disable or destroy chunk gameobject when it's out of visible distance. Enable/create it again when it enters the visible distance."));
+                EditorGUILayout.PropertyField(adjustCameraFarClip, new GUIContent("Adjust Cam Far Clip", "카메라 원거리 클리핑 거리를 표시 청크 거리로 자동 조정합니다."));
+                EditorGUILayout.PropertyField(distanceAnchor, new GUIContent("Distance Anchor", "거리를 계산할 기준 위치입니다. 보통 1인칭은 카메라, 3인칭은 캐릭터입니다."));
+                EditorGUILayout.PropertyField(unloadFarChunks, new GUIContent("Unload Far Chunks", "가시 거리 밖으로 나가면 청크 게임오브젝트를 비활성화하거나 파괴합니다. 다시 들어오면 활성화/생성됩니다."));
                 if (unloadFarChunks.boolValue) {
                     EditorGUI.indentLevel++;
-                    EditorGUILayout.PropertyField(unloadFarChunksMode, new GUIContent("Mode", "Select the action when a chunk is unloaded. 'Toggle visibility' will just hide/show the chunks based on the visible distance parameter. 'Destroy' will actually destroy and release memory of the chunk mesh as well as its collider and NavMesh (if present)."));
+                    EditorGUILayout.PropertyField(unloadFarChunksMode, new GUIContent("Mode", "청크 언로드 시 동작을 선택합니다. 'Toggle visibility'는 가시 거리 기준으로 숨김/표시만 합니다. 'Destroy'는 청크 메쉬와 콜라이더, 네브메시(있다면)를 파괴하고 메모리를 해제합니다."));
                     EditorGUI.indentLevel--;
                 }
-                EditorGUILayout.PropertyField(unloadFarNavMesh, new GUIContent("Unload Far NavMesh", "Allows reusing a chunk NavMesh when it's out of visible distance. Note: NavMeshes are linked to chunks so when chunk pool is exhausted, NavMeshes will be reused automatically for new chunk requests. This option just releases the chunk NavMesh earlier when chunk is out of visible distance, without waiting for the pool to be depleted."));
+                EditorGUILayout.PropertyField(unloadFarNavMesh, new GUIContent("Unload Far NavMesh", "가시 거리 밖일 때 청크 네브메시를 재사용할 수 있습니다. 참고: 네브메시는 청크에 연결되어 있어 풀 고갈 시 새 청크 요청에 자동 재사용됩니다. 이 옵션은 풀 고갈을 기다리지 않고 가시 거리 밖일 때 네브메시를 먼저 해제합니다."));
                 EditorGUI.indentLevel--;
-                EditorGUILayout.PropertyField(forceChunkDistance, new GUIContent("Force Chunk Distance", "Distance measured in chunks that will be rendered completely before starting the game."));
-                EditorGUILayout.PropertyField(maxCPUTimePerFrame, new GUIContent("Max CPU Time Per Frame", "Maximum milliseconds that can be used by the CPU per frame to generate the world."));
-                EditorGUILayout.PropertyField(maxChunksPerFrame, new GUIContent("Max Chunks Per Frame", "Maximum number of chunks that can be generated in a single frame (0 = unlimited (limited only by the maxCPUTimePerFrame value)"));
-                EditorGUILayout.PropertyField(maxTreesPerFrame, new GUIContent("Max Trees Per Frame", "Maximum number of trees that can be generated in a single frame  (0 = unlimited (limited only by the maxCPUTimePerFrame value)"));
-                EditorGUILayout.PropertyField(maxBushesPerFrame, new GUIContent("Max Bushes Per Frame", "Maximum number of bushes that can be generated in a single frame  (0 = unlimited (limited only by the maxCPUTimePerFrame value)"));
+                EditorGUILayout.PropertyField(forceChunkDistance, new GUIContent("Force Chunk Distance", "게임 시작 전에 완전히 렌더링할 청크 거리(청크 수 기준)입니다."));
+                EditorGUILayout.PropertyField(maxCPUTimePerFrame, new GUIContent("Max CPU Time Per Frame", "월드 생성에 프레임당 CPU가 사용할 수 있는 최대 밀리초입니다."));
+                EditorGUILayout.PropertyField(maxChunksPerFrame, new GUIContent("Max Chunks Per Frame", "한 프레임에서 생성할 수 있는 최대 청크 수입니다(0=무제한, maxCPUTimePerFrame 값에만 제한됨)."));
+                EditorGUILayout.PropertyField(maxTreesPerFrame, new GUIContent("Max Trees Per Frame", "한 프레임에서 생성할 수 있는 최대 나무 수입니다(0=무제한, maxCPUTimePerFrame 값에만 제한됨)."));
+                EditorGUILayout.PropertyField(maxBushesPerFrame, new GUIContent("Max Bushes Per Frame", "한 프레임에서 생성할 수 있는 최대 덤불 수입니다(0=무제한, maxCPUTimePerFrame 값에만 제한됨)."));
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(enableColliders, new GUIContent("Colliders", "Enables/disables collider generation for opaque voxels."));
-                EditorGUILayout.PropertyField(enableNavMesh, new GUIContent("NavMesh", "Enables/disables NavMesh generation."));
+                EditorGUILayout.PropertyField(enableColliders, new GUIContent("Colliders", "불투명 복셀의 콜라이더 생성을 활성/비활성합니다."));
+                EditorGUILayout.PropertyField(enableNavMesh, new GUIContent("NavMesh", "네브메시 생성을 활성/비활성합니다."));
                 if (enableNavMesh.boolValue) {
                     EditorGUI.indentLevel++;
-                    EditorGUILayout.PropertyField(navMeshResolution, new GUIContent("Resolution", "Detail of the generated navMesh. Use a higher resolution if you need navMesh to be created on single voxels or Default every two voxels."));
+                    EditorGUILayout.PropertyField(navMeshResolution, new GUIContent("Resolution", "생성되는 네브메시의 디테일입니다. 단일 복셀에도 네브메시가 필요하면 높은 해상도를 사용하세요. 기본은 두 복셀마다입니다."));
                     EditorGUI.indentLevel--;
                 }
-                EditorGUILayout.PropertyField(hideChunksInHierarchy, new GUIContent("Hide Chunks In Hierarchy", "Do not show chunks in hierarchy (this option has no effect in a build)"));
-                EditorGUILayout.PropertyField(enableTrees, new GUIContent("Trees", "Enables/disables tree generation."));
+                EditorGUILayout.PropertyField(hideChunksInHierarchy, new GUIContent("Hide Chunks In Hierarchy", "계층에서 청크를 표시하지 않습니다(빌드에서는 영향 없음)."));
+                EditorGUILayout.PropertyField(enableTrees, new GUIContent("Trees", "나무 생성을 활성/비활성합니다."));
                 if (EditorGUI.EndChangeCheck()) {
                     rebuildWorld = true;
                 }
                 if (enableTrees.boolValue) {
                     prevBool = denseTrees.boolValue;
-                    EditorGUILayout.PropertyField(denseTrees, new GUIContent("   Dense Trees", "If enabled, disables adjacent voxel occlusion making tree leaves cutout denser."));
+                    EditorGUILayout.PropertyField(denseTrees, new GUIContent("   Dense Trees", "활성화하면 인접 복셀 오클루전을 끄고 나뭇잎 컷아웃을 더 촘촘하게 만듭니다."));
                     if (denseTrees.boolValue != prevBool)
                         refreshChunks = true;
                 }
                 prevBool = enableVegetation.boolValue;
-                EditorGUILayout.PropertyField(enableVegetation, new GUIContent("Vegetation", "Enables/disables bush generation."));
+                EditorGUILayout.PropertyField(enableVegetation, new GUIContent("Vegetation", "덤불 생성을 활성/비활성합니다."));
                 if (enableVegetation.boolValue != prevBool)
                     rebuildWorld = true;
-                EditorGUILayout.PropertyField(enableDetailGenerators, new GUIContent("Detail Generators", "Enables/disables world detail generators."));
-                EditorGUILayout.PropertyField(particlePoolSize, new GUIContent("Particle Pool Size", "Maximum number of active particles, including recoverable voxels"));
-                layerParticles.intValue = EditorGUILayout.LayerField(new GUIContent("Particles Layer", "The layer used for particles. Used to optimize physics and avoid particle collision between them."), layerParticles.intValue);
-                layerVoxels.intValue = EditorGUILayout.LayerField(new GUIContent("Voxels Layer", "The layer used for voxels. Used to optimize physics and avoid voxels collision between them."), layerVoxels.intValue);
-                layerClouds.intValue = EditorGUILayout.LayerField(new GUIContent("Clouds Layer", "The layer used for cloud voxels. Can be used to ignore cloud chunks if using a top-down camera or for other purposes."), layerClouds.intValue);
+                EditorGUILayout.PropertyField(enableDetailGenerators, new GUIContent("Detail Generators", "월드 디테일 생성기를 활성/비활성합니다."));
+                EditorGUILayout.PropertyField(particlePoolSize, new GUIContent("Particle Pool Size", "회수 가능한 복셀을 포함한 활성 파티클의 최대 수입니다."));
+                layerParticles.intValue = EditorGUILayout.LayerField(new GUIContent("Particles Layer", "파티클에 사용할 레이어입니다. 물리 최적화 및 파티클 간 충돌 방지에 사용됩니다."), layerParticles.intValue);
+                layerVoxels.intValue = EditorGUILayout.LayerField(new GUIContent("Voxels Layer", "복셀에 사용할 레이어입니다. 물리 최적화 및 복셀 간 충돌 방지에 사용됩니다."), layerVoxels.intValue);
+                layerClouds.intValue = EditorGUILayout.LayerField(new GUIContent("Clouds Layer", "구름 복셀에 사용할 레이어입니다. 탑다운 카메라에서 구름 청크를 무시하는 등 용도로 사용할 수 있습니다."), layerClouds.intValue);
             }
 
-            // Quality and effects
+            // 품질 및 효과
             if (GUILayout.Button(new GUIContent(" Shader Features", Resources.Load("VoxelPlay/Inspector/qualityAndEffects") as Texture2D), leftAlignStyle)) {
                 ToggleSection(ref expandQualitySection);
             }
             if (expandQualitySection) {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Preset", GUILayout.Width(120));
-                if (GUILayout.Button(new GUIContent("All Features", "Enables all engine visual features available for the active platform."))) {
+                if (GUILayout.Button(new GUIContent("All Features", "현재 플랫폼에서 사용할 수 있는 모든 시각적 기능을 활성화합니다."))) {
                     globalIllumination.boolValue = true;
                     enableShadows.boolValue = true;
                     shadowsOnWater.boolValue = true;
@@ -795,7 +795,7 @@ namespace VoxelPlay {
                     }
                     rebuildWorld = true;
                 }
-                if (GUILayout.Button(new GUIContent("Medium", "Disables shadows to improve performance but keeps global illumination."))) {
+                if (GUILayout.Button(new GUIContent("Medium", "성능을 위해 그림자를 끄되 전역 조명은 유지합니다."))) {
                     globalIllumination.boolValue = true;
                     enableShadows.boolValue = false;
                     shadowsOnWater.boolValue = false;
@@ -815,7 +815,7 @@ namespace VoxelPlay {
                     }
                     rebuildWorld = true;
                 }
-                if (GUILayout.Button(new GUIContent("Fastest", "Disables all effects to improve performance."))) {
+                if (GUILayout.Button(new GUIContent("Fastest", "성능을 위해 모든 효과를 비활성화합니다."))) {
                     globalIllumination.boolValue = false;
                     enableShadows.boolValue = false;
                     shadowsOnWater.boolValue = false;
@@ -850,32 +850,32 @@ namespace VoxelPlay {
                 EditorGUILayout.EndHorizontal();
 
                 prevBool = globalIllumination.boolValue;
-                EditorGUILayout.PropertyField(globalIllumination, new GUIContent("Global Illumination", "Enables Voxel Play's own lightmap computation. This option adds smooth shading and lighting in combination with Unity shadow system."));
+                EditorGUILayout.PropertyField(globalIllumination, new GUIContent("Global Illumination", "Voxel Play 자체 라이트맵 계산을 활성화합니다. Unity 그림자 시스템과 함께 부드러운 음영 및 조명을 추가합니다."));
                 if (globalIllumination.boolValue != prevBool)
                     refreshChunks = true;
 
                 prevBool = enableSmoothLighting.boolValue;
-                EditorGUILayout.PropertyField(enableSmoothLighting, new GUIContent("Smooth Lighting", "Interpolates lighting between voxel vertices. Also includes ambient occlusion."));
+                EditorGUILayout.PropertyField(enableSmoothLighting, new GUIContent("Smooth Lighting", "복셀 정점 간 조명을 보간합니다. 앰비언트 오클루전도 포함됩니다."));
                 if (enableSmoothLighting.boolValue != prevBool)
                     refreshChunks = true;
 
                 GUI.enabled = enableSmoothLighting.boolValue;
                 int prevInt = obscuranceMode.intValue;
-                EditorGUILayout.PropertyField(obscuranceMode, new GUIContent("Obscurance Mode", "Changes shader obscurance function. Requires smooth lighting."));
+                EditorGUILayout.PropertyField(obscuranceMode, new GUIContent("Obscurance Mode", "셰이더의 오브스큐런스 함수를 변경합니다. 부드러운 조명이 필요합니다."));
                 if (obscuranceMode.intValue != prevInt) {
                     updateSpecialFeaturesMacro = true;
                 }
                 if (obscuranceMode.intValue == (int)ObscuranceMode.Custom) {
                     EditorGUI.indentLevel++;
-                    EditorGUILayout.PropertyField(obscuranceIntensity, new GUIContent("Intensity", "AO intensity."));
+                    EditorGUILayout.PropertyField(obscuranceIntensity, new GUIContent("Intensity", "AO 강도입니다."));
                     EditorGUI.indentLevel--;
                 }
                 GUI.enabled = true;
 
-                EditorGUILayout.PropertyField(ambientLight, new GUIContent("Ambient Light", "Minimum amount of light in the scene affecting the voxels."));
+                EditorGUILayout.PropertyField(ambientLight, new GUIContent("Ambient Light", "복셀에 영향을 주는 씬의 최소 광량입니다."));
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(enableShadows, new GUIContent("Shadows", "Turns on/off shadow casting and receiving on voxels."));
+                EditorGUILayout.PropertyField(enableShadows, new GUIContent("Shadows", "복셀의 그림자 투영/수신을 켜거나 끕니다."));
                 if (EditorGUI.EndChangeCheck()) {
                     rebuildWorld = true;
                 }
@@ -884,59 +884,59 @@ namespace VoxelPlay {
                 }
                 EditorGUI.BeginChangeCheck();
                 if (!VoxelPlayEnvironment.supportsURP) {
-                    EditorGUILayout.PropertyField(shadowsOnWater, new GUIContent("Shadows On Water", "Enables shadow receiving on water surface."));
+                    EditorGUILayout.PropertyField(shadowsOnWater, new GUIContent("Shadows On Water", "물 표면의 그림자 수신을 활성화합니다."));
                 } else if (shadowsOnWater.boolValue) {
                     shadowsOnWater.boolValue = false;
                 }
-                EditorGUILayout.PropertyField(realisticWater, new GUIContent("Realistic Water", "Uses a realistic water shader."));
+                EditorGUILayout.PropertyField(realisticWater, new GUIContent("Realistic Water", "리얼리스틱 워터 셰이더를 사용합니다."));
                 if (EditorGUI.EndChangeCheck()) {
                     rebuildWorld = true;
                 }
 
-                EditorGUILayout.PropertyField(daylightShadowAtten, new GUIContent("Daylight Shadow Atten", "Shadow attenuation factor when Sun is high. Set this value to 0 to preserve standard shadow intensity. A value of 1 will make shadows disappear when Sun is on top. A middle value will make shadows more intense when Sun is low in the sky and more subtle when Sun is high."));
+                EditorGUILayout.PropertyField(daylightShadowAtten, new GUIContent("Daylight Shadow Atten", "태양이 높을 때의 그림자 감쇠 계수입니다. 이 값을 0으로 하면 기본 그림자 강도를 유지합니다. 1이면 태양이 머리 위에 있을 때 그림자가 사라집니다. 중간 값은 태양이 낮을 때 그림자를 더 진하게, 높을 때는 더 옅게 만듭니다."));
 
                 prevBool = enableNormalMap.boolValue;
-                EditorGUILayout.PropertyField(enableNormalMap, new GUIContent("Normal Mapping", "Enables use of normal maps."));
+                EditorGUILayout.PropertyField(enableNormalMap, new GUIContent("Normal Mapping", "노멀 맵 사용을 활성화합니다."));
                 if (prevBool != enableNormalMap.boolValue) {
                     refreshChunks = true;
                     reloadWorldTextures = true;
                 }
                 prevBool = enableReliefMapping.boolValue;
-                EditorGUILayout.PropertyField(enableReliefMapping, new GUIContent("Relief Mapping", "Enables parallax occlusion/relief mapping."));
+                EditorGUILayout.PropertyField(enableReliefMapping, new GUIContent("Relief Mapping", "시차 오클루전/릴리프 매핑을 활성화합니다."));
                 if (prevBool != enableReliefMapping.boolValue) {
                     refreshChunks = true;
                     reloadWorldTextures = true;
                 }
                 if (enableReliefMapping.boolValue) {
                     EditorGUI.indentLevel++;
-                    EditorGUILayout.PropertyField(reliefStrength, new GUIContent("Strength", "Strength of the parallax effect."));
-                    EditorGUILayout.PropertyField(reliefMaxDistance, new GUIContent("Max Distance", "Maximum visible distance for the parallax effect."));
-                    EditorGUILayout.PropertyField(reliefIterations, new GUIContent("Iterations", "Max number of ray-marching steps."));
-                    EditorGUILayout.PropertyField(reliefIterationsBinarySearch, new GUIContent("Binary Search Iterations", "Max number of binary search iterations to precisely find the intersection point."));
+                    EditorGUILayout.PropertyField(reliefStrength, new GUIContent("Strength", "시차 효과의 강도입니다."));
+                    EditorGUILayout.PropertyField(reliefMaxDistance, new GUIContent("Max Distance", "시차 효과가 보이는 최대 거리입니다."));
+                    EditorGUILayout.PropertyField(reliefIterations, new GUIContent("Iterations", "레이 마칭 최대 단계 수입니다."));
+                    EditorGUILayout.PropertyField(reliefIterationsBinarySearch, new GUIContent("Binary Search Iterations", "교차점을 정밀하게 찾기 위한 이진 탐색 최대 반복 수입니다."));
                     EditorGUI.indentLevel--;
                 }
-                EditorGUILayout.PropertyField(textureSize, new GUIContent("Texture Size", "Texture size should be a multiple of 2 (eg. 16, 32, 64, 128)"));
+                EditorGUILayout.PropertyField(textureSize, new GUIContent("Texture Size", "텍스처 크기는 2의 배수여야 합니다(예: 16, 32, 64, 128)."));
 
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(enableTinting, new GUIContent("Enable Tinting", "Enables individual voxel tint color."));
-                EditorGUILayout.PropertyField(enableColoredShadows, new GUIContent("Colored Shadows", "When enabled, customize shadow tint color in the world definition."));
+                EditorGUILayout.PropertyField(enableTinting, new GUIContent("Enable Tinting", "개별 복셀 틴트 색상을 활성화합니다."));
+                EditorGUILayout.PropertyField(enableColoredShadows, new GUIContent("Colored Shadows", "활성화하면 월드 정의에서 그림자 틴트 색상을 커스터마이즈합니다."));
                 if (EditorGUI.EndChangeCheck()) {
                     refreshChunks = true;
                     updateSpecialFeaturesMacro = true;
                 }
 
-                EditorGUILayout.PropertyField(enableOutline, new GUIContent("Outline", "Enables outline effect on solid voxels."));
+                EditorGUILayout.PropertyField(enableOutline, new GUIContent("Outline", "고체 복셀에 윤곽선 효과를 활성화합니다."));
                 if (enableOutline.boolValue) {
                     EditorGUI.indentLevel++;
-                    EditorGUILayout.PropertyField(outlineColor, new GUIContent("Color", "Outline color and alpha."));
-                    EditorGUILayout.PropertyField(outlineThreshold, new GUIContent("Threshold", "Controls outline width."));
+                    EditorGUILayout.PropertyField(outlineColor, new GUIContent("Color", "윤곽선 색상과 알파입니다."));
+                    EditorGUILayout.PropertyField(outlineThreshold, new GUIContent("Threshold", "윤곽선 두께를 조절합니다."));
                     EditorGUI.indentLevel--;
                 }
 
                 GUI.enabled = usePixelLights.boolValue;
                 prevBool = enableBevel.boolValue;
-                EditorGUILayout.PropertyField(enableBevel, new GUIContent("Bevel", "Enables bevel effect by tweaking top face normals. Looks better from a third-person view."));
+                EditorGUILayout.PropertyField(enableBevel, new GUIContent("Bevel", "상단 면 노멀을 조정하여 베벨 효과를 활성화합니다. 3인칭 시점에서 더 보기 좋습니다."));
                 if (prevBool != enableBevel.boolValue && !Application.isPlaying) {
                     refreshChunks = true;
                     updateSpecialFeaturesMacro = true;
@@ -945,7 +945,7 @@ namespace VoxelPlay {
 
                 GUI.enabled = usePixelLights.boolValue;
                 prevBool = enableFresnel.boolValue;
-                EditorGUILayout.PropertyField(enableFresnel, new GUIContent("Fresnel", "Enables fresnel effect."));
+                EditorGUILayout.PropertyField(enableFresnel, new GUIContent("Fresnel", "프레넬 효과를 활성화합니다."));
                 if (enableFresnel.boolValue) {
                     EditorGUI.indentLevel++;
                     EditorGUILayout.PropertyField(fresnelExponent, new GUIContent("Exponent"));
@@ -959,7 +959,7 @@ namespace VoxelPlay {
                 }
 
                 prevBool = enableGlobalSpecular.boolValue;
-                EditorGUILayout.PropertyField(enableGlobalSpecular, new GUIContent("Global Specular", "Enables specular for regular opaque voxels. Makes these voxels more shiny when facing the directional light."));
+                EditorGUILayout.PropertyField(enableGlobalSpecular, new GUIContent("Global Specular", "일반 불투명 복셀의 스페큘러를 활성화합니다. 방향광을 향할 때 더 반짝이게 합니다."));
                 if (enableGlobalSpecular.boolValue) {
                     EditorGUI.indentLevel++;
                     EditorGUILayout.PropertyField(globalSpecularIntensity, new GUIContent("Intensity"));
@@ -974,19 +974,19 @@ namespace VoxelPlay {
 
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(doubleSidedGlass, new GUIContent("Double Sided Glass", "Renders both sides of transparent voxels."));
-                EditorGUILayout.PropertyField(transparentBling, new GUIContent("Transparent Bling", "Enables shining effect on transparent voxels."));
+                EditorGUILayout.PropertyField(doubleSidedGlass, new GUIContent("Double Sided Glass", "투명 복셀의 양면을 렌더링합니다."));
+                EditorGUILayout.PropertyField(transparentBling, new GUIContent("Transparent Bling", "투명 복셀의 반짝임 효과를 활성화합니다."));
                 if (EditorGUI.EndChangeCheck()) {
                     rebuildWorld = true;
                 }
 
                 EditorGUILayout.PropertyField(damageParticles);
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(enableBrightPointLights, new GUIContent("Bright Point Lights", "Improves appearance of point lights."));
+                EditorGUILayout.PropertyField(enableBrightPointLights, new GUIContent("Bright Point Lights", "포인트 라이트의 외관을 개선합니다."));
                 if (enableBrightPointLights.boolValue) {
                     EditorGUI.indentLevel++;
                     if (VoxelPlayEnvironment.supportsURP) {
-                        EditorGUILayout.PropertyField(enableURPNativeLights, new GUIContent("Enable URP Native Lights", "Adds support for native URP point and spot lights with shadows. Make sure additional lights and shadows are enabled in the URP asset used in Project Settings/Quality or Project Settings/Graphics."));
+                        EditorGUILayout.PropertyField(enableURPNativeLights, new GUIContent("Enable URP Native Lights", "그림자를 포함한 URP 네이티브 포인트/스폿 라이트 지원을 추가합니다. Project Settings/Quality 또는 Project Settings/Graphics에서 사용하는 URP 에셋에서 Additional Lights와 Shadows가 활성화되어 있는지 확인하세요."));
                     }
                 }
 
@@ -996,13 +996,13 @@ namespace VoxelPlay {
                 }
 
                 if (enableBrightPointLights.boolValue) {
-                    EditorGUILayout.PropertyField(brightPointsMaxDistance, new GUIContent("Max Distance", "Max distance to render bright point lights."));
+                    EditorGUILayout.PropertyField(brightPointsMaxDistance, new GUIContent("Max Distance", "밝은 포인트 라이트를 렌더링할 최대 거리입니다."));
                     EditorGUI.indentLevel--;
                 }
 
                 GUI.enabled = !Application.isPlaying;
                 EditorGUI.BeginChangeCheck();
-                enableCurvatureFromShader = EditorGUILayout.Toggle(new GUIContent("Curvature", "Enables curvature vertex modifier in VoxelPlay shaders."), enableCurvatureFromShader);
+                enableCurvatureFromShader = EditorGUILayout.Toggle(new GUIContent("Curvature", "VoxelPlay 셰이더에서 곡률 버텍스 수정자를 활성화합니다."), enableCurvatureFromShader);
                 enableCurvature.boolValue = enableCurvatureFromShader;
                 if (EditorGUI.EndChangeCheck()) {
                     updateCurvatureMacro = true;
@@ -1011,7 +1011,7 @@ namespace VoxelPlay {
                 if (enableCurvatureFromShader) {
                     EditorGUILayout.BeginHorizontal();
                     EditorGUI.indentLevel++;
-                    curvatureAmount = EditorGUILayout.TextField(new GUIContent("Amount", "Vertex shift amount multiplier."), curvatureAmount);
+                    curvatureAmount = EditorGUILayout.TextField(new GUIContent("Amount", "버텍스 이동량 배율입니다."), curvatureAmount);
                     if (GUILayout.Button("Update", GUILayout.Width(65))) {
                         updateCurvatureMacro = true;
                         rebuildWorld = true;
@@ -1022,28 +1022,28 @@ namespace VoxelPlay {
                 GUI.enabled = true;
 
                 prevBool = seeThrough.boolValue;
-                EditorGUILayout.PropertyField(seeThrough, new GUIContent("See Through", "Hides voxels between camera and desired target. This option is designed for third person perspective."));
+                EditorGUILayout.PropertyField(seeThrough, new GUIContent("See Through", "카메라와 대상 사이의 복셀을 숨깁니다. 이 옵션은 3인칭 시점을 위한 것입니다."));
                 if (prevBool != seeThrough.boolValue) {
                     updateSpecialFeaturesMacro = true;
                 }
                 if (seeThrough.boolValue) {
                     EditorGUI.indentLevel++;
-                    EditorGUILayout.PropertyField(seeThroughTarget, new GUIContent("Target", "The target gameobject. Usually this is the character controller or player gameobject."));
-                    EditorGUILayout.PropertyField(seeThroughRadius, new GUIContent("Radius", "Radius of effect. No voxels will be visible within this distance to the target."));
-                    EditorGUILayout.PropertyField(seeThroughHeightOffset, new GUIContent("Height Offset", "Voxels below target plus this height offset won't be hidden. This option avoids hiding the ground."));
-                    EditorGUILayout.PropertyField(seeThroughAlpha, new GUIContent("Alpha", "The alpha value used for occluded voxels with see-through mode set to transparency."));
+                    EditorGUILayout.PropertyField(seeThroughTarget, new GUIContent("Target", "대상 게임오브젝트입니다. 보통 캐릭터 컨트롤러나 플레이어 게임오브젝트입니다."));
+                    EditorGUILayout.PropertyField(seeThroughRadius, new GUIContent("Radius", "효과 반경입니다. 대상에서 이 거리 내의 복셀은 보이지 않습니다."));
+                    EditorGUILayout.PropertyField(seeThroughHeightOffset, new GUIContent("Height Offset", "대상 아래 + 이 높이 오프셋 이하의 복셀은 숨기지 않습니다. 이 옵션은 지면이 숨겨지는 것을 방지합니다."));
+                    EditorGUILayout.PropertyField(seeThroughAlpha, new GUIContent("Alpha", "시스루 모드가 투명일 때 가려진 복셀에 사용하는 알파 값입니다."));
                     EditorGUI.indentLevel--;
                 }
 
-                EditorGUILayout.PropertyField(useOriginShift, new GUIContent("Origin Shift", "Shift player to origin when its position passes beyond a threshold. This is called origin shift and is necessary to avoid floating point issues."));
+                EditorGUILayout.PropertyField(useOriginShift, new GUIContent("Origin Shift", "플레이어 위치가 임계값을 넘으면 원점으로 이동시킵니다. 이를 오리진 시프트라고 하며 부동소수점 문제를 피하는 데 필요합니다."));
                 if (useOriginShift.boolValue) {
                     EditorGUI.indentLevel++;
-                    EditorGUILayout.PropertyField(originShiftDistanceThreshold, new GUIContent("Distance Threshold", "The distance at which the origin shift occurs."));
+                    EditorGUILayout.PropertyField(originShiftDistanceThreshold, new GUIContent("Distance Threshold", "오리진 시프트가 발생하는 거리입니다."));
                     EditorGUI.indentLevel--;
                 }
             }
 
-            // Rendering
+            // 렌더링
             if (GUILayout.Button(new GUIContent(" Rendering Options", Resources.Load("VoxelPlay/Inspector/renderingOptions") as Texture2D), leftAlignStyle)) {
                 ToggleSection(ref expandRenderingSection);
             }
@@ -1051,7 +1051,7 @@ namespace VoxelPlay {
 
                 EditorGUI.BeginChangeCheck();
                 GUI.enabled = SystemInfo.supportsComputeShaders;
-                GUIContent computeGUIContent = new GUIContent("Compute Buffers", "Enables compute buffers for custom voxels. This option requires GPU capable of Shader Model 4.5 so it will restrict the amount of potential mobile devices that can run your game. Performance benefits vs regular GPU instancing in custom voxels may vary depending on platform, amount of voxels, etc. Do a benchmark before using this option.");
+                GUIContent computeGUIContent = new GUIContent("Compute Buffers", "커스텀 복셀에 컴퓨트 버퍼를 활성화합니다. 이 옵션은 Shader Model 4.5를 지원하는 GPU가 필요하므로 실행 가능한 모바일 기기가 제한됩니다. 커스텀 복셀에서 일반 GPU 인스턴싱 대비 성능 이점은 플랫폼, 복셀 수 등에 따라 달라질 수 있습니다. 사용 전에 벤치마크를 수행하세요.");
                 if (!GUI.enabled) {
                     EditorGUILayout.BeginHorizontal();
                     EditorGUILayout.LabelField(computeGUIContent, GUILayout.Width(EditorGUIUtility.labelWidth));
@@ -1065,7 +1065,7 @@ namespace VoxelPlay {
                 }
                 GUI.enabled = true;
 
-                EditorGUILayout.PropertyField(instancingCullingMode, new GUIContent("Instancing Culling Mode", "Aggresive is the default value: culls non visible voxels. Gentle allows some padding to keep shadows from invisible voxels. Disabled: renders all voxels, regardless of their positions vs camera."));
+                EditorGUILayout.PropertyField(instancingCullingMode, new GUIContent("Instancing Culling Mode", "Aggresive가 기본값으로 보이지 않는 복셀을 컬링합니다. Gentle은 보이지 않는 복셀의 그림자를 유지하기 위해 약간의 패딩을 허용합니다. Disabled는 카메라 위치와 상관없이 모든 복셀을 렌더링합니다."));
                 if ((InstancingCullingMode)instancingCullingMode.intValue == InstancingCullingMode.Gentle) {
                     EditorGUI.indentLevel++;
                     EditorGUILayout.PropertyField(instancingCullingPadding);
@@ -1074,7 +1074,7 @@ namespace VoxelPlay {
 
                 GUI.enabled = !Application.isPlaying;
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(filterMode, new GUIContent("Texture Sampling", "Choose the texture sampling filter mode."));
+                EditorGUILayout.PropertyField(filterMode, new GUIContent("Texture Sampling", "텍스처 샘플링 필터 모드를 선택합니다."));
                 if (EditorGUI.EndChangeCheck()) {
                     refreshChunks = true;
                     reloadWorldTextures = true;
@@ -1084,7 +1084,7 @@ namespace VoxelPlay {
                 GUI.enabled = true;
                 if (filterMode.intValue == (int)FilterMode.Point) {
                     GUI.enabled = !enableReliefMapping.boolValue;
-                    EditorGUILayout.PropertyField(hqFiltering, new GUIContent("HQ Point Filter", "Enables mipmapping and intergrated texel antialiasing."));
+                    EditorGUILayout.PropertyField(hqFiltering, new GUIContent("HQ Point Filter", "밉맵과 통합된 텍셀 안티앨리어싱을 활성화합니다."));
                     if (prevBool != hqFiltering.boolValue) {
                         refreshChunks = true;
                         reloadWorldTextures = true;
@@ -1092,7 +1092,7 @@ namespace VoxelPlay {
                     if (hqFiltering.boolValue) {
                         EditorGUI.indentLevel++;
                         float prevFloat = mipMapBias.floatValue;
-                        EditorGUILayout.PropertyField(mipMapBias, new GUIContent("MipMap Bias", "Increase to reduce texture blurring."));
+                        EditorGUILayout.PropertyField(mipMapBias, new GUIContent("MipMap Bias", "값을 높이면 텍스처 블러를 줄입니다."));
                         if (mipMapBias.floatValue != prevFloat) {
                             refreshChunks = true;
                             reloadWorldTextures = true;
@@ -1103,7 +1103,7 @@ namespace VoxelPlay {
                 }
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(usePixelLights, new GUIContent("Per-Pixel Lighting", "If disabled, lighting will be calculated per-vertex."));
+                EditorGUILayout.PropertyField(usePixelLights, new GUIContent("Per-Pixel Lighting", "비활성화하면 조명을 정점 단위로 계산합니다."));
                 if (EditorGUI.EndChangeCheck()) {
                     refreshChunks = true;
                     reloadWorldTextures = true;
@@ -1113,11 +1113,11 @@ namespace VoxelPlay {
                 EditorGUILayout.LabelField("Gaps/White Pixels Removal Options");
                 EditorGUI.indentLevel++;
                 EditorGUI.BeginChangeCheck();
-                voxelPadding = EditorGUILayout.Toggle(new GUIContent("Voxel Padding", "Enlarges voxels a bit to prevent gaps (white pixels) in adjacent edges due to greedy meshing."), voxelPadding);
+                voxelPadding = EditorGUILayout.Toggle(new GUIContent("Voxel Padding", "그리디 메시로 인해 인접 가장자리에서 생기는 틈(흰 픽셀)을 줄이기 위해 복셀을 약간 확대합니다."), voxelPadding);
                 if (EditorGUI.EndChangeCheck()) {
                     ChangeVoxelPadding();
                 }
-                EditorGUILayout.PropertyField(usePostProcessing, new GUIContent("Post Processing", "Uses a custom post processing effect to detect and remove white pixels."));
+                EditorGUILayout.PropertyField(usePostProcessing, new GUIContent("Post Processing", "화이트 픽셀을 감지/제거하기 위한 커스텀 포스트 프로세싱 효과를 사용합니다."));
                 if (usePostProcessing.boolValue && !VoxelPlayPostProcessing.isActive) {
                     EditorGUILayout.HelpBox("추가 단계가 필요합니다:\nBuilt-in 파이프라인에서는 카메라에 Voxel Play Post Processing 스크립트를 추가해야 합니다.\nURP에서는 URP Universal Renderer에 Voxel Play Post Processing 렌더 피처를 추가하세요.", MessageType.Warning);
                 }
@@ -1127,7 +1127,7 @@ namespace VoxelPlay {
                 EditorGUI.indentLevel--;
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(enableFarChunksRendering, new GUIContent("Far Chunks Rendering", "Enables rendering of far chunks."));
+                EditorGUILayout.PropertyField(enableFarChunksRendering, new GUIContent("Far Chunks Rendering", "원거리 청크 렌더링을 활성화합니다."));
                 if (EditorGUI.EndChangeCheck()) {
                     serializedObject.ApplyModifiedProperties();
                     VoxelPlayFarChunksRenderer.Dispose();
@@ -1145,31 +1145,31 @@ namespace VoxelPlay {
                         EditorGUILayout.HelpBox("원거리 청크 렌더링은 플레이 모드에서만 작동합니다.", MessageType.Info);
                     }
                     EditorGUI.BeginChangeCheck();
-                    EditorGUILayout.PropertyField(farChunksShadows, new GUIContent("Shadows", "Enables shadows for far chunks."));
+                    EditorGUILayout.PropertyField(farChunksShadows, new GUIContent("Shadows", "원거리 청크 그림자를 활성화합니다."));
                     if (farChunksShadows.boolValue) {
                         EditorGUI.indentLevel++;
-                        EditorGUILayout.PropertyField(farChunksShadowIntensity, new GUIContent("Intensity", "Intensity of shadows for far chunks."));
+                        EditorGUILayout.PropertyField(farChunksShadowIntensity, new GUIContent("Intensity", "원거리 청크 그림자 강도입니다."));
                         EditorGUI.indentLevel--;
                     }
-                    EditorGUILayout.PropertyField(farChunksWaterReflections, new GUIContent("Water Reflections", "Enables water reflections for far chunks."));
+                    EditorGUILayout.PropertyField(farChunksWaterReflections, new GUIContent("Water Reflections", "원거리 청크의 물 반사를 활성화합니다."));
                     if (farChunksWaterReflections.boolValue) {
                         EditorGUI.indentLevel++;
-                        EditorGUILayout.PropertyField(farChunksWaterReflectionsIntensity, new GUIContent("Intensity", "Intensity of shadows for far chunks."));
+                        EditorGUILayout.PropertyField(farChunksWaterReflectionsIntensity, new GUIContent("Intensity", "원거리 청크의 물 반사 강도입니다."));
                         EditorGUI.indentLevel--;
                     }
-                    EditorGUILayout.PropertyField(farChunksWaterColorOverride, new GUIContent("Water Color Override", "Enables overriding the water color for far chunks."));
+                    EditorGUILayout.PropertyField(farChunksWaterColorOverride, new GUIContent("Water Color Override", "원거리 청크의 물 색상을 덮어쓰도록 활성화합니다."));
                     if (farChunksWaterColorOverride.boolValue) {
                         EditorGUI.indentLevel++;
-                        EditorGUILayout.PropertyField(farChunksWaterColor, new GUIContent("Color", "Color of water for far chunks."));
+                        EditorGUILayout.PropertyField(farChunksWaterColor, new GUIContent("Color", "원거리 청크 물 색상입니다."));
                         EditorGUI.indentLevel--;
                     }
-                    EditorGUILayout.PropertyField(farChunksShoreColor, new GUIContent("Shore Color", "Color of shore for far chunks."));
+                    EditorGUILayout.PropertyField(farChunksShoreColor, new GUIContent("Shore Color", "원거리 청크 해안 색상입니다."));
                     if (EditorGUI.EndChangeCheck()) {
                         serializedObject.ApplyModifiedProperties();
                         VoxelPlayFarChunksRenderer.requireUpdateMaterialProperties = true;
                     }
                     EditorGUI.BeginChangeCheck();
-                    EditorGUILayout.PropertyField(farChunksDeepWater, new GUIContent("Deep Water", "Trace below water level for far chunks."));
+                    EditorGUILayout.PropertyField(farChunksDeepWater, new GUIContent("Deep Water", "원거리 청크에서 수면 아래를 추적합니다."));
                     if (env.world != null && env.world.terrainGenerator != null && env.world.terrainGenerator.maxHeight > 255) {
                         EditorGUILayout.HelpBox("지형 생성기의 최대 높이가 255보다 크게 설정되어 있습니다. 높이맵 캡처의 정밀도가 8비트에서 16비트로 증가하여 이 기능에 필요한 메모리가 두 배로 늘어나고 렌더링 성능에도 영향을 줄 수 있습니다.", MessageType.Info);
                     }
@@ -1184,126 +1184,126 @@ namespace VoxelPlay {
                 }
             }
 
-            // Sky Options
+            // 하늘 옵션
             if (GUILayout.Button(new GUIContent(" Sky Options", Resources.Load("VoxelPlay/Inspector/skySettings") as Texture2D), leftAlignStyle)) {
                 ToggleSection(ref expandSkySection);
             }
             if (expandSkySection) {
-                EditorGUILayout.PropertyField(sun, new GUIContent("Sun", "Assigns the directional light used as the Sun."));
-                EditorGUILayout.PropertyField(enableFogSkyBlending, new GUIContent("Enable Fog", "Enabled fog/sky blending."));
+                EditorGUILayout.PropertyField(sun, new GUIContent("Sun", "태양으로 사용할 방향성 라이트를 지정합니다."));
+                EditorGUILayout.PropertyField(enableFogSkyBlending, new GUIContent("Enable Fog", "안개/하늘 블렌딩을 활성화합니다."));
                 if (enableFogSkyBlending.boolValue) {
                     EditorGUI.indentLevel++;
-                    EditorGUILayout.PropertyField(fogAmount, new GUIContent("Fog Height", "Amount of fog."));
+                    EditorGUILayout.PropertyField(fogAmount, new GUIContent("Fog Height", "안개의 양입니다."));
                     EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.PropertyField(fogDistanceAuto, new GUIContent("Auto Distance", "Adjust fog distance to match camera's far clipping plane or visible chunk distance if unload chunks is enabled (the lower distance)."));
+                    EditorGUILayout.PropertyField(fogDistanceAuto, new GUIContent("Auto Distance", "안개 거리를 카메라의 원거리 클리핑 또는 표시 청크 거리(더 낮은 값)에 맞춰 조정합니다."));
                     if (env.cameraMain != null) {
                         EditorGUILayout.LabelField("(Currently: " + env.GetFogAutoDistance() + ")");
                     }
                     EditorGUILayout.EndHorizontal();
                     if (!fogDistanceAuto.boolValue) {
                         EditorGUI.indentLevel++;
-                        EditorGUILayout.PropertyField(fogDistance, new GUIContent("Fog Distance", "Fog's distance factor"));
+                        EditorGUILayout.PropertyField(fogDistance, new GUIContent("Fog Distance", "안개 거리 계수입니다."));
                         EditorGUI.indentLevel--;
                     }
-                    EditorGUILayout.PropertyField(fogFallOff, new GUIContent("Fog Fall Off", "Fog's fall off factor"));
-                    EditorGUILayout.PropertyField(fogTint, new GUIContent("Fog Tint", "Fog's tint color"));
+                    EditorGUILayout.PropertyField(fogFallOff, new GUIContent("Fog Fall Off", "안개 감쇠 계수입니다."));
+                    EditorGUILayout.PropertyField(fogTint, new GUIContent("Fog Tint", "안개의 틴트 색상입니다."));
                     EditorGUI.indentLevel--;
                 }
-                EditorGUILayout.PropertyField(enableClouds, new GUIContent("Enable Clouds", "Clouds generation on/off"));
+                EditorGUILayout.PropertyField(enableClouds, new GUIContent("Enable Clouds", "구름 생성 on/off"));
             }
 
             if (GUILayout.Button(new GUIContent(" Optional Game Features", Resources.Load("VoxelPlay/Inspector/optionalGameFeatures") as Texture2D), leftAlignStyle)) {
                 ToggleSection(ref expandInGameSection);
             }
             if (expandInGameSection) {
-                EditorGUILayout.PropertyField(loadSavedGame, new GUIContent("Load Saved Game At Start", "If Voxel Play should load a previously saved game at start up. Specify name of saved game in 'Save Filename' field."));
+                EditorGUILayout.PropertyField(loadSavedGame, new GUIContent("Load Saved Game At Start", "시작 시 저장된 게임을 불러올지 여부입니다. 'Save Filename' 필드에 저장 파일 이름을 지정하세요."));
                 if (loadSavedGame.boolValue) {
-                    EditorGUILayout.PropertyField(saveFilename, new GUIContent("   Filename", "The current name for the saved game file. Used at runtime when pressing F3 to load or F4 to save. You can set a different save filename at runtime to support multiple save slots."));
+                    EditorGUILayout.PropertyField(saveFilename, new GUIContent("   Filename", "현재 저장 게임 파일 이름입니다. 런타임에서 F3(불러오기), F4(저장)를 눌렀을 때 사용됩니다. 여러 저장 슬롯을 지원하려면 런타임에서 다른 파일명을 설정할 수 있습니다."));
                 }
-                EditorGUILayout.PropertyField(enableLoadingPanel, new GUIContent("Loading Screen", "Shows a loading panel during start up while chunks are being reserved."));
+                EditorGUILayout.PropertyField(enableLoadingPanel, new GUIContent("Loading Screen", "시작 시 청크가 예약되는 동안 로딩 패널을 표시합니다."));
                 if (enableLoadingPanel.boolValue) {
-                    EditorGUILayout.PropertyField(loadingText, new GUIContent("   Text", "Text to show while initializing the engine."));
+                    EditorGUILayout.PropertyField(loadingText, new GUIContent("   Text", "엔진 초기화 중 표시할 텍스트입니다."));
                 }
-                EditorGUILayout.PropertyField(initialWaitTime, new GUIContent("Initial Wait Time", "Additional seconds to wait before loading screen is removed."));
+                EditorGUILayout.PropertyField(initialWaitTime, new GUIContent("Initial Wait Time", "로딩 화면을 제거하기 전에 추가로 대기할 초입니다."));
                 if (initialWaitTime.floatValue > 0) {
-                    EditorGUILayout.PropertyField(initialWaitText, new GUIContent("   Text", "Text to show diring the additional wait time."));
+                    EditorGUILayout.PropertyField(initialWaitText, new GUIContent("   Text", "추가 대기 시간 동안 표시할 텍스트입니다."));
                 }
                 GUI.enabled = EditorUserBuildSettings.activeBuildTarget == BuildTarget.Android || EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS;
-                EditorGUILayout.PropertyField(previewTouchUIinEditor, new GUIContent("Preview Mobile UI in Editor", "Shows mobile UI in Editor when targeting a mobile platform."));
+                EditorGUILayout.PropertyField(previewTouchUIinEditor, new GUIContent("Preview Mobile UI in Editor", "모바일 플랫폼을 타겟할 때 에디터에서 모바일 UI를 표시합니다."));
                 GUI.enabled = true;
-                EditorGUILayout.PropertyField(enableBuildMode, new GUIContent("Enable Build Mode", "Enables entering Build Mode by pressing key B. In build mode, all world items are available in the inventory in unlimited amount and anything can be destroyed with a single hit. Player is also indestructible."));
+                EditorGUILayout.PropertyField(enableBuildMode, new GUIContent("Enable Build Mode", "B 키를 눌러 빌드 모드에 들어갈 수 있게 합니다. 빌드 모드에서는 모든 월드 아이템이 인벤토리에 무제한으로 제공되며, 무엇이든 한 번에 파괴할 수 있습니다. 플레이어는 또한 무적이 됩니다."));
                 if (enableBuildMode.boolValue) {
-                    EditorGUILayout.PropertyField(buildMode, new GUIContent("   Build Mode ON", "Activates build mode."));
+                    EditorGUILayout.PropertyField(buildMode, new GUIContent("   Build Mode ON", "빌드 모드를 활성화합니다."));
                 }
-                EditorGUILayout.PropertyField(enableConsole, new GUIContent("Enable Console", "Enables console system. Shows when pressing F1."));
+                EditorGUILayout.PropertyField(enableConsole, new GUIContent("Enable Console", "콘솔 시스템을 활성화합니다. F1을 누르면 표시됩니다."));
                 if (enableConsole.boolValue) {
-                    EditorGUILayout.PropertyField(showConsole, new GUIContent("   Visible", "Toggles console visibility on/off. The console shows useful data for debugging purposes."));
+                    EditorGUILayout.PropertyField(showConsole, new GUIContent("   Visible", "콘솔 표시/숨김을 전환합니다. 콘솔은 디버깅에 유용한 데이터를 표시합니다."));
                     EditorGUILayout.PropertyField(consoleBackgroundColor, new GUIContent("   Background Color"));
                 }
                 EditorGUILayout.PropertyField(enableStatusBar, new GUIContent("Enable Status Bar"));
                 if (enableStatusBar.boolValue) {
                     EditorGUILayout.PropertyField(statusBarBackgroundColor, new GUIContent("   Status Bar Color"));
                 }
-                EditorGUILayout.PropertyField(enableInventory, new GUIContent("Enable Inventory", "Enables inventory UI when pressing Tab. Disable if you wish to provide your own interface."));
-                EditorGUILayout.PropertyField(enableDebugWindow, new GUIContent("Enable Debug Window", "Enables debug window toggling using F2."));
-                EditorGUILayout.PropertyField(showFPS, new GUIContent("Show FPS", "Shows FPS on top/right screen corner."));
+                EditorGUILayout.PropertyField(enableInventory, new GUIContent("Enable Inventory", "Tab 키를 누르면 인벤토리 UI를 표시합니다. 자체 인터페이스를 사용하려면 비활성화하세요."));
+                EditorGUILayout.PropertyField(enableDebugWindow, new GUIContent("Enable Debug Window", "F2로 디버그 창 토글을 활성화합니다."));
+                EditorGUILayout.PropertyField(showFPS, new GUIContent("Show FPS", "화면 오른쪽 상단에 FPS를 표시합니다."));
             }
 
             if (GUILayout.Button(new GUIContent(" Default Assets", Resources.Load("VoxelPlay/Inspector/defaultAssets") as Texture2D), leftAlignStyle)) {
                 ToggleSection(ref expandDefaultsSection);
             }
             if (expandDefaultsSection) {
-                EditorGUILayout.PropertyField(defaultBuildSound, new GUIContent("Build Sound", "Default sound played when an item or voxel is placed in the scene."));
-                EditorGUILayout.PropertyField(defaultPickupSound, new GUIContent("Pick Up Sound", "Default sound played when an item is collected."));
-                EditorGUILayout.PropertyField(defaultImpactSound, new GUIContent("Impact Sound", "Default sound played when a voxel is hit."));
-                EditorGUILayout.PropertyField(defaultDestructionSound, new GUIContent("Destruction Sound", "Default sound played when a voxel is destroyed."));
-                EditorGUILayout.PropertyField(defaultVoxel, new GUIContent("Default Voxel", "Assumed voxel when the voxel definition is missing or placing colors directly on the positions."));
-                EditorGUILayout.PropertyField(defaultWaterVoxel, new GUIContent("Default Water Voxel", "Default water voxel in case the terrain generator doesn't assign one."));
+                EditorGUILayout.PropertyField(defaultBuildSound, new GUIContent("Build Sound", "아이템이나 복셀이 씬에 배치될 때 재생되는 기본 사운드입니다."));
+                EditorGUILayout.PropertyField(defaultPickupSound, new GUIContent("Pick Up Sound", "아이템을 수집할 때 재생되는 기본 사운드입니다."));
+                EditorGUILayout.PropertyField(defaultImpactSound, new GUIContent("Impact Sound", "복셀을 때릴 때 재생되는 기본 사운드입니다."));
+                EditorGUILayout.PropertyField(defaultDestructionSound, new GUIContent("Destruction Sound", "복셀이 파괴될 때 재생되는 기본 사운드입니다."));
+                EditorGUILayout.PropertyField(defaultVoxel, new GUIContent("Default Voxel", "복셀 정의가 없거나 위치에 직접 색상을 배치할 때 가정하는 기본 복셀입니다."));
+                EditorGUILayout.PropertyField(defaultWaterVoxel, new GUIContent("Default Water Voxel", "지형 생성기가 지정하지 않을 때 사용할 기본 물 복셀입니다."));
 
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PropertyField(inputControllerPC, new GUIContent("Input Prefab (PC)", "The prefab that contains the input controller script for PC."));
+                EditorGUILayout.PropertyField(inputControllerPC, new GUIContent("Input Prefab (PC)", "PC 입력 컨트롤러 스크립트가 포함된 프리팹입니다."));
                 if (GUILayout.Button("Load Default", GUILayout.Width(120))) {
                     inputControllerPC.objectReferenceValue = Resources.Load<GameObject>("VoxelPlay/InputControllers/PC/Voxel Play PC Input Controller");
                 }
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PropertyField(inputControllerMobile, new GUIContent("Input Prefab (Mobile)", "The prefab that contains the input controller script for mobile."));
+                EditorGUILayout.PropertyField(inputControllerMobile, new GUIContent("Input Prefab (Mobile)", "모바일 입력 컨트롤러 스크립트가 포함된 프리팹입니다."));
                 if (GUILayout.Button("Load Default", GUILayout.Width(120))) {
                     inputControllerMobile.objectReferenceValue = Resources.Load<GameObject>("VoxelPlay/InputControllers/Mobile/Voxel Play Mobile Input Controller");
                 }
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PropertyField(uiCanvasPrefab, new GUIContent("UI Prefab", "The canvas prefab used for the game main interface. This interface has elements for inventory, selected item, crosshair and other information."));
+                EditorGUILayout.PropertyField(uiCanvasPrefab, new GUIContent("UI Prefab", "게임 메인 인터페이스에 사용하는 캔버스 프리팹입니다. 인벤토리, 선택 아이템, 크로스헤어 등 정보가 포함됩니다."));
                 if (GUILayout.Button("Load Default", GUILayout.Width(120))) {
                     uiCanvasPrefab.objectReferenceValue = Resources.Load<GameObject>("VoxelPlay/UI/Voxel Play UI Canvas");
                 }
                 EditorGUILayout.EndHorizontal();
 
                 if (uiCanvasPrefab.objectReferenceValue != null) {
-                    EditorGUILayout.PropertyField(welcomeMessage, new GUIContent("Welcome Text", "Optional message shown when game starts"));
-                    EditorGUILayout.PropertyField(welcomeMessageDuration, new GUIContent("Welcome Duration", "Duration for the welcome text"));
+                    EditorGUILayout.PropertyField(welcomeMessage, new GUIContent("Welcome Text", "게임 시작 시 표시되는 선택 메시지입니다."));
+                    EditorGUILayout.PropertyField(welcomeMessageDuration, new GUIContent("Welcome Duration", "환영 텍스트 표시 시간입니다."));
                 }
 
-                EditorGUILayout.PropertyField(crosshairPrefab, new GUIContent("Crosshair Prefab", "The prefab used for the crosshair."));
-                EditorGUILayout.PropertyField(crosshairTexture, new GUIContent("Crosshair Texture", "The texture used for the crosshair."));
+                EditorGUILayout.PropertyField(crosshairPrefab, new GUIContent("Crosshair Prefab", "크로스헤어에 사용하는 프리팹입니다."));
+                EditorGUILayout.PropertyField(crosshairTexture, new GUIContent("Crosshair Texture", "크로스헤어에 사용하는 텍스처입니다."));
             }
 
-            // Advanced section
+            // 고급 섹션
             if (GUILayout.Button(new GUIContent(" Advanced", Resources.Load("VoxelPlay/Inspector/advancedSettings") as Texture2D), leftAlignStyle)) {
                 ToggleSection(ref expandAdvancedSection);
             }
             if (expandAdvancedSection) {
                 EditorGUILayout.PropertyField(debugLevel);
                 EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(serverMode, new GUIContent("Server Mode", "In server mode, Voxel Play doesn't render voxels to reduce memory usage and improve performance of system when running on an unattended server."));
+                EditorGUILayout.PropertyField(serverMode, new GUIContent("Server Mode", "서버 모드에서는 복셀을 렌더링하지 않아 메모리 사용을 줄이고 무인 서버에서의 성능을 개선합니다."));
                 if (EditorGUI.EndChangeCheck() && serverMode.boolValue) {
                     lowMemoryMode.boolValue = true;
                 }
-                EditorGUILayout.PropertyField(lowMemoryMode, new GUIContent("Low Memory Mode", "When enabled, internal rendering buffers are not pre-allocated during start up. Memory allocation occur when needed only. Enable this option to reduce memory pressure warnings on mobile devices or on dedicated servers with low memory. Some memory allocation spike can occur when a buffer needs resizing."));
-                EditorGUILayout.PropertyField(delayedInitialization, new GUIContent("Delayed Initialization", "When enabled, Voxel Play won't initialize until you call the Init() method."));
+                EditorGUILayout.PropertyField(lowMemoryMode, new GUIContent("Low Memory Mode", "활성화하면 시작 시 내부 렌더링 버퍼를 미리 할당하지 않습니다. 필요할 때만 메모리를 할당합니다. 모바일 기기나 저메모리 전용 서버에서 메모리 압박 경고를 줄이려면 이 옵션을 사용하세요. 버퍼 크기 조정 시 메모리 할당 스파이크가 발생할 수 있습니다."));
+                EditorGUILayout.PropertyField(delayedInitialization, new GUIContent("Delayed Initialization", "활성화하면 Init() 메서드를 호출할 때까지 Voxel Play가 초기화되지 않습니다."));
                 EditorGUILayout.BeginHorizontal();
-                maxMaterialsPerChunk = EditorGUILayout.IntField(new GUIContent("Max Materials Per Chunk", "The number of different materials that can be used in a single chunk. Please note that this number should be kept low to reduce memory usage and improve performance."), maxMaterialsPerChunk);
+                maxMaterialsPerChunk = EditorGUILayout.IntField(new GUIContent("Max Materials Per Chunk", "한 청크에서 사용할 수 있는 서로 다른 머티리얼 수입니다. 메모리 사용 및 성능을 개선하려면 이 값을 낮게 유지하세요."), maxMaterialsPerChunk);
                 GUI.enabled = maxMaterialsPerChunk != VoxelPlayEnvironment.MAX_MATERIALS_PER_CHUNK;
                 if (GUILayout.Button("Change", GUILayout.Width(80))) {
                     ChangeMaxMaterialsPerChunk();
@@ -1312,7 +1312,7 @@ namespace VoxelPlay {
                 EditorGUILayout.EndHorizontal();
             }
 
-            // Stats
+            // 통계
             if (GUILayout.Button(new GUIContent(" Stats", Resources.Load("VoxelPlay/Inspector/Stats") as Texture2D), leftAlignStyle)) {
                 ToggleSection(ref expandStatsSection);
             }
@@ -1328,9 +1328,9 @@ namespace VoxelPlay {
                 } else {
                     ShowProgressBar("Bush Creation: ---", 1f);
                 }
-                EditorGUILayout.LabelField(new GUIContent("Total Chunks Created", "Increases when the chunk contents are generated which occurs when a chunk is created for the first time or when a chunk is reused and its contents replaced."), new GUIContent(env.chunksCreated.ToString()));
+                EditorGUILayout.LabelField(new GUIContent("Total Chunks Created", "청크 내용이 생성될 때 증가합니다. 이는 청크가 처음 생성되거나 재사용되면서 내용이 교체될 때 발생합니다."), new GUIContent(env.chunksCreated.ToString()));
                 EditorGUILayout.LabelField("Chunks Pool Usage", env.chunksUsed + " of " + maxChunks.intValue + " (" + (env.chunksUsed * 100f / env.maxChunks).ToString("F1") + "%)");
-                EditorGUILayout.LabelField(new GUIContent("Total Voxels Created", "Number of voxels that contribute to mesh generation. Fully surrounded voxels are hidden and are not included."), new GUIContent(env.voxelsCreatedCount.ToString()));
+                EditorGUILayout.LabelField(new GUIContent("Total Voxels Created", "메쉬 생성에 기여하는 복셀 수입니다. 완전히 둘러싸인 복셀은 숨겨져 포함되지 않습니다."), new GUIContent(env.voxelsCreatedCount.ToString()));
             }
 
             EditorGUILayout.Separator();
@@ -1368,7 +1368,7 @@ namespace VoxelPlay {
                             rebuildWorld = false;
                             env.ReloadWorld();
 
-                            // Check if scene camera is under terrain
+                            // 씬 카메라가 지형 아래에 있는지 확인합니다.
                             if (!Application.isPlaying && env.renderInEditor && SceneView.lastActiveSceneView != null) {
                                 Camera cam = SceneView.lastActiveSceneView.camera;
                                 if (cam != null) {
@@ -1580,7 +1580,7 @@ namespace VoxelPlay {
         void CheckDepthPrimingMode () {
             RenderPipelineAsset pipe = GraphicsSettings.currentRenderPipeline;
             if (pipe == null) return;
-            // Check depth priming mode
+            // Depth Priming 모드를 확인합니다.
             FieldInfo renderers = pipe.GetType().GetField("m_RendererDataList", BindingFlags.NonPublic | BindingFlags.Instance);
             if (renderers == null) return;
             foreach (var renderer in (object[])renderers.GetValue(pipe)) {

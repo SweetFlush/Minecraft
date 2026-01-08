@@ -46,7 +46,7 @@ namespace VoxelPlay {
             waterVoxel = serializedObject.FindProperty("waterVoxel");
             vegetationDensity = serializedObject.FindProperty("vegetationDensity");
             if (tg.terrainData != null) {
-                // Check previews
+                // 미리보기를 확인합니다.
                 for (int k = 0; k < tg.terrainData.terrainLayers.Length && k < tg.splatSettings.Length; k++) {
                     if (tg.splatSettings[k].preview == null) {
                         tg.ExamineTerrainData();
@@ -342,7 +342,7 @@ namespace VoxelPlay {
         }
 
         VoxelDefinition GenerateVoxelFromTexture(Texture2D textureTop, Texture2D textureSide, Texture2D textureDirt, int textureSize, string path, string voxelDefinitionName, RenderType renderType, float smoothPower) {
-            // Prepare top texture
+            // 상단 텍스처를 준비합니다.
             Texture2D texTop = null;
             if (textureTop != null) {
                 texTop = Instantiate(textureTop);
@@ -354,7 +354,7 @@ namespace VoxelPlay {
                 texTop = CreateTextureFile(texTop, path, texName, smoothPower);
             }
 
-            // Side texture
+            // 측면 텍스처입니다.
             Texture2D texSide = null;
             if (textureSide != null) {
                 if (textureSide == textureTop) {
@@ -365,13 +365,13 @@ namespace VoxelPlay {
                     if (texSide.width != textureSize || texSide.height != textureSize) {
                         TextureTools.ScaleTexture(texSide, textureSize, textureSize, FilterMode.Bilinear);
                     }
-                    // Save texture
+                    // 텍스처를 저장합니다.
                     string texSideName = Sanitize(texSide.name);
                     texSide = CreateTextureFile(texSide, path, texSideName, smoothPower);
                 }
             }
 
-            // Dirt texture
+            // 흙 텍스처입니다.
             Texture2D texDirt = null;
             if (textureDirt != null) {
                 if (textureDirt == textureTop) {
@@ -382,13 +382,13 @@ namespace VoxelPlay {
                     if (texDirt.width != textureSize || texDirt.height != textureSize) {
                         TextureTools.ScaleTexture(texDirt, textureSize, textureSize, FilterMode.Bilinear);
                     }
-                    // Save texture
+                    // 텍스처를 저장합니다.
                     string texDirtName = Sanitize(texDirt.name);
                     texDirt = CreateTextureFile(texDirt, path, texDirtName, smoothPower);
                 }
             }
 
-            // Setup and save voxel definition
+            // 복셀 정의를 설정하고 저장합니다.
             VoxelDefinition vd = CreateInstance<VoxelDefinition>();
             vd.renderType = renderType;
             vd.textureTop = texTop;
@@ -460,7 +460,7 @@ namespace VoxelPlay {
         }
 
         Texture2D CreateSideTexture(Texture2D texTop, Texture2D texDirt) {
-            // Make side texture
+            // 측면 텍스처를 생성합니다.
             Color32[] colors = texTop.GetPixels32();
             Color32[] colorsDirt = texDirt.GetPixels32();
             int h = texTop.height;
@@ -528,9 +528,9 @@ namespace VoxelPlay {
 
             for (int k = 0; k < tg.terrainData.treePrototypes.Length; k++) {
                 if (forceGeneration || tg.treeSettings[k].action == UnityTerrainGenerator.TerrainResourceAction.Create) {
-                    // Get tree size
+                    // 나무 크기를 가져옵니다.
                     GameObject o = tg.terrainData.treePrototypes[k].prefab;
-                    // Look for LOD0
+                    // LOD0를 찾습니다.
                     MeshRenderer[] rr = o.GetComponentsInChildren<MeshRenderer>();
                     if (rr.Length == 0)
                         continue;
@@ -541,7 +541,7 @@ namespace VoxelPlay {
                             break;
                         }
                     }
-                    // Get bounds of renderer
+                    // 렌더러의 바운드를 가져옵니다.
                     Bounds bounds = r.bounds;
                     int sizeX = (int)(bounds.size.x * treeScale);
                     int sizeY = (int)(bounds.size.y * treeScale);
@@ -549,7 +549,7 @@ namespace VoxelPlay {
                     if (sizeX == 0 || sizeY == 0 || sizeZ == 0)
                         continue;
 
-                    // Build model definition
+                    // 모델 정의를 구성합니다.
                     ModelDefinition md = CreateInstance<ModelDefinition>();
                     md.sizeX = sizeX;
                     md.sizeY = sizeY;
@@ -642,7 +642,7 @@ namespace VoxelPlay {
 
         Texture2D GenerateFrondTexture(Texture2D tex, Vector2 uv, int textureSize) {
             Color32[] sourceColors = tex.GetPixels32();
-            // Extract representative colors around uv position
+            // UV 위치 주변의 대표 색상을 추출합니다.
             int w = textureSize;
             int h = textureSize;
             int x = Mathf.Clamp((int)(w * uv.x), 0, w - 1);

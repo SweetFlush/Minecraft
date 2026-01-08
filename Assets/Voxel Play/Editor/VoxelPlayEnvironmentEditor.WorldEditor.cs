@@ -42,7 +42,7 @@ namespace VoxelPlay {
                 env.sceneEditorBrushShape = Resources.Load("VoxelPlay/Brushes/Brush2") as Texture2D;
             }
 
-            // figure out which voxel definitions can be considered as part of terrain
+            // 지형의 일부로 간주할 수 있는 복셀 정의를 판별합니다.
             if (env.initialized) {
                 LoadTerrainVoxelDefinitions();
             } else {
@@ -112,13 +112,13 @@ namespace VoxelPlay {
                 }
             }
 
-            // Crear una lista temporal de las instancias
+            // 인스턴스의 임시 목록을 생성합니다.
             var sortedInstances = new List<WorldEditorTool>(toolInstances.Values);
 
-            // Ordenar las instancias por prioridad
+            // 인스턴스를 우선순위로 정렬합니다.
             sortedInstances.Sort((t1, t2) => t1.priority.CompareTo(t2.priority));
 
-            // Limpiar y rellenar toolTypes con el orden correcto
+            // toolTypes를 정리하고 올바른 순서로 채웁니다.
             toolTypes.Clear();
             foreach (var instance in sortedInstances) {
                 toolTypes.Add(instance.GetType());
@@ -239,7 +239,7 @@ namespace VoxelPlay {
             Handles.Label(lastHighlightInfo.point + new Vector3(labelOffset, labelOffset, labelOffset), lastHighlightInfo.point.ToString("F2") + " Rot: " + lastHighlightInfo.voxel.GetTextureRotationDegrees() + " " + lastHighlightInfo.voxel.type.name);
             tool.DrawGizmos(lastHighlightInfo, voxelIndices);
 
-            // Highlight voxels
+            // 복셀을 하이라이트합니다.
             int thisFrame = Time.frameCount;
             if (thisFrame != sceneEditorHighlightedLastFrame) {
                 sceneEditorHighlightedLastFrame = thisFrame;
@@ -265,7 +265,7 @@ namespace VoxelPlay {
                 tool.HighlightVoxels(ref lastHighlightInfo, voxelIndices, highlightColor, edgeWidth: 2f, fadeAmplitude: 0);
             }
 
-            // Execute tool
+            // 도구를 실행합니다.
             if (thisFrame == sceneEditorExecutionLastFrame) return;
             sceneEditorExecutionLastFrame = thisFrame;
 

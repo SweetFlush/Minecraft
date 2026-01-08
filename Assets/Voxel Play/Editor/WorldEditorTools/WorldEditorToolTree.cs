@@ -65,9 +65,9 @@ namespace VoxelPlay {
 
                         pos.y += 0.45;
                         Vector3d toCam = (camPos - pos).normalized;
-                        // voxel visible?
+                        // 복셀이 보이나요?
                         if (!env.IsSolidAtPosition(pos + toCam)) {
-                            // ensure it's not solid on top
+                            // 위가 고체가 아닌지 확인합니다.
                             Vector3d abovePos = pos;
                             abovePos.y++;
                             if (env.GetVoxelIndex(abovePos, out VoxelChunk chunk, out int voxelIndex, createChunkIfNotExists: false)) {

@@ -40,10 +40,10 @@ namespace VoxelPlay {
                     float mask = ComputeMaskFactor(pz, px, size) - ROUNDNESS;
                     if (mask <= 0) continue;
 
-                    // planting over a terrain voxel?
+                    // 지형 복셀 위에 심는 중인가요?
                     if (!terrainVoxelDefinitions.Contains(vi.chunk.voxels[vi.voxelIndex].typeIndex)) continue;
 
-                    // ensure it's no above
+                    // 위에 아무것도 없도록 확인합니다.
                     Vector3d abovePos = pos;
                     abovePos.y++;
                     if (!env.GetVoxelIndex(abovePos, out VoxelChunk chunk, out int voxelIndex, createChunkIfNotExists: false)) continue;

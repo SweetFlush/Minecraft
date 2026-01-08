@@ -109,7 +109,7 @@ namespace VoxelPlay {
 			EditorGUILayout.EndHorizontal ();
 			EditorGUILayout.Separator ();
 
-			// Draw noise texture
+			// 노이즈 텍스처를 그립니다.
 			if (noiseTexture != null) {
 				if (previewTextureMat == null) {
 					previewTextureMat = Resources.Load<Material> ("VoxelPlay/PreviewTexture");
@@ -223,7 +223,7 @@ namespace VoxelPlay {
 				break;
 			}
 
-			// normalize values
+			// 값을 정규화합니다.
 			float range = maxValue - minValue;
 			if (range > 0 && normalize) {
 				float fixedMin = 0;
@@ -338,7 +338,7 @@ namespace VoxelPlay {
 				noiseTexture = new Texture2D (size, size, TextureFormat.ARGB32, false);
 			}
 
-			// update texture
+			// 텍스처를 업데이트합니다.
 			if (colors == null || colors.Length != values.Length) {
 				colors = new Color[size * size];
 			}

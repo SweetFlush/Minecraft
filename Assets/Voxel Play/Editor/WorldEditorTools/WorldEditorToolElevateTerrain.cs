@@ -118,7 +118,7 @@ namespace VoxelPlay {
 
                     int ny = chunk.terrainInfo[elevationIndex].groundLevel;
 
-                    // remove vegetation above terrain
+                    // 지형 위의 식생을 제거합니다.
                     ClearVegetationAbove(pos, undoManager, modifiedChunks);
 
                     Vector3d bottomPos = pos;
@@ -142,7 +142,7 @@ namespace VoxelPlay {
 
                     int ny = chunk.terrainInfo[elevationIndex].groundLevel;
 
-                    // only applies to voxels which have a non opaque voxel on top
+                    // 위에 불투명하지 않은 복셀이 있는 경우에만 적용됩니다.
                     Vector3d abovePos = pos;
                     abovePos.y = ny;
                     if (!env.GetVoxelIndex(abovePos, out VoxelChunk aboveChunk, out int aboveIndex, createChunkIfNotExists: true)) continue;
@@ -154,7 +154,7 @@ namespace VoxelPlay {
                         aboveChunk.voxels[aboveIndex].Set(biome.voxelTop);
                         PlaceVegetationAbove(abovePos, aboveChunk, aboveIndex, biome, modifiedChunks);
                     } else {
-                        // simply repeats voxel
+                        // 복셀을 단순히 반복합니다.
                         undoManager.SaveChunk(aboveChunk);
                         aboveChunk.voxels[aboveIndex].Set(chunk.voxels[voxelIndex].type);
                     }

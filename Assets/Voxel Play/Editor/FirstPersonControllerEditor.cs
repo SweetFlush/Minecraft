@@ -103,7 +103,7 @@ namespace VoxelPlay {
             serializedObject.Update();
 
             EditorGUILayout.PropertyField(loadModel, new GUIContent("Model"));
-            EditorGUILayout.PropertyField(constructorSize, new GUIContent("Constructor Size", "Default constructor size."));
+            EditorGUILayout.PropertyField(constructorSize, new GUIContent("Constructor Size", "기본 생성자 크기입니다."));
 
             serializedObject.ApplyModifiedProperties();
         }

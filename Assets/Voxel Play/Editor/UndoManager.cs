@@ -76,7 +76,7 @@ namespace VoxelPlay {
 
             var undoSession = undoStack[sessionIndex];
 
-            // restore chunks in scene
+            // 씬의 청크를 복원합니다.
             var chunkDataList = new List<KeyValuePair<VoxelChunk, UndoChunkData>>(undoSession.chunks);
             for (int i = chunkDataList.Count - 1; i >= 0; i--) {
                 var chunkData = chunkDataList[i];
@@ -131,7 +131,7 @@ namespace VoxelPlay {
             Undo.RecordObject(this, "World Editor Tool");
             sessionIndex++;
 
-            // in order to support redo, we need to store the chunk state after the modifications
+            // 리두를 지원하려면 변경 후의 청크 상태를 저장해야 합니다.
             UndoSession redoUndoSession = new UndoSession();
             foreach (var kvp in currentUndoSession.chunks) {
                 redoUndoSession.AddChunk(kvp.Key);

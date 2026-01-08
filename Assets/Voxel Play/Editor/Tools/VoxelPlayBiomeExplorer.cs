@@ -179,10 +179,10 @@ namespace VoxelPlay {
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(new GUIContent("Refresh Window", "Refresh textures to reflect new filters."), GUILayout.Width(140))) {
+            if (GUILayout.Button(new GUIContent("Refresh Window", "새 필터를 반영하도록 텍스처를 새로 고칩니다."), GUILayout.Width(140))) {
                 requestRefresh = true;
             }
-            if (GUILayout.Button(new GUIContent("Center On Camera", "Moves the preview area so camera stays at the center."), GUILayout.Width(140))) {
+            if (GUILayout.Button(new GUIContent("Center On Camera", "카메라가 중앙에 오도록 미리보기 영역을 이동합니다."), GUILayout.Width(140))) {
                 float dx = maxX - minX;
                 float dz = maxZ - minZ;
                 Camera cam = env.currentCamera;
@@ -196,16 +196,16 @@ namespace VoxelPlay {
                 }
             }
 
-            if (GUILayout.Button(new GUIContent("-> World Definition", "Show World Definition in the inspector."), GUILayout.Width(140))) {
+            if (GUILayout.Button(new GUIContent("-> World Definition", "인스펙터에 월드 정의를 표시합니다."), GUILayout.Width(140))) {
                 Selection.activeObject = world;
             }
-            if (GUILayout.Button(new GUIContent("-> Terrain Generator", "Show Terrain Generator in the inspector."), GUILayout.Width(140))) {
+            if (GUILayout.Button(new GUIContent("-> Terrain Generator", "인스펙터에 지형 생성기를 표시합니다."), GUILayout.Width(140))) {
                 Selection.activeObject = tg;
             }
-            if (GUILayout.Button(new GUIContent("-> Environment", "Show Voxel Play Environment in the inspector."), GUILayout.Width(140))) {
+            if (GUILayout.Button(new GUIContent("-> Environment", "인스펙터에 Voxel Play Environment를 표시합니다."), GUILayout.Width(140))) {
                 Selection.activeGameObject = env.gameObject;
             }
-            if (GUILayout.Button(new GUIContent("Reload Config", "Resets heightmaps and biome cache and initializes terrain generator."), GUILayout.Width(140))) {
+            if (GUILayout.Button(new GUIContent("Reload Config", "하이트맵과 바이옴 캐시를 초기화하고 지형 생성기를 다시 초기화합니다."), GUILayout.Width(140))) {
                 env.NotifyTerrainGeneratorConfigurationChanged();
                 requestRefresh = true;
                 GUIUtility.ExitGUI();
@@ -224,12 +224,12 @@ namespace VoxelPlay {
 
             if (biomes != null && biomeTex != null) {
 
-                // Draw heightmap texture
+                // 하이트맵 텍스처를 그립니다.
                 EditorGUILayout.LabelField(new GUIContent("Biome Map Preview"), titleLabelStyle);
 
                 EditorGUILayout.BeginHorizontal();
 
-                // Biome legend
+                // 바이옴 범례
                 EditorGUILayout.BeginVertical(GUILayout.MaxWidth(600));
                 EditorGUILayout.Separator();
                 EditorGUI.BeginChangeCheck();
@@ -281,7 +281,7 @@ namespace VoxelPlay {
 
                 EditorGUILayout.Separator();
                 EditorGUILayout.Separator();
-                // Tester
+                // 테스트용
                 EditorGUILayout.LabelField(new GUIContent("Biome Tester"), titleLabelStyle);
                 EditorGUI.BeginChangeCheck();
                 EditorGUILayout.BeginHorizontal();
@@ -298,7 +298,7 @@ namespace VoxelPlay {
                 EditorGUILayout.LabelField(biomeTestResult);
                 EditorGUILayout.EndVertical();
 
-                // Biome map
+                // 바이옴 맵
                 space = EditorGUILayout.BeginVertical();
                 space.width = space.height;
                 GUILayout.FlexibleSpace();
@@ -496,13 +496,13 @@ namespace VoxelPlay {
                 env.SetBiomeDefaultColors(false);
                 colors.Fill<Color>(Misc.colorTransparent);
 
-                // reset biome stats
+                // 바이옴 통계를 초기화합니다.
                 for (int k = 0; k < biomes.Count; k++) {
                     if (biomes[k] != null) {
                         biomes[k].biomeMapOccurrences = 0;
                     }
                 }
-                // draw biome colors
+                // 바이옴 색상을 그립니다.
                 Color chartColor;
                 for (int j = 0; j < height; j++) {
                     float z = (maxZ - minZ) * (float)j / height + minZ;
@@ -541,7 +541,7 @@ namespace VoxelPlay {
                 }
 
                 Color gridColor = new Color(64, 64, 64, 0.2f);
-                // draw horizontal grid lines
+                // 수평 그리드 라인을 그립니다.
                 int gridCount = (int)((maxZ - minZ) / gridStep);
                 if (gridCount > 0) {
                     for (int j = 0; j <= gridCount; j++) {
@@ -551,7 +551,7 @@ namespace VoxelPlay {
                         }
                     }
                 }
-                // draw vertical grid lines
+                // 수직 그리드 라인을 그립니다.
                 gridCount = (int)((maxX - minX) / gridStep);
                 if (gridCount > 0) {
                     for (int j = 0; j <= gridCount; j++) {

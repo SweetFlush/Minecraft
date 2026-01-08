@@ -43,7 +43,7 @@ namespace VoxelPlay {
             VoxelDefinition sourceDefinition = chunk.voxels[voxelIndex].type;
             if (sourceDefinition == null) return false;
 
-            // Defer the modal confirmation so it's not called inside the OnSceneGUI draw cycle.
+            // 모달 확인 창이 OnSceneGUI 드로우 사이클 안에서 호출되지 않도록 지연합니다.
             EditorApplication.delayCall += () => {
                 if (EditorUtility.DisplayDialog("Create Voxel Definition", "Are you sure you want to create a voxel definition from the selected voxel?", "Yes", "No")) {
 

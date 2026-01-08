@@ -7,7 +7,7 @@ namespace VoxelPlay {
 	[CustomPropertyDrawer(typeof(StepData))]
 	public class TerrainStepDataDrawer : PropertyDrawer {
 
-		// Draw the property inside the given rect
+		// 주어진 사각형 안에 속성을 그립니다.
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 
 			position.height -= 5f;
@@ -51,49 +51,49 @@ namespace VoxelPlay {
 						position.y += lineHeight;
 						EditorGUI.PropertyField(position, property.FindPropertyRelative("noiseTexture"));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("frecuency"), new GUIContent("Frequency", "The scale applied to the noise texture"));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("frecuency"), new GUIContent("Frequency", "노이즈 텍스처에 적용되는 스케일입니다."));
                         position.y += lineHeight;
-                        EditorGUI.PropertyField(position, property.FindPropertyRelative("offset"), new GUIContent("Offset", "Offset applied to the sampling coordinates"));
+                        EditorGUI.PropertyField(position, property.FindPropertyRelative("offset"), new GUIContent("Offset", "샘플링 좌표에 적용되는 오프셋입니다."));
                         position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("noiseRangeMin"), new GUIContent("Min", "The value of noise is mapped to min-max range"));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("noiseRangeMin"), new GUIContent("Min", "노이즈 값을 최소-최대 범위로 매핑합니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("noiseRangeMax"), new GUIContent("Max", "The value of noise is mapped to min-max range"));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("noiseRangeMax"), new GUIContent("Max", "노이즈 값을 최소-최대 범위로 매핑합니다."));
 						break;
 					case (int)TerrainStepType.SampleHeightMapFractal:
 						position.y += lineHeight;
 						EditorGUI.PropertyField(position, property.FindPropertyRelative("noiseTexture"));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("frecuency"), new GUIContent("Frequency", "The scale applied to the noise texture"));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("frecuency"), new GUIContent("Frequency", "노이즈 텍스처에 적용되는 스케일입니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("octaves"), new GUIContent("Octaves", "Number of noise samples to be combined"));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("octaves"), new GUIContent("Octaves", "결합할 노이즈 샘플 수입니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("persistence"), new GUIContent("Persistence", "Multiplier to the amplitude value of previous octave"));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("persistence"), new GUIContent("Persistence", "이전 옥타브의 진폭 값에 곱하는 배율입니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("lacunarity"), new GUIContent("Lacunarity", "Multiplier to the frequency value of previous octave"));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("lacunarity"), new GUIContent("Lacunarity", "이전 옥타브의 주파수 값에 곱하는 배율입니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("noiseRangeMin"), new GUIContent("Min", "The final value of noise is mapped to min-max range"));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("noiseRangeMin"), new GUIContent("Min", "최종 노이즈 값을 최소-최대 범위로 매핑합니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("noiseRangeMax"), new GUIContent("Max", "The final value of noise is mapped to min-max range"));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("noiseRangeMax"), new GUIContent("Max", "최종 노이즈 값을 최소-최대 범위로 매핑합니다."));
 						break;
                     case (int)TerrainStepType.SampleHeightMapUnityTerrain:
                         position.y += lineHeight;
                         EditorGUI.PropertyField(position, property.FindPropertyRelative("terrainData"));
                         position.y += lineHeight;
-                        EditorGUI.PropertyField(position, property.FindPropertyRelative("frecuency"), new GUIContent("Frequency", "The scale applied to the heightmap"));
+                        EditorGUI.PropertyField(position, property.FindPropertyRelative("frecuency"), new GUIContent("Frequency", "하이트맵에 적용되는 스케일입니다."));
                         position.y += lineHeight;
-                        EditorGUI.PropertyField(position, property.FindPropertyRelative("offset"), new GUIContent("Offset", "Offset applied to the sampling coordinates"));
+                        EditorGUI.PropertyField(position, property.FindPropertyRelative("offset"), new GUIContent("Offset", "샘플링 좌표에 적용되는 오프셋입니다."));
                         position.y += lineHeight;
-                        EditorGUI.PropertyField(position, property.FindPropertyRelative("noiseRangeMin"), new GUIContent("Min", "The value of heightmap is mapped to min-max range"));
+                        EditorGUI.PropertyField(position, property.FindPropertyRelative("noiseRangeMin"), new GUIContent("Min", "하이트맵 값을 최소-최대 범위로 매핑합니다."));
                         position.y += lineHeight;
-                        EditorGUI.PropertyField(position, property.FindPropertyRelative("noiseRangeMax"), new GUIContent("Max", "The value of heightmap is mapped to min-max range"));
+                        EditorGUI.PropertyField(position, property.FindPropertyRelative("noiseRangeMax"), new GUIContent("Max", "하이트맵 값을 최소-최대 범위로 매핑합니다."));
                         break;
                     case (int)TerrainStepType.Constant:
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("param"), new GUIContent("Constant", "Outputs a constant value."));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("param"), new GUIContent("Constant", "상수 값을 출력합니다."));
 						break;		
 					case (int)TerrainStepType.Copy:
 						position.y += lineHeight;
-						EditorGUI.IntPopup(position, property.FindPropertyRelative("inputIndex0"), stepLabels, stepIndices, new GUIContent("Copy Output From", "Copies a result from a previous step."));
+						EditorGUI.IntPopup(position, property.FindPropertyRelative("inputIndex0"), stepLabels, stepIndices, new GUIContent("Copy Output From", "이전 단계의 결과를 복사합니다."));
 						break;		
 					case (int)TerrainStepType.Random:
 						break;
@@ -101,117 +101,117 @@ namespace VoxelPlay {
 						break;
 					case (int)TerrainStepType.Shift:
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("param"), new GUIContent("Add", "The value to add to the previous result."));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("param"), new GUIContent("Add", "이전 결과에 더할 값입니다."));
 						break;
 					case (int)TerrainStepType.BeachMask:
 						position.y += lineHeight;
-						EditorGUI.IntPopup(position, property.FindPropertyRelative("inputIndex0"), stepLabels, stepIndices, new GUIContent("Mask Source", "If mask value is zero and altitude is at beach level then altitude will be reduced."));
+						EditorGUI.IntPopup(position, property.FindPropertyRelative("inputIndex0"), stepLabels, stepIndices, new GUIContent("Mask Source", "마스크 값이 0이고 고도가 해변 레벨이면 고도가 낮아집니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("threshold"), new GUIContent("Threshold", "Values greater than this threshold will cancel beach."));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("threshold"), new GUIContent("Threshold", "이 임계값보다 큰 값은 해변 효과를 제거합니다."));
 						break;
 					case (int)TerrainStepType.AddAndMultiply:
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("param"), new GUIContent("Add", "The value to add to the previous result."));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("param"), new GUIContent("Add", "이전 결과에 더할 값입니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("param2"), new GUIContent("Then Multiply", "Multiply the result by this value."));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("param2"), new GUIContent("Then Multiply", "결과에 이 값을 곱합니다."));
 						break;
 					case (int)TerrainStepType.MultiplyAndAdd:
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("param"), new GUIContent("Multiply", "Multiply the value by this value."));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("param"), new GUIContent("Multiply", "값에 이 값을 곱합니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("param2"), new GUIContent("Then Add", "Add this value to the result."));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("param2"), new GUIContent("Then Add", "결과에 이 값을 더합니다."));
 						break;
 					case (int)TerrainStepType.Exponential:
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("param"), new GUIContent("Exponent", "Result = exp(distance to 0, exponent)"));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("param"), new GUIContent("Exponent", "결과 = exp(0까지의 거리, 지수)"));
 						break;
 					case (int)TerrainStepType.Island:
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("param"), new GUIContent("Radius", "Reduces terrain height beyond distance to 0,0,0."));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("param"), new GUIContent("Radius", "0,0,0에서 멀어질수록 지형 높이를 낮춥니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("param2"), new GUIContent("Slope Multiplier", "Multiplier for the slope beyond the radius (0.01 - 5)."));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("param2"), new GUIContent("Slope Multiplier", "반경 밖의 경사 배율입니다(0.01 - 5)."));
 						break;
 					case (int)TerrainStepType.Threshold:
 						position.y += lineHeight;
-						EditorGUI.IntPopup(position, property.FindPropertyRelative("inputIndex0"), stepLabels, stepIndices, new GUIContent("Input", "The source for the threshold operation"));
+						EditorGUI.IntPopup(position, property.FindPropertyRelative("inputIndex0"), stepLabels, stepIndices, new GUIContent("Input", "임계값 연산에 사용할 소스입니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("threshold"), new GUIContent("Threshold", "Only values greater than threshold are preserved. Otherwise 0 is output."));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("threshold"), new GUIContent("Threshold", "임계값보다 큰 값만 유지하고 나머지는 0을 출력합니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("thresholdShift"), new GUIContent("If Greater, Add", "A value that is added to the previous value if it passes the threshold."));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("thresholdShift"), new GUIContent("If Greater, Add", "임계값을 넘으면 이전 값에 더해지는 값입니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("thresholdParam"), new GUIContent("If Not, Output...", "A value that is set if the previous value does not pass the threshold."));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("thresholdParam"), new GUIContent("If Not, Output...", "이전 값이 임계값을 넘지 못할 때 설정되는 값입니다."));
 						break;
 					case (int)TerrainStepType.FlattenOrRaise:
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("threshold"), new GUIContent("Min Elevation", "Values greater than this threshold will be flattened."));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("threshold"), new GUIContent("Min Elevation", "이 임계값보다 큰 값은 평탄화됩니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("thresholdParam"), new GUIContent("Multiplier", "Flatten multiplier."));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("thresholdParam"), new GUIContent("Multiplier", "평탄화 배율입니다."));
 						break;
 					case (int)TerrainStepType.BlendAdditive:
 						position.y += lineHeight;
 						prevPosition = position;
 						position.width = 190;
 						float labelWidth = EditorGUIUtility.labelWidth;
-						EditorGUI.IntPopup(position, property.FindPropertyRelative("inputIndex0"), stepLabels, stepIndices, new GUIContent("Input A", "One of the inputs to combine"));
+						EditorGUI.IntPopup(position, property.FindPropertyRelative("inputIndex0"), stepLabels, stepIndices, new GUIContent("Input A", "결합할 입력 중 하나입니다."));
 						position.x += 190;
 						position.width = 120;
 						EditorGUIUtility.labelWidth = 60;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("weight0"), new GUIContent("Weight", "Input A is multiplied by Weight"));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("weight0"), new GUIContent("Weight", "입력 A에 가중치를 곱합니다."));
 						position = prevPosition;
 						position.y += lineHeight;
 						prevPosition = position;
 						position.width = 190;
 						EditorGUIUtility.labelWidth = labelWidth;
-						EditorGUI.IntPopup(position, property.FindPropertyRelative("inputIndex1"), stepLabels, stepIndices, new GUIContent("Input B", "The other part of combination"));
+						EditorGUI.IntPopup(position, property.FindPropertyRelative("inputIndex1"), stepLabels, stepIndices, new GUIContent("Input B", "결합할 다른 입력입니다."));
 						position.x += 190;
 						position.width = 120;
 						EditorGUIUtility.labelWidth = 60;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("weight1"), new GUIContent("Weight", "Input A is multiplied by Weight"));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("weight1"), new GUIContent("Weight", "입력 A에 가중치를 곱합니다."));
 						position = prevPosition;
 						break;
 					case (int)TerrainStepType.BlendMultiply:
 						position.y += lineHeight;
-						EditorGUI.IntPopup(position, property.FindPropertyRelative("inputIndex0"), stepLabels, stepIndices, new GUIContent("Input A", "Result = input A * input B"));
+						EditorGUI.IntPopup(position, property.FindPropertyRelative("inputIndex0"), stepLabels, stepIndices, new GUIContent("Input A", "결과 = 입력 A * 입력 B"));
 						position.y += lineHeight;
-						EditorGUI.IntPopup(position, property.FindPropertyRelative("inputIndex1"), stepLabels, stepIndices, new GUIContent("Input B", "Result = input A * input B"));
+						EditorGUI.IntPopup(position, property.FindPropertyRelative("inputIndex1"), stepLabels, stepIndices, new GUIContent("Input B", "결과 = 입력 A * 입력 B"));
 						break;
 					case (int)TerrainStepType.Clamp:
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("min"), new GUIContent("Min", "Outputs value or Min if value < Min"));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("min"), new GUIContent("Min", "값이 Min보다 작으면 Min을, 아니면 값을 출력합니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("max"), new GUIContent("Max", "Outputs value or Max if value > Max"));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("max"), new GUIContent("Max", "값이 Max보다 크면 Max를, 아니면 값을 출력합니다."));
 						break;
 					case (int)TerrainStepType.Select:
 						position.y += lineHeight;
-						EditorGUI.IntPopup(position, property.FindPropertyRelative("inputIndex0"), stepLabels, stepIndices, new GUIContent("Input", "Choose a step as a source"));
+						EditorGUI.IntPopup(position, property.FindPropertyRelative("inputIndex0"), stepLabels, stepIndices, new GUIContent("Input", "소스로 사용할 단계를 선택합니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("min"), new GUIContent("Range Min", "Outputs 0 if value is less than Min"));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("min"), new GUIContent("Range Min", "값이 Min보다 작으면 0을 출력합니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("max"), new GUIContent("Range Max", "Outputs 0 if value is greater than Max"));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("max"), new GUIContent("Range Max", "값이 Max보다 크면 0을 출력합니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("thresholdParam"), new GUIContent("Outside Value", "Outputs a different value if it's out of range"));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("thresholdParam"), new GUIContent("Outside Value", "범위를 벗어나면 다른 값을 출력합니다."));
 						break;
 					case (int)TerrainStepType.Fill:
 						position.y += lineHeight;
-						EditorGUI.IntPopup(position, property.FindPropertyRelative("inputIndex0"), stepLabels, stepIndices, new GUIContent("Input", "Choose a step as a source"));
+						EditorGUI.IntPopup(position, property.FindPropertyRelative("inputIndex0"), stepLabels, stepIndices, new GUIContent("Input", "소스로 사용할 단계를 선택합니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("min"), new GUIContent("Range Min", "Outputs fill value if value is between min and max"));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("min"), new GUIContent("Range Min", "값이 min과 max 사이면 채움 값을 출력합니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("max"), new GUIContent("Range Max", "Outputs fill value if value is between min and max"));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("max"), new GUIContent("Range Max", "값이 min과 max 사이면 채움 값을 출력합니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("thresholdParam"), new GUIContent("Fill Value", "Replaces input value if it's inside the min-max range"));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("thresholdParam"), new GUIContent("Fill Value", "입력 값이 min-max 범위 안이면 그 값으로 대체합니다."));
 						break;
 					case (int)TerrainStepType.Test:
 						position.y += lineHeight;
-						EditorGUI.IntPopup(position, property.FindPropertyRelative("inputIndex0"), stepLabels, stepIndices, new GUIContent("Input", "Choose a step as a source"));
+						EditorGUI.IntPopup(position, property.FindPropertyRelative("inputIndex0"), stepLabels, stepIndices, new GUIContent("Input", "소스로 사용할 단계를 선택합니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("min"), new GUIContent("Range Min", "Outputs 0 if value is less than Min"));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("min"), new GUIContent("Range Min", "값이 Min보다 작으면 0을 출력합니다."));
 						position.y += lineHeight;
-						EditorGUI.PropertyField(position, property.FindPropertyRelative("max"), new GUIContent("Range Max", "Outputs 0 if value is greater than Max"));
+						EditorGUI.PropertyField(position, property.FindPropertyRelative("max"), new GUIContent("Range Max", "값이 Max보다 크면 0을 출력합니다."));
 						break;
 				}
 
-				// Buttons
+				// 버튼
 				position.x += 20;
 				position.y += lineHeight;
 				const float buttonWidth = 60;
@@ -225,7 +225,7 @@ namespace VoxelPlay {
 					stepData.inputIndex0 = index;
 					od.Insert(index + 1, stepData);
 					tg.Steps = od.ToArray();
-					// Shift any input reference
+					// 입력 참조 인덱스를 이동합니다.
 					for (int k = 0; k < tg.Steps.Length; k++) {
 						if (tg.Steps[k].inputIndex0 > index)
 							tg.Steps[k].inputIndex0++;
@@ -240,7 +240,7 @@ namespace VoxelPlay {
 					List<StepData> od = new List<StepData>(tg.Steps);
 					od.RemoveAt(index);
 					tg.Steps = od.ToArray();
-					// Shift any input reference
+					// 입력 참조 인덱스를 이동합니다.
 					for (int k = 0; k < tg.Steps.Length; k++) {
 						if (tg.Steps[k].inputIndex0 >= index)
 							tg.Steps[k].inputIndex0--;
@@ -255,7 +255,7 @@ namespace VoxelPlay {
 						StepData o = tg.Steps[index - 1];
 						tg.Steps[index - 1] = tg.Steps[index];
 						tg.Steps[index] = o;
-						// Shift any input reference
+						// 입력 참조 인덱스를 이동합니다.
 						for (int k = 0; k < tg.Steps.Length; k++) {
 							if (tg.Steps[k].inputIndex0 == index)
 								tg.Steps[k].inputIndex0--;
@@ -271,7 +271,7 @@ namespace VoxelPlay {
 						StepData o = tg.Steps[index + 1];
 						tg.Steps[index + 1] = tg.Steps[index];
 						tg.Steps[index] = o;
-						// Shift any input reference
+						// 입력 참조 인덱스를 이동합니다.
 						for (int k = 0; k < tg.Steps.Length; k++) {
 							if (tg.Steps[k].inputIndex0 == index)
 								tg.Steps[k].inputIndex0++;

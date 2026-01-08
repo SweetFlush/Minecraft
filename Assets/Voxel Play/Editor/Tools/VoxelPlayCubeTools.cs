@@ -270,7 +270,7 @@ namespace VoxelPlay {
 			mf.mesh = mesh;
             GameObject prefab = PrefabUtility.SaveAsPrefabAsset (obj, path);
 
-            // Store packed texture and mesh inside the prefab
+            // 패킹된 텍스처와 메쉬를 프리팹 안에 저장합니다.
             if (cubeShadingStyle != CubeShadingStyle.Color && mat.mainTexture != null) {
 				AssetDatabase.AddObjectToAsset (mat.mainTexture, prefab);
 				AssetDatabase.AddObjectToAsset (mat, prefab);
@@ -323,7 +323,7 @@ namespace VoxelPlay {
 		string GetPathForNewCube () {
 			string path = null;
 
-			// Check any texture
+			// 텍스처를 확인합니다.
 			for (int k = 0; k < sides.Length; k++) {
 				if (sides [k].texture != null) {
 					path = AssetDatabase.GetAssetPath (sides [k].texture);

@@ -37,7 +37,7 @@ namespace VoxelPlay {
 
                 EditorGUI.BeginChangeCheck();
 
-                // top slice
+                // 상단 슬라이스
                 GUI.Label(position, "Top Slice:");
                 position.x += 90;
                 Rect prevPosition = position;
@@ -90,7 +90,7 @@ namespace VoxelPlay {
                 SerializedProperty br2 = property.FindPropertyRelative("br2");
                 EditorGUI.PropertyField(position, br2, GUIContent.none);
 
-                // middle slice
+                // 중간 슬라이스
                 position = prevPosition;
                 position.x -= 90;
                 position.y += lineHeight + 10f;
@@ -135,7 +135,7 @@ namespace VoxelPlay {
                 SerializedProperty br = property.FindPropertyRelative("br");
                 EditorGUI.PropertyField(position, br, GUIContent.none);
 
-                // bottom slice
+                // 하단 슬라이스
                 position = prevPosition;
                 position.x -= 90;
                 position.y += lineHeight + 10f;
@@ -180,7 +180,7 @@ namespace VoxelPlay {
                 SerializedProperty br0 = property.FindPropertyRelative("br0");
                 EditorGUI.PropertyField(position, br0, GUIContent.none);
 
-                // actions
+                // 동작
                 position = prevPosition;
                 position.x -= 90;
                 position.y += lineHeight + 10f;
