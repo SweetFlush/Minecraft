@@ -84,15 +84,15 @@ namespace VoxelPlay {
             env.sceneEditorCaptureOffset = EditorGUILayout.Vector3IntField("Capture Offset", env.sceneEditorCaptureOffset);
             env.sceneEditorCaptureFileName = EditorGUILayout.TextField("Model Filename", env.sceneEditorCaptureFileName);
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(new GUIContent("Remove Grid", "Destroy the current grid object"), EditorStyles.miniButton)) {
+            if (GUILayout.Button(new GUIContent("Remove Grid", "현재 그리드 오브젝트를 삭제합니다."), EditorStyles.miniButton)) {
                 DestroyGrid();
                 VoxelPlayEnvironmentEditor.UnselectWorldEditorTool();
                 GUIUtility.ExitGUI();
             }
-            if (GUILayout.Button(new GUIContent("Clear Contents", "Clears the contents of the grid"), EditorStyles.miniButton)) {
+            if (GUILayout.Button(new GUIContent("Clear Contents", "그리드 내용을 비웁니다."), EditorStyles.miniButton)) {
                 ClearContents();
             }
-            if (GUILayout.Button(new GUIContent("Capture Model", "Creates a model definition with the contents of the grid"), EditorStyles.miniButton)) {
+            if (GUILayout.Button(new GUIContent("Capture Model", "그리드 내용으로 모델 정의를 생성합니다."), EditorStyles.miniButton)) {
                 CaptureGrid();
             }
             EditorGUILayout.EndHorizontal();
