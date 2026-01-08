@@ -35,8 +35,8 @@ namespace VoxelPlay {
                 }
             }
 
-            size = EditorGUILayout.Vector3Field(new GUIContent("Size", "Size of the resulting prefab."), size);
-            alphaCutoutThreshold = EditorGUILayout.IntField(new GUIContent("Cut Out Threshold", "Minimum alpha value for pixels (0-255)"), alphaCutoutThreshold);
+            size = EditorGUILayout.Vector3Field(new GUIContent("Size", "결과 프리팹의 크기입니다."), size);
+            alphaCutoutThreshold = EditorGUILayout.IntField(new GUIContent("Cut Out Threshold", "픽셀의 최소 알파 값입니다(0-255)."), alphaCutoutThreshold);
 
             EditorGUILayout.Separator();
             GUI.enabled = texture != null;

@@ -242,7 +242,7 @@ namespace VoxelPlay {
                     EditorGUI.indentLevel++;
                     EditorGUILayout.HelpBox("머티리얼 셰이더는 원본 VP 셰이더와 호환되어야 합니다.\n자세한 내용은 온라인 문서를 확인하세요.", MessageType.Info);
                     EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.PropertyField(overrideMaterialNonGeo, new GUIContent("Material", "Overriding material."));
+                    EditorGUILayout.PropertyField(overrideMaterialNonGeo, new GUIContent("Material", "재정의할 머티리얼입니다."));
                     if (GUILayout.Button("Locate Original")) {
                         LocateOriginal(rt);
                     }
@@ -251,18 +251,18 @@ namespace VoxelPlay {
                     if (texturesByMaterial.boolValue) {
                         EditorGUILayout.HelpBox("이름이 'Voxel Play/Voxels/Override Examples/***'인 셰이더는 사용하거나 복제할 수 있는 예제입니다.", MessageType.Info);
                     }
-                    EditorGUILayout.PropertyField(overrideMaterialGreedyMeshing, new GUIContent("Greedy Meshing", "Enables greedy meshing when using this override material."));
+                    EditorGUILayout.PropertyField(overrideMaterialGreedyMeshing, new GUIContent("Greedy Meshing", "이 재정의 머티리얼을 사용할 때 그리디 메시를 활성화합니다."));
                     EditorGUI.indentLevel--;
                 }
                 if (!overrideMaterial.boolValue || !texturesByMaterial.boolValue) {
-                    EditorGUILayout.PropertyField(texturesCustomPacking, new GUIContent("Custom Packing", "Specifies custom texture packing settings for this voxel definition, including custom texture size, normal map and relief mapping support."));
+                    EditorGUILayout.PropertyField(texturesCustomPacking, new GUIContent("Custom Packing", "이 복셀 정의의 사용자 지정 텍스처 패킹 설정(텍스처 크기, 노멀 맵, 릴리프 매핑 지원 포함)을 지정합니다."));
                     if (texturesCustomPacking.boolValue) {
                         EditorGUI.indentLevel++;
                         EditorGUILayout.HelpBox("사용자 지정 텍스처 패킹을 사용하면 이 복셀 정의에서 서로 다른 크기의 텍스처(일반 복셀이 사용하지 않는 경우에도 사용자 지정 노멀/릴리프 맵 포함)를 사용할 수 있습니다. 아래에 제공된 모든 텍스처는 별도의 텍스처 배열에 패킹됩니다. Voxel Play는 크기, UV 스케일, 노멀/릴리프 매핑 설정이 동일한 텍스처에 대해 동일한 텍스처 배열을 재사용합니다. 모든 복셀 정의에서 가능한 한 다양한 조합을 줄이도록 하세요.", MessageType.Info);
-                        EditorGUILayout.PropertyField(texturesPackingSize, new GUIContent("Texture Size", "Texture size for each individual texture used by this material. If some textures are of different sizes, they'll be rescaled to this size. All textures with same size are then packed into a single texture array used by this material."));
-                        EditorGUILayout.PropertyField(texturesPackingScale, new GUIContent("UV Scale", "UV multiplier."));
-                        EditorGUILayout.PropertyField(texturesPackingNormalMap, new GUIContent("Enable Normal Map", "Enables or disables normal map effect for this material."));
-                        EditorGUILayout.PropertyField(texturesPackingReliefMap, new GUIContent("Enable Relief Map", "Enables or disables relief mapping effect for this material."));
+                        EditorGUILayout.PropertyField(texturesPackingSize, new GUIContent("Texture Size", "이 머티리얼에서 사용하는 각 텍스처의 크기입니다. 텍스처 크기가 서로 다르면 이 크기로 리스케일됩니다. 같은 크기의 텍스처는 이 머티리얼에서 사용하는 하나의 텍스처 배열로 패킹됩니다."));
+                        EditorGUILayout.PropertyField(texturesPackingScale, new GUIContent("UV Scale", "UV 배율입니다."));
+                        EditorGUILayout.PropertyField(texturesPackingNormalMap, new GUIContent("Enable Normal Map", "이 머티리얼의 노멀 맵 효과를 활성/비활성합니다."));
+                        EditorGUILayout.PropertyField(texturesPackingReliefMap, new GUIContent("Enable Relief Map", "이 머티리얼의 릴리프 매핑 효과를 활성/비활성합니다."));
                         EditorGUI.indentLevel--;
                     }
                 }
@@ -276,8 +276,8 @@ namespace VoxelPlay {
 
             switch (rt) {
                 case RenderType.Custom:
-                    EditorGUILayout.PropertyField(model, new GUIContent("Prefab", "Assign a prefab. Make sure your prefab uses a valid material (you can copy one of the VP Model * materials provided with Voxel Play). Please check the documentation for details."));
-                    EditorGUILayout.PropertyField(prefabMaterial, new GUIContent("Material", "The material to use when rendering the custom voxel. You can use the material provided by the prefab or use one of the optimized materials provided by Voxel Play."));
+                    EditorGUILayout.PropertyField(model, new GUIContent("Prefab", "프리팹을 할당합니다. 프리팹이 유효한 머티리얼을 사용하는지 확인하세요(Voxel Play에서 제공하는 VP Model * 머티리얼을 복사해 사용할 수 있습니다). 자세한 내용은 문서를 확인하세요."));
+                    EditorGUILayout.PropertyField(prefabMaterial, new GUIContent("Material", "커스텀 복셀 렌더링에 사용할 머티리얼입니다. 프리팹이 제공하는 머티리얼을 사용하거나 Voxel Play에서 제공하는 최적화 머티리얼 중 하나를 사용할 수 있습니다."));
                     if (prefabMaterial.intValue != (int)CustomVoxelMaterial.PrefabMaterial) {
                         EditorGUILayout.HelpBox("기존 머티리얼은 실행 중에 이 머티리얼로 교체되며, 이전 머티리얼의 색상과 텍스처, 노멀 맵이 사용됩니다.", MessageType.Info);
                     }
@@ -285,7 +285,7 @@ namespace VoxelPlay {
                     EditorGUILayout.PropertyField(offsetRandom);
                     if (offsetRandom.boolValue) {
                         EditorGUI.indentLevel++;
-                        EditorGUILayout.PropertyField(offsetRandomRange, new GUIContent("Offset Range", "Scale applied to random on each axis."));
+                        EditorGUILayout.PropertyField(offsetRandomRange, new GUIContent("Offset Range", "각 축에 적용되는 랜덤 스케일입니다."));
                         EditorGUI.indentLevel--;
                     }
                     EditorGUILayout.PropertyField(scale);
@@ -294,10 +294,10 @@ namespace VoxelPlay {
                     EditorGUILayout.PropertyField(overrideMainTexture);
                     if (overrideMainTexture.boolValue) {
                         EditorGUI.indentLevel++;
-                        EditorGUILayout.PropertyField(overrideMainTextureOffset, new GUIContent("Texture Offset", "Offsets the overridden texture"));
+                        EditorGUILayout.PropertyField(overrideMainTextureOffset, new GUIContent("Texture Offset", "재정의된 텍스처의 오프셋을 설정합니다."));
                         EditorGUI.indentLevel--;
                     }
-                    EditorGUILayout.PropertyField(opaque, new GUIContent("Opaque", "Set this value to 15 to specify that this is a fully solid object that occludes other adjacent voxels. A lower value let light pass through and reduces it by this amount. 0 = fully transparent."));
+                    EditorGUILayout.PropertyField(opaque, new GUIContent("Opaque", "이 값을 15로 설정하면 인접한 복셀을 가리는 완전한 불투명 오브젝트가 됩니다. 값이 낮을수록 빛이 통과하며 그만큼 감소합니다. 0 = 완전 투명."));
                     if (opaque.intValue == VoxelPlayEnvironment.FULL_OPAQUE) {
                         occludesTop.boolValue = occludesBottom.boolValue = occludesLeft.boolValue = occludesRight.boolValue = occludesForward.boolValue = occludesBack.boolValue = true;
                     }
@@ -311,14 +311,14 @@ namespace VoxelPlay {
                         EditorGUILayout.PropertyField(occludesBack);
                         EditorGUI.indentLevel--;
                     }
-                    EditorGUILayout.PropertyField(gpuInstancing, new GUIContent("GPU Instancing", "Uses GPU instancing to render the model."));
+                    EditorGUILayout.PropertyField(gpuInstancing, new GUIContent("GPU Instancing", "GPU 인스턴싱으로 모델을 렌더링합니다."));
                     if (allowUpsideDownVoxel.boolValue) {
                         EditorGUILayout.HelpBox("GPU 인스턴싱은 'Allow Upside Down' 옵션과 호환되지 않습니다.", MessageType.Info);
                     }
                     if (gpuInstancing.boolValue) {
                         EditorGUI.indentLevel++;
                         EditorGUILayout.PropertyField(castShadows, new GUIContent("Cast Shadows"));
-                        EditorGUILayout.PropertyField(receiveShadows, new GUIContent("Receive Shadows", "If this instanced voxel can cast shadows."));
+                        EditorGUILayout.PropertyField(receiveShadows, new GUIContent("Receive Shadows", "이 인스턴스 복셀이 그림자를 투영할 수 있는지 여부입니다."));
                         EditorGUILayout.PropertyField(createGameObject, new GUIContent("Create GameObject"));
                         EditorGUILayout.PropertyField(generateCollider, new GUIContent("Generate Collider"));
                         if (createGameObject.boolValue && generateCollider.boolValue) {
@@ -467,7 +467,7 @@ namespace VoxelPlay {
                         CheckTintColorFeature();
                     }
                     if (renderType.intValue == (int)RenderType.Transp6tex) {
-                        EditorGUILayout.PropertyField(alpha, new GUIContent("Alpha", "Custom alpha for transparent voxels. Texture alpha value is multipled by this factor."));
+                        EditorGUILayout.PropertyField(alpha, new GUIContent("Alpha", "투명 복셀의 사용자 지정 알파입니다. 텍스처 알파 값에 이 값이 곱해집니다."));
                     }
                     break;
                 case RenderType.CutoutCross:
@@ -475,7 +475,7 @@ namespace VoxelPlay {
                     break;
             }
 
-            TextureField(textureSample, false, "Texture Sample", "Texture that represents the object colors. Used for sampling particle colors and inventory.");
+            TextureField(textureSample, false, "Texture Sample", "오브젝트 색상을 나타내는 텍스처입니다. 파티클 색상과 인벤토리 샘플링에 사용됩니다.");
 
             if (rt == RenderType.Cutout || rt == RenderType.CutoutCross) {
                 EditorGUILayout.PropertyField(colorVariation);
@@ -485,7 +485,7 @@ namespace VoxelPlay {
             }
 
             if (rt != RenderType.Invisible) {
-                EditorGUILayout.PropertyField(lightIntensity, new GUIContent("Emission Intensity", "Amount of light that this voxel emit. This emission value is added to the voxel lighting."));
+                EditorGUILayout.PropertyField(lightIntensity, new GUIContent("Emission Intensity", "이 복셀이 발산하는 빛의 양입니다. 이 발광 값이 복셀 조명에 더해집니다."));
             }
 
             EditorGUILayout.Separator();
@@ -535,7 +535,7 @@ namespace VoxelPlay {
                     EditorGUILayout.PropertyField(placeOnWall);
                 }
                 if (!placeOnWall.boolValue) {
-                    EditorGUILayout.PropertyField(allowsTextureRotation, new GUIContent("Can Rotate", "Allows texture/object rotation by using VoxelRotateTextures or VoxelRotate (for custom voxel) and similar methods."));
+                    EditorGUILayout.PropertyField(allowsTextureRotation, new GUIContent("Can Rotate", "VoxelRotateTextures 또는 VoxelRotate(커스텀 복셀) 등과 같은 방법으로 텍스처/오브젝트 회전을 허용합니다."));
                     GUI.enabled = allowsTextureRotation.boolValue;
                     EditorGUILayout.PropertyField(placeFacingPlayer);
                     GUI.enabled = true;
@@ -549,7 +549,7 @@ namespace VoxelPlay {
             }
 
             if (rt == RenderType.Custom && !placeOnWall.boolValue) {
-                EditorGUILayout.PropertyField(allowUpsideDownVoxel, new GUIContent("Allow Upside Down", "Allows the voxel to be placed upside down."));
+                EditorGUILayout.PropertyField(allowUpsideDownVoxel, new GUIContent("Allow Upside Down", "복셀을 거꾸로 배치할 수 있습니다."));
                 if (allowUpsideDownVoxel.boolValue) {
                     if (gpuInstancing.boolValue) {
                         gpuInstancing.boolValue = false;
@@ -646,7 +646,7 @@ namespace VoxelPlay {
             EditorGUILayout.PropertyField(seeThroughMode);
             if (seeThroughMode.intValue == (int)SeeThroughMode.ReplaceVoxel) {
                 EditorGUI.indentLevel++;
-                EditorGUILayout.PropertyField(seeThroughVoxel, new GUIContent("Replace By", "The voxel used to render when see-through effect occurs. This voxel can be a variation of this voxel with transparency of any other type of voxel."));
+                EditorGUILayout.PropertyField(seeThroughVoxel, new GUIContent("Replace By", "시스루 효과가 발생할 때 렌더링에 사용할 복셀입니다. 이 복셀은 다른 타입의 투명 복셀 변형일 수 있습니다."));
                 EditorGUI.indentLevel--;
             } else if (seeThroughMode.intValue == (int)SeeThroughMode.Transparency && !rt.supportsAlphaSeeThrough()) {
                 EditorGUILayout.HelpBox("이 렌더 타입은 알파 기반 투시 모드를 지원하지 않습니다.", MessageType.Warning);

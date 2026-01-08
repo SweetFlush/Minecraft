@@ -76,7 +76,7 @@ namespace VoxelPlay {
                 env.sceneEditorBuildIgnoreWater = EditorGUILayout.Toggle("Ignore Water", env.sceneEditorBuildIgnoreWater);
             } else {
             }
-            env.sceneEditorBrushContinuousMode = EditorGUILayout.Toggle(new GUIContent("Continuous Mode", "Hold left button mouse to operate"), env.sceneEditorBrushContinuousMode);
+            env.sceneEditorBrushContinuousMode = EditorGUILayout.Toggle(new GUIContent("Continuous Mode", "왼쪽 마우스 버튼을 누른 채로 작업합니다."), env.sceneEditorBrushContinuousMode);
             if (env.sceneEditorBrushContinuousMode) {
                 EditorGUI.indentLevel++;
                 env.sceneEditorBrushSpeed = EditorGUILayout.Slider("Speed", env.sceneEditorBrushSpeed, 0, 1);

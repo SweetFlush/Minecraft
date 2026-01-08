@@ -179,10 +179,10 @@ namespace VoxelPlay {
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(new GUIContent("Refresh Window", "Refresh textures to reflect new filters."), GUILayout.Width(140))) {
+            if (GUILayout.Button(new GUIContent("Refresh Window", "새 필터를 반영하도록 텍스처를 새로 고칩니다."), GUILayout.Width(140))) {
                 requestRefresh = true;
             }
-            if (GUILayout.Button(new GUIContent("Center On Camera", "Moves the preview area so camera stays at the center."), GUILayout.Width(140))) {
+            if (GUILayout.Button(new GUIContent("Center On Camera", "카메라가 중앙에 오도록 미리보기 영역을 이동합니다."), GUILayout.Width(140))) {
                 float dx = maxX - minX;
                 float dz = maxZ - minZ;
                 Camera cam = env.currentCamera;
@@ -196,16 +196,16 @@ namespace VoxelPlay {
                 }
             }
 
-            if (GUILayout.Button(new GUIContent("-> World Definition", "Show World Definition in the inspector."), GUILayout.Width(140))) {
+            if (GUILayout.Button(new GUIContent("-> World Definition", "인스펙터에 월드 정의를 표시합니다."), GUILayout.Width(140))) {
                 Selection.activeObject = world;
             }
-            if (GUILayout.Button(new GUIContent("-> Terrain Generator", "Show Terrain Generator in the inspector."), GUILayout.Width(140))) {
+            if (GUILayout.Button(new GUIContent("-> Terrain Generator", "인스펙터에 지형 생성기를 표시합니다."), GUILayout.Width(140))) {
                 Selection.activeObject = tg;
             }
-            if (GUILayout.Button(new GUIContent("-> Environment", "Show Voxel Play Environment in the inspector."), GUILayout.Width(140))) {
+            if (GUILayout.Button(new GUIContent("-> Environment", "인스펙터에 Voxel Play Environment를 표시합니다."), GUILayout.Width(140))) {
                 Selection.activeGameObject = env.gameObject;
             }
-            if (GUILayout.Button(new GUIContent("Reload Config", "Resets heightmaps and biome cache and initializes terrain generator."), GUILayout.Width(140))) {
+            if (GUILayout.Button(new GUIContent("Reload Config", "하이트맵과 바이옴 캐시를 초기화하고 지형 생성기를 다시 초기화합니다."), GUILayout.Width(140))) {
                 env.NotifyTerrainGeneratorConfigurationChanged();
                 requestRefresh = true;
                 GUIUtility.ExitGUI();

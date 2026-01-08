@@ -18,8 +18,8 @@ namespace VoxelPlay {
 
         public override void OnInspectorGUI() {
             serializedObject.Update();
-            EditorGUILayout.PropertyField(voxelDefinition, new GUIContent("Placing Voxel", "These rules will be applied when placing this voxel in the world."));
-            EditorGUILayout.PropertyField(ruleEvent, new GUIContent("Event", "Choose if these rules are applied when placing a voxel or when rendering. If rules are applied when placing, the voxel will actually be changed in the chunk. However, if you select 'When Rendering', the contents of the chunk won't be modified, only the representation will change."));
+            EditorGUILayout.PropertyField(voxelDefinition, new GUIContent("Placing Voxel", "월드에 이 복셀을 배치할 때 이 규칙이 적용됩니다."));
+            EditorGUILayout.PropertyField(ruleEvent, new GUIContent("Event", "복셀을 배치할 때 적용할지 렌더링할 때 적용할지 선택합니다. 배치 시 적용하면 청크의 복셀 데이터가 실제로 변경됩니다. 하지만 'When Rendering'을 선택하면 청크 내용은 변경되지 않고 표시만 바뀝니다."));
             EditorGUILayout.HelpBox("인접한 프리팹이 어떻게 연결되는지와 각 상황에서 사용할 동작 및 프리팹을 지정하세요.", MessageType.Info);
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.Space();
