@@ -16,7 +16,7 @@ namespace VoxelPlay {
 		}
 
 		static void CreateVPE(bool useDefaultAssets) {
-			// Create a custom game object
+			// 커스텀 게임오브젝트를 생성합니다.
 			if (Misc.FindObjectOfType<VoxelPlayEnvironment>() != null) {
 				EditorUtility.DisplayDialog("Voxel Play Environment already created!", "Voxel Play Environment script has been found in the scene. Only one can per scene can be created.", "Ok");
 				return;
@@ -35,12 +35,12 @@ namespace VoxelPlay {
 
         [MenuItem("GameObject/Voxel Play/Create First Person Controller", false, priority = 100)]
 		static void CreateFPSController(MenuCommand menuCommand) {
-			// Create a custom game object
+			// 커스텀 게임오브젝트를 생성합니다.
 			if (Misc.FindObjectOfType<VoxelPlayEnvironment>() == null) {
 				EditorUtility.DisplayDialog("Voxel Play Environment not found!", "Voxel Play Environment must be created first..", "Ok");
 				return;
 			}
-			// Disable other cameras
+			// 다른 카메라를 비활성화합니다.
 			Camera[] cams = Misc.FindObjectsOfType<Camera>();
 			for (int k = 0; k < cams.Length; k++) {
 				if (cams[k] == Camera.main) cams[k].tag = "Untagged";
@@ -57,7 +57,7 @@ namespace VoxelPlay {
 
 		[MenuItem("GameObject/Voxel Play/Create Third Person Controller", false, priority = 100)]
 		static void CreateTPController(MenuCommand menuCommand) {
-			// Create a custom game object
+			// 커스텀 게임오브젝트를 생성합니다.
 			if (Misc.FindObjectOfType<VoxelPlayEnvironment>() == null) {
 				EditorUtility.DisplayDialog("Voxel Play Environment not found!", "Voxel Play Environment must be created first..", "Ok");
 				return;

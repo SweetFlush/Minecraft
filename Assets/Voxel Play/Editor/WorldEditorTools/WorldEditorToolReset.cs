@@ -70,7 +70,7 @@ namespace VoxelPlay {
             int count = indices.Count;
             VoxelChunk lastChunk = null;
 
-            // fix terrain height and biome
+            // 지형 높이와 바이옴을 수정합니다.
             for (int k = 0; k < count; k++) {
 
                 VoxelIndex vi = indices[k];
@@ -81,7 +81,7 @@ namespace VoxelPlay {
                 if (modifiedChunks.Contains(vi.chunk)) continue;
                 modifiedChunks.Add(vi.chunk);
 
-                // Get the first entry in the undoManager.undoStack
+                // undoManager.undoStack의 첫 항목을 가져옵니다.
                 foreach (UndoSession undoSession in UndoManager.undoStack) {
                     if (undoSession.chunks.TryGetValue(vi.chunk, out UndoChunkData undoChunkData)) {
                         undoManager.RestoreChunk(vi.chunk, undoChunkData);

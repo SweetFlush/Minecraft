@@ -58,7 +58,7 @@ namespace VoxelPlay {
             if (baseModel.colors == null)
                 return null;
 
-            // Generate a cuboid per visible voxel
+            // 보이는 복셀마다 직육면체를 생성합니다.
             int sizeX = baseModel.sizeX;
             int sizeY = baseModel.sizeY;
             int sizeZ = baseModel.sizeZ;
@@ -72,7 +72,7 @@ namespace VoxelPlay {
             path += "/" + GetFilenameForNewModel(baseModel.name) + ".prefab";
             GameObject prefab = PrefabUtility.SaveAsPrefabAsset(obj, path);
 
-            // Store the mesh inside the prefab
+            // 메쉬를 프리팹 안에 저장합니다.
             Mesh mesh = obj.GetComponent<MeshFilter>().sharedMesh;
             AssetDatabase.AddObjectToAsset(mesh, prefab);
             prefab.GetComponent<MeshFilter>().sharedMesh = mesh;
@@ -106,7 +106,7 @@ namespace VoxelPlay {
             itemDefinition.icon = texture;
             itemDefinition.prefab = prefab;
 
-            // Create a suitable file path
+            // 적절한 파일 경로를 생성합니다.
             string path = GetPathForNewAsset();
             AssetDatabase.CreateAsset(itemDefinition, path + "/" + GetFilenameForNewModel(itemDefinition.title.Substring(0, 1).ToUpper() + itemDefinition.title.Substring(1)) + "_Item.asset");
             AssetDatabase.SaveAssets();

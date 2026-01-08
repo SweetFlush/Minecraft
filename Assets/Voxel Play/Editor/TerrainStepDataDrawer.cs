@@ -7,7 +7,7 @@ namespace VoxelPlay {
 	[CustomPropertyDrawer(typeof(StepData))]
 	public class TerrainStepDataDrawer : PropertyDrawer {
 
-		// Draw the property inside the given rect
+		// 주어진 사각형 안에 속성을 그립니다.
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 
 			position.height -= 5f;
@@ -211,7 +211,7 @@ namespace VoxelPlay {
 						break;
 				}
 
-				// Buttons
+				// 버튼
 				position.x += 20;
 				position.y += lineHeight;
 				const float buttonWidth = 60;
@@ -225,7 +225,7 @@ namespace VoxelPlay {
 					stepData.inputIndex0 = index;
 					od.Insert(index + 1, stepData);
 					tg.Steps = od.ToArray();
-					// Shift any input reference
+					// 입력 참조 인덱스를 이동합니다.
 					for (int k = 0; k < tg.Steps.Length; k++) {
 						if (tg.Steps[k].inputIndex0 > index)
 							tg.Steps[k].inputIndex0++;
@@ -240,7 +240,7 @@ namespace VoxelPlay {
 					List<StepData> od = new List<StepData>(tg.Steps);
 					od.RemoveAt(index);
 					tg.Steps = od.ToArray();
-					// Shift any input reference
+					// 입력 참조 인덱스를 이동합니다.
 					for (int k = 0; k < tg.Steps.Length; k++) {
 						if (tg.Steps[k].inputIndex0 >= index)
 							tg.Steps[k].inputIndex0--;
@@ -255,7 +255,7 @@ namespace VoxelPlay {
 						StepData o = tg.Steps[index - 1];
 						tg.Steps[index - 1] = tg.Steps[index];
 						tg.Steps[index] = o;
-						// Shift any input reference
+						// 입력 참조 인덱스를 이동합니다.
 						for (int k = 0; k < tg.Steps.Length; k++) {
 							if (tg.Steps[k].inputIndex0 == index)
 								tg.Steps[k].inputIndex0--;
@@ -271,7 +271,7 @@ namespace VoxelPlay {
 						StepData o = tg.Steps[index + 1];
 						tg.Steps[index + 1] = tg.Steps[index];
 						tg.Steps[index] = o;
-						// Shift any input reference
+						// 입력 참조 인덱스를 이동합니다.
 						for (int k = 0; k < tg.Steps.Length; k++) {
 							if (tg.Steps[k].inputIndex0 == index)
 								tg.Steps[k].inputIndex0++;

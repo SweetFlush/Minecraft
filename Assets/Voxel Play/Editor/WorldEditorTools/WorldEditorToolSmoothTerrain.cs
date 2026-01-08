@@ -24,7 +24,7 @@ namespace VoxelPlay {
             corner.x -= brushSize;
             corner.z -= brushSize;
 
-            // compute average elevation
+            // 평균 고도를 계산합니다.
             float averageElevation = 0;
             float samples = 0;
             for (int k = 0; k < count; k++) {
@@ -52,7 +52,7 @@ namespace VoxelPlay {
             if (samples == 0) return false;
             averageElevation /= samples;
 
-            // smooth terrain
+            // 지형을 부드럽게 만듭니다.
             for (int k = 0; k < count; k++) {
                 int pz = k / size;
                 int px = k % size;
@@ -80,7 +80,7 @@ namespace VoxelPlay {
                 if (count > 1) {
                     factor *= mask * brushStrength;
                 }
-                // if (pos.y > averageElevation) factor = -factor;
+                // pos.y가 평균 고도보다 높으면 factor를 반전합니다.
 
                 BiomeDefinition biome = chunk.terrainInfo[elevationIndex].biome;
                 if (factor < 0) { // lower terrain
@@ -110,7 +110,7 @@ namespace VoxelPlay {
                         undoManager.SaveChunk(bottomChunk);
                         bottomChunk.voxels[bottomIndex].Set(biome.voxelTop);
 
-                        // directly place a vegetation voxel above this voxel
+                        // 이 복셀 위에 식생 복셀을 직접 배치합니다.
                         if (env.enableVegetation && pos.y > env.waterLevel) {
                             float rn = WorldRand.GetValue(pos);
                             if (biome.vegetationDensity > 0 && rn < biome.vegetationDensity && biome.vegetation.Length > 0) {
@@ -129,7 +129,7 @@ namespace VoxelPlay {
                     int ny = chunk.terrainInfo[elevationIndex].groundLevel;
                     if (ny <= pos.y) continue;
 
-                    // only applies to voxels which have a non opaque voxel on top
+                    // 위에 불투명하지 않은 복셀이 있는 경우에만 적용됩니다.
                     Vector3d abovePos = pos;
                     abovePos.y = ny;
                     if (!env.GetVoxelIndex(abovePos, out VoxelChunk aboveChunk, out int aboveIndex, createChunkIfNotExists: true)) continue;
@@ -141,7 +141,7 @@ namespace VoxelPlay {
                         chunk.voxels[voxelIndex].Set(biome.voxelDirt);
                         aboveChunk.voxels[aboveIndex].Set(biome.voxelTop);
 
-                        // directly place a vegetation voxel above this voxel
+                        // 이 복셀 위에 식생 복셀을 직접 배치합니다.
                         if (env.enableVegetation && abovePos.y > env.waterLevel) {
                             float rn = WorldRand.GetValue(abovePos);
                             if (biome.vegetationDensity > 0 && rn < biome.vegetationDensity && biome.vegetation.Length > 0) {
@@ -151,7 +151,7 @@ namespace VoxelPlay {
                             }
                         }
                     } else {
-                        // simply repeats voxel
+                        // 복셀을 단순히 반복합니다.
                         undoManager.SaveChunk(aboveChunk);
                         aboveChunk.voxels[aboveIndex].Set(chunk.voxels[voxelIndex].type);
                     }

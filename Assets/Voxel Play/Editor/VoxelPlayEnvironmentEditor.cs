@@ -399,7 +399,7 @@ namespace VoxelPlay {
             bool updateCurvatureMacro = false;
             bool prevBool = false;
 
-            // General settings
+            // 일반 설정
             bool isURPActive = GraphicsSettings.currentRenderPipeline != null;
             if (isURPActive != VoxelPlayEnvironment.supportsURP) {
                 refreshChunks = true;
@@ -461,7 +461,7 @@ namespace VoxelPlay {
                         cachedWorldEditor = Editor.CreateEditor(world.objectReferenceValue);
                     }
 
-                    // Drawing the world editor
+                    // 월드 에디터를 그립니다.
                     EditorGUILayout.BeginVertical(boxStyle);
                     EditorGUI.BeginChangeCheck();
                     cachedWorldEditor.OnInspectorGUI();
@@ -486,7 +486,7 @@ namespace VoxelPlay {
                             cachedTerrainGeneratorEditor = Editor.CreateEditor(terrainGenerator);
                         }
 
-                        // Drawing the world editor
+                        // 월드 에디터를 그립니다.
                         EditorGUI.BeginChangeCheck();
                         EditorGUILayout.BeginVertical(boxStyle);
                         cachedTerrainGeneratorEditor.OnInspectorGUI();
@@ -682,7 +682,7 @@ namespace VoxelPlay {
                 }
             }
 
-            // Voxel Generation
+            // 복셀 생성
             if (GUILayout.Button(new GUIContent(" Voxel Generation", Resources.Load("VoxelPlay/Inspector/voxelGeneration") as Texture2D), leftAlignStyle)) {
                 ToggleSection(ref expandVoxelGenerationSection);
             }
@@ -769,7 +769,7 @@ namespace VoxelPlay {
                 layerClouds.intValue = EditorGUILayout.LayerField(new GUIContent("Clouds Layer", "구름 복셀에 사용할 레이어입니다. 탑다운 카메라에서 구름 청크를 무시하는 등 용도로 사용할 수 있습니다."), layerClouds.intValue);
             }
 
-            // Quality and effects
+            // 품질 및 효과
             if (GUILayout.Button(new GUIContent(" Shader Features", Resources.Load("VoxelPlay/Inspector/qualityAndEffects") as Texture2D), leftAlignStyle)) {
                 ToggleSection(ref expandQualitySection);
             }
@@ -1043,7 +1043,7 @@ namespace VoxelPlay {
                 }
             }
 
-            // Rendering
+            // 렌더링
             if (GUILayout.Button(new GUIContent(" Rendering Options", Resources.Load("VoxelPlay/Inspector/renderingOptions") as Texture2D), leftAlignStyle)) {
                 ToggleSection(ref expandRenderingSection);
             }
@@ -1184,7 +1184,7 @@ namespace VoxelPlay {
                 }
             }
 
-            // Sky Options
+            // 하늘 옵션
             if (GUILayout.Button(new GUIContent(" Sky Options", Resources.Load("VoxelPlay/Inspector/skySettings") as Texture2D), leftAlignStyle)) {
                 ToggleSection(ref expandSkySection);
             }
@@ -1289,7 +1289,7 @@ namespace VoxelPlay {
                 EditorGUILayout.PropertyField(crosshairTexture, new GUIContent("Crosshair Texture", "크로스헤어에 사용하는 텍스처입니다."));
             }
 
-            // Advanced section
+            // 고급 섹션
             if (GUILayout.Button(new GUIContent(" Advanced", Resources.Load("VoxelPlay/Inspector/advancedSettings") as Texture2D), leftAlignStyle)) {
                 ToggleSection(ref expandAdvancedSection);
             }
@@ -1312,7 +1312,7 @@ namespace VoxelPlay {
                 EditorGUILayout.EndHorizontal();
             }
 
-            // Stats
+            // 통계
             if (GUILayout.Button(new GUIContent(" Stats", Resources.Load("VoxelPlay/Inspector/Stats") as Texture2D), leftAlignStyle)) {
                 ToggleSection(ref expandStatsSection);
             }
@@ -1368,7 +1368,7 @@ namespace VoxelPlay {
                             rebuildWorld = false;
                             env.ReloadWorld();
 
-                            // Check if scene camera is under terrain
+                            // 씬 카메라가 지형 아래에 있는지 확인합니다.
                             if (!Application.isPlaying && env.renderInEditor && SceneView.lastActiveSceneView != null) {
                                 Camera cam = SceneView.lastActiveSceneView.camera;
                                 if (cam != null) {
@@ -1580,7 +1580,7 @@ namespace VoxelPlay {
         void CheckDepthPrimingMode () {
             RenderPipelineAsset pipe = GraphicsSettings.currentRenderPipeline;
             if (pipe == null) return;
-            // Check depth priming mode
+            // Depth Priming 모드를 확인합니다.
             FieldInfo renderers = pipe.GetType().GetField("m_RendererDataList", BindingFlags.NonPublic | BindingFlags.Instance);
             if (renderers == null) return;
             foreach (var renderer in (object[])renderers.GetValue(pipe)) {

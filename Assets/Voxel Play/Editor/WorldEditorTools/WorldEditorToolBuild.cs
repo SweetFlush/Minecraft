@@ -113,7 +113,7 @@ namespace VoxelPlay {
             }
 
             if (env.sceneEditorBrushMicroVoxelSize > 0) {
-                // draw cube around voxel containing the micro voxels
+                // 마이크로복셀이 포함된 복셀 주변에 큐브를 그립니다.
                 var originalZTest = Handles.zTest;
                 Handles.zTest = CompareFunction.LessEqual;
                 Handles.color = new Color(1, 1, 1, 0.35f);
@@ -126,7 +126,7 @@ namespace VoxelPlay {
                 Handles.DrawWireCube(center, new Vector3(size, size, size));
                 Handles.zTest = originalZTest;
             } else if (env.sceneEditorBuildVoxel != null) {
-                // Show voxel preview with microvoxels
+                // 마이크로복셀로 복셀 미리보기를 표시합니다.
                 if (env.sceneEditorBuildVoxel.usesMicroVoxels) {
                     if (hitInfo.voxel.isSolid) {
                         voxelPreview = MicroVoxelsHighlight(env.sceneEditorBuildVoxel, hitInfo.voxelCenter + hitInfo.normal);
@@ -173,7 +173,7 @@ namespace VoxelPlay {
 
         public override bool RayCast (Ray ray, out VoxelHitInfo hitInfo) {
             bool res = base.RayCast(ray, out hitInfo);
-            // in continous mode, make it eaiser to build rows of voxels over the same surface by comparing the new normal with the start hit normal
+            // 연속 모드에서는 시작 히트 노멀과 새 노멀을 비교해 같은 표면 위에 복셀 줄을 쉽게 쌓도록 합니다.
             if (env.sceneEditorBrushContinuousMode && isMouseDown && executionCount > 0 && hitInfo.normal != startHitInfo.normal && !hitInfo.voxel.type.isVegetation) {
                 hitInfo = startHitInfo;
                 return false;
@@ -305,7 +305,7 @@ namespace VoxelPlay {
 
                                     otherChunk.voxels[otherIndex].SetTextureRotation(env.sceneEditorPlacementRotation);
 
-                                    // Set microvoxels
+                                    // 마이크로복셀을 설정합니다.
                                     if (vd.usesMicroVoxels) {
                                         otherChunk.SetMicroVoxels(otherIndex, vd.microVoxels.Clone());
                                         byte newOpaque = vd.microVoxels.GetOpaqueProportional();

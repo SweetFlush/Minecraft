@@ -56,7 +56,7 @@ namespace VoxelPlay {
             List<VoxelIndex> tempVoxels = BufferPool<VoxelIndex>.Get();
             env.GetVoxelIndices(center, brushSize, env.sceneEditorRiverDepth, brushSize, tempVoxels, VoxelPlayEnvironment.FULL_OPAQUE);
 
-            // dirty hack: we use the damageTaken field to temporarily store the type of voxel to be placed
+            // 임시 처리: damageTaken 필드를 배치할 복셀 타입을 임시 저장하는 데 사용합니다.
             int count = tempVoxels.Count;
             for (int k = 0; k < count; k++) {
                 VoxelIndex vi = tempVoxels[k];
@@ -86,7 +86,7 @@ namespace VoxelPlay {
                 undoManager.SaveChunk(vi.chunk);
                 vi.chunk.voxels[vi.voxelIndex].Set(vd);
                 modifiedChunks.Add(vi.chunk);
-                // clear any plant above
+                // 위에 있는 식물을 정리합니다.
                 Vector3d pos = env.GetVoxelPosition(vi);
                 pos.y++;
                 if (env.GetVoxelIndex(pos, out VoxelChunk aboveChunk, out int aboveIndex)) {

@@ -224,12 +224,12 @@ namespace VoxelPlay {
 
             if (biomes != null && biomeTex != null) {
 
-                // Draw heightmap texture
+                // 하이트맵 텍스처를 그립니다.
                 EditorGUILayout.LabelField(new GUIContent("Biome Map Preview"), titleLabelStyle);
 
                 EditorGUILayout.BeginHorizontal();
 
-                // Biome legend
+                // 바이옴 범례
                 EditorGUILayout.BeginVertical(GUILayout.MaxWidth(600));
                 EditorGUILayout.Separator();
                 EditorGUI.BeginChangeCheck();
@@ -281,7 +281,7 @@ namespace VoxelPlay {
 
                 EditorGUILayout.Separator();
                 EditorGUILayout.Separator();
-                // Tester
+                // 테스트용
                 EditorGUILayout.LabelField(new GUIContent("Biome Tester"), titleLabelStyle);
                 EditorGUI.BeginChangeCheck();
                 EditorGUILayout.BeginHorizontal();
@@ -298,7 +298,7 @@ namespace VoxelPlay {
                 EditorGUILayout.LabelField(biomeTestResult);
                 EditorGUILayout.EndVertical();
 
-                // Biome map
+                // 바이옴 맵
                 space = EditorGUILayout.BeginVertical();
                 space.width = space.height;
                 GUILayout.FlexibleSpace();
@@ -496,13 +496,13 @@ namespace VoxelPlay {
                 env.SetBiomeDefaultColors(false);
                 colors.Fill<Color>(Misc.colorTransparent);
 
-                // reset biome stats
+                // 바이옴 통계를 초기화합니다.
                 for (int k = 0; k < biomes.Count; k++) {
                     if (biomes[k] != null) {
                         biomes[k].biomeMapOccurrences = 0;
                     }
                 }
-                // draw biome colors
+                // 바이옴 색상을 그립니다.
                 Color chartColor;
                 for (int j = 0; j < height; j++) {
                     float z = (maxZ - minZ) * (float)j / height + minZ;
@@ -541,7 +541,7 @@ namespace VoxelPlay {
                 }
 
                 Color gridColor = new Color(64, 64, 64, 0.2f);
-                // draw horizontal grid lines
+                // 수평 그리드 라인을 그립니다.
                 int gridCount = (int)((maxZ - minZ) / gridStep);
                 if (gridCount > 0) {
                     for (int j = 0; j <= gridCount; j++) {
@@ -551,7 +551,7 @@ namespace VoxelPlay {
                         }
                     }
                 }
-                // draw vertical grid lines
+                // 수직 그리드 라인을 그립니다.
                 gridCount = (int)((maxX - minX) / gridStep);
                 if (gridCount > 0) {
                     for (int j = 0; j <= gridCount; j++) {
