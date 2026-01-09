@@ -27,18 +27,18 @@ MonoBehaviour:
   texturesPackingNormalMap: 0
   texturesPackingReliefMap: 0
   worldSpaceUVs: 0
-  opaque: 0
+  opaque: 15
   occludesTop: 0
   occludesBottom: 0
   occludesLeft: 0
   occludesRight: 0
   occludesForward: 0
   occludesBack: 0
-  textureTop: {fileID: 0}
+  textureTop: {fileID: 2800000, guid: 1325bc3c540b4b54498f12ded2f33be3, type: 3}
   textureTopEmission: {fileID: 0}
   textureTopNRM: {fileID: 0}
   textureTopDISP: {fileID: 0}
-  textureSide: {fileID: 0}
+  textureSide: {fileID: 2800000, guid: d737ae640c08cee4bb9e1b9044d31274, type: 3}
   textureSideEmission: {fileID: 0}
   textureSideNRM: {fileID: 0}
   textureSideDISP: {fileID: 0}
@@ -54,7 +54,7 @@ MonoBehaviour:
   textureLeftEmission: {fileID: 0}
   textureLeftNRM: {fileID: 0}
   textureLeftDISP: {fileID: 0}
-  textureBottom: {fileID: 0}
+  textureBottom: {fileID: 2800000, guid: 13593ebedb8fcdb438d4134ac0736410, type: 3}
   textureBottomEmission: {fileID: 0}
   textureBottomNRM: {fileID: 0}
   textureBottomDISP: {fileID: 0}
@@ -83,7 +83,7 @@ MonoBehaviour:
   dropItemLifeTime: 10
   dropItemScale: 0.25
   icon: {fileID: 0}
-  textureSample: {fileID: 0}
+  textureSample: {fileID: 2800000, guid: d737ae640c08cee4bb9e1b9044d31274, type: 3}
   overrideMainTexture: 0
   overrideMainTextureOffset: {x: 0, y: 0}
   navigatable: 1
@@ -131,4 +131,5 @@ MonoBehaviour:
   allowUpsideDownVoxel: 0
   upsideDownVoxel: {fileID: 0}
   isUpsideDown: 0
-  biomeDirtCounterpart: {fileID: 0}
+  biomeDirtCounterpart: {fileID: 11400000, guid: 360f68e43ea12f6469ff32a76cebf492,
+    type: 2}

@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.58631957, g: 0.516926, b: 0.50818294, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2354,7 +2353,7 @@ Transform:
   m_GameObject: {fileID: 1035406579}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 15, z: 0}
+  m_LocalPosition: {x: 0, y: 81.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3613,12 +3612,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    quality: 3
-    frameInfluence: 0.1
-    jitterScale: 1
-    mipBias: 0
-    varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!1 &1481845302
 GameObject:
   m_ObjectHideFlags: 0
@@ -3831,12 +3830,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    quality: 3
-    frameInfluence: 0.1
-    jitterScale: 1
-    mipBias: 0
-    varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!114 &1636234707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4600,7 +4599,7 @@ MonoBehaviour:
   originShiftDistanceThreshold: 1000
   fxRoot: {fileID: 0}
   particlePoolSize: 1000
-  voxelDefinitionsCount: 15
+  voxelDefinitionsCount: 16
   worldManagementSelectedTool: 0
   sceneEditorBrushSize: 1
   sceneEditorBrushStrength: 0.5
@@ -4641,7 +4640,7 @@ MonoBehaviour:
   buildMode: 0
   enableGeneration: 1
   constructorMode: 0
-  renderInEditor: 1
+  renderInEditor: 0
   renderInEditorLowPriority: 1
   generateAroundCamera: 1
   renderInEditorDetail: 0
@@ -4715,7 +4714,7 @@ MonoBehaviour:
   enableOutline: 0
   outlineColor: {r: 1, g: 1, b: 1, a: 0.5}
   outlineThreshold: 0.49
-  enableCurvature: 0
+  enableCurvature: 1
   seeThrough: 0
   seeThroughTarget: {fileID: 0}
   seeThroughRadius: 3
@@ -4768,12 +4767,12 @@ MonoBehaviour:
   enableFarChunksRendering: 0
   farChunksShadows: 1
   farChunksShadowIntensity: 0.8
-  farChunksWaterReflections: 1
+  farChunksWaterReflections: 0
   farChunksWaterReflectionsIntensity: 0.5
   farChunksWaterColorOverride: 0
   farChunksWaterColor: {r: 0.247, g: 0.396, b: 0.745, a: 0.87}
-  farChunksShoreColor: {r: 1, g: 1, b: 1, a: 1}
-  farChunksDeepWater: 1
+  farChunksShoreColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
+  farChunksDeepWater: 0
   enableDetailGenerators: 1
 --- !u!4 &1959804129
 Transform:

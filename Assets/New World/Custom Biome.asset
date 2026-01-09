@@ -19,7 +19,7 @@ MonoBehaviour:
     moistureMax: 1
   showInBiomeMap: 1
   biomeMapColor: {r: 1, g: 0, b: 0, a: 1}
-  voxelTop: {fileID: 11400000, guid: ad851e8ba3e93e24b927a39491cace6c, type: 2}
+  voxelTop: {fileID: 11400000, guid: f14b382f52e83ea4e9bc79a98cafa34a, type: 2}
   noteTopAdditional:
     dummy: 0
   voxelTopAdditional: []
