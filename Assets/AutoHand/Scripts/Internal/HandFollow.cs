@@ -146,8 +146,8 @@ namespace Autohand {
 
 
         protected virtual void Awake() {
-            hand.body.drag = startDrag;
-            hand.body.angularDrag = startAngularDrag;
+            hand.body.linearDamping = startDrag;
+            hand.body.angularDamping = startAngularDrag;
             hand.body.useGravity = false;
         }
 
@@ -187,7 +187,7 @@ namespace Autohand {
                 }
 
                 if(ignoreMoveFrame) {
-                    hand.body.velocity = Vector3.zero;
+                    hand.body.linearVelocity = Vector3.zero;
                     hand.body.angularVelocity = Vector3.zero;
                 }
                 ignoreMoveFrame = false;
@@ -289,14 +289,14 @@ namespace Autohand {
 
             float deltaOffset = Time.fixedDeltaTime / 0.011111f;
             float inverseDeltaOffset = 0.011111f / Time.fixedDeltaTime;
-            Vector3 currentVelocity = hand.body.velocity;
+            Vector3 currentVelocity = hand.body.linearVelocity;
             minVelocityChange *= deltaOffset;
             minVelocityChange *= 1 + (distance)*minVelocityDistanceMulti;
 
             if(currentHands == null)
-                hand.body.drag = Mathf.Lerp((startDrag * dragDamper), startDrag, distance/dragDamperDistance) * inverseDeltaOffset;
+                hand.body.linearDamping = Mathf.Lerp((startDrag * dragDamper), startDrag, distance/dragDamperDistance) * inverseDeltaOffset;
             else 
-                hand.body.drag = startDrag * inverseDeltaOffset;
+                hand.body.linearDamping = startDrag * inverseDeltaOffset;
 
             Vector3 towardsVel;
             if(currentHands != null) {
@@ -314,8 +314,8 @@ namespace Autohand {
                 );
             }
 
-            hand.body.velocity = towardsVel;
-            lastVelocity = hand.body.velocity;
+            hand.body.linearVelocity = towardsVel;
+            lastVelocity = hand.body.linearVelocity;
         }
 
 
@@ -356,9 +356,9 @@ namespace Autohand {
             float inverseDeltaOffset = 0.011111f / Time.fixedDeltaTime;
 
             if(currentHands == null)
-                hand.body.angularDrag = Mathf.Lerp((startAngularDrag * angleDragDamper), startAngularDrag, angle/angleDragDamperDistance) * inverseDeltaOffset;
+                hand.body.angularDamping = Mathf.Lerp((startAngularDrag * angleDragDamper), startAngularDrag, angle/angleDragDamperDistance) * inverseDeltaOffset;
             else
-                hand.body.angularDrag = startAngularDrag * inverseDeltaOffset;
+                hand.body.angularDamping = startAngularDrag * inverseDeltaOffset;
 
             hand.body.angularVelocity = angular;
             lastAngularVelocity = hand.body.angularVelocity;
@@ -498,7 +498,7 @@ namespace Autohand {
                     hand.holdingObj.body.position = grabRuler.position;
                     hand.holdingObj.body.rotation = grabRuler.rotation;
 
-                    hand.body.velocity = deltaHandRot * hand.body.velocity;
+                    hand.body.linearVelocity = deltaHandRot * hand.body.linearVelocity;
                     hand.body.angularVelocity = deltaHandRot * hand.body.angularVelocity;
                     
 
@@ -520,7 +520,7 @@ namespace Autohand {
                 hand.transform.rotation = targetRotation;
                 hand.body.position = targetPosition;
                 hand.body.rotation = targetRotation;
-                hand.body.velocity = Vector3.zero;
+                hand.body.linearVelocity = Vector3.zero;
                 hand.body.angularVelocity = Vector3.zero;
             }
 

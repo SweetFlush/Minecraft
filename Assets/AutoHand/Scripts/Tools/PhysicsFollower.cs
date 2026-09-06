@@ -95,7 +95,7 @@ namespace Autohand{
             vel.x = Mathf.Clamp(vel.x, -velocityClamp, velocityClamp);
             vel.y = Mathf.Clamp(vel.y, -velocityClamp, velocityClamp);
             vel.z = Mathf.Clamp(vel.z, -velocityClamp, velocityClamp);
-            body.velocity = vel;
+            body.linearVelocity = vel;
         }
 
 

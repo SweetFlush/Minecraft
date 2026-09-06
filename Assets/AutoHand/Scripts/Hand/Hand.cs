@@ -144,7 +144,7 @@ namespace Autohand {
                 if(value != null && _grabRoutine != null) {
                     StopCoroutine(_grabRoutine);
                     if(holdingObj != null) {
-                        holdingObj.body.velocity = Vector3.zero;
+                        holdingObj.body.linearVelocity = Vector3.zero;
                         holdingObj.body.angularVelocity = Vector3.zero;
                         holdingObj.beingGrabbed = false;
                     }
@@ -175,7 +175,7 @@ namespace Autohand {
         protected virtual void Start()
         {
             if(noHandFriction) {
-                var noFrictionMat = Resources.Load<PhysicMaterial>("NoFriction");
+                var noFrictionMat = Resources.Load<PhysicsMaterial>("NoFriction");
                 foreach(var collider in handColliders) {
                     collider.material = noFrictionMat;
                 }
@@ -393,7 +393,7 @@ namespace Autohand {
 
                 if(grabbing) {
                     if (holdingObj.body != null && !holdingObj.body.isKinematic){
-                        holdingObj.body.velocity = Vector3.zero;
+                        holdingObj.body.linearVelocity = Vector3.zero;
                         holdingObj.body.angularVelocity = Vector3.zero;
                     }
                 }
@@ -487,7 +487,7 @@ namespace Autohand {
             if(holdingObj.singleHandOnly && holdingObj.HeldCount(false, false, false) > 0) {
                 holdingObj.ForceHandRelease(holdingObj.GetHeldBy()[0]);
                 if(holdingObj.body != null) {
-                    holdingObj.body.velocity = Vector3.zero;
+                    holdingObj.body.linearVelocity = Vector3.zero;
                     holdingObj.body.angularVelocity = Vector3.zero;
                 }
             }
@@ -556,7 +556,7 @@ namespace Autohand {
                 heldJoint = null;
             }
             if(holdingObj != null) {
-                holdingObj.body.velocity /= 100f;
+                holdingObj.body.linearVelocity /= 100f;
                 holdingObj.body.angularVelocity /= 100f;
                 OnGrabJointBreak?.Invoke(this, holdingObj);
                 holdingObj?.OnHandJointBreak(this);
@@ -845,7 +845,7 @@ namespace Autohand {
             holdingObj = grab;
             var startHoldingObj = holdingObj;
 
-            body.velocity = Vector3.zero;
+            body.linearVelocity = Vector3.zero;
             body.angularVelocity = Vector3.zero;
 
             grabbingHit = hit;
@@ -919,7 +919,7 @@ namespace Autohand {
                 if(holdingObj.singleHandOnly && holdingObj.HeldCount(false, false, false) > 0) {
                     holdingObj.ForceHandRelease(holdingObj.GetHeldBy()[0]);
                     if(holdingObj.body != null) {
-                        holdingObj.body.velocity = Vector3.zero;
+                        holdingObj.body.linearVelocity = Vector3.zero;
                         holdingObj.body.angularVelocity = Vector3.zero;
                     }
                 }
@@ -979,9 +979,9 @@ namespace Autohand {
                                 if(holdingObj.body != null && !holdingObj.body.isKinematic) {
                                     holdingObj.body.angularVelocity *= 0.5f;
                                     if(point * handTargetTime >= 1f)
-                                        holdingObj.body.velocity *= 0.9f;
+                                        holdingObj.body.linearVelocity *= 0.9f;
                                     else
-                                        holdingObj.body.velocity *= 0.98f;
+                                        holdingObj.body.linearVelocity *= 0.98f;
                                 }
                                 yield return new WaitForEndOfFrame();
                             }
@@ -1036,7 +1036,7 @@ namespace Autohand {
                                 holdingObj.body.transform.rotation = Quaternion.Lerp(startGrabbableRotation, localGrabbablePoint.rotation, grabCurve.Evaluate(point / grabOpenHandPoint));
                                 holdingObj.body.position = holdingObj.body.transform.position;
                                 holdingObj.body.rotation = holdingObj.body.transform.rotation;
-                                holdingObj.body.velocity = Vector3.zero;
+                                holdingObj.body.linearVelocity = Vector3.zero;
                                 holdingObj.body.angularVelocity = Vector3.zero;
                             }
                             else {
@@ -1106,7 +1106,7 @@ namespace Autohand {
                 {
                     if (startHoldingObj.body != null)
                     {
-                        startHoldingObj.body.velocity = Vector3.zero;
+                        startHoldingObj.body.linearVelocity = Vector3.zero;
                         startHoldingObj.body.angularVelocity = Vector3.zero;
                     }
                     startHoldingObj.beingGrabbed = false;

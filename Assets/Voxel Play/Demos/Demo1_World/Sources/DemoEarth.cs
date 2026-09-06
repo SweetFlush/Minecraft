@@ -109,7 +109,7 @@ namespace VoxelPlayDemos {
             ball.GetComponent<Renderer>().material.color = new Color(Random.value * 0.5f + 0.5f, Random.value * 0.5f + 0.5f, Random.value * 0.5f + 0.5f);
 
             // Throw it! :)
-            ball.GetComponent<Rigidbody>().velocity = Camera.main.transform.forward * 10f;
+            ball.GetComponent<Rigidbody>().linearVelocity = Camera.main.transform.forward * 10f;
         }
 
         /// <summary>

@@ -37,7 +37,7 @@ namespace Autohand{
         void CreateStick(Stickable sticker) {
             if(stickers.Contains(sticker) || sticker.stickIndex != stickIndex)
                 return;
-            if(sticker.body.velocity.sqrMagnitude*sticker.stickSpeedMultiplyer < requiredStickSpeed)
+            if(sticker.body.linearVelocity.sqrMagnitude*sticker.stickSpeedMultiplyer < requiredStickSpeed)
                 return;
 
             var joint = gameObject.AddComponent<FixedJoint>();

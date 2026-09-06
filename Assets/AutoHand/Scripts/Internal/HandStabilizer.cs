@@ -18,6 +18,8 @@ namespace Autohand{
 
         void OnEnable(){
             if(GraphicsSettings.defaultRenderPipeline != null){
+                RenderPipelineManager.beginContextRendering += OnPreRenderEvent;
+                RenderPipelineManager.endContextRendering += OnPostRenderEvent;
                 RenderPipelineManager.beginCameraRendering += OnPreRenderEvent;
                 RenderPipelineManager.endCameraRendering += OnPostRenderEvent;
             }
@@ -25,6 +27,8 @@ namespace Autohand{
 
         void OnDisable(){
             if(GraphicsSettings.defaultRenderPipeline != null){
+                RenderPipelineManager.beginContextRendering -= OnPreRenderEvent;
+                RenderPipelineManager.endContextRendering -= OnPostRenderEvent;
                 RenderPipelineManager.beginCameraRendering -= OnPreRenderEvent;
                 RenderPipelineManager.endCameraRendering -= OnPostRenderEvent;
             }

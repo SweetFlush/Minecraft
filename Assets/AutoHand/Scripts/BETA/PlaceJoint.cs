@@ -103,11 +103,11 @@ namespace Autohand {
             if(localGrabbable) {
                 if (localGrabbable.body != null)
                 {
-                    localGrabbable.body.velocity = Vector3.zero;
+                    localGrabbable.body.linearVelocity = Vector3.zero;
                     localGrabbable.body.angularVelocity = Vector3.zero;
                 }
                 for(int i = 0; i < localGrabbable.jointedBodies.Count; i++) {
-                    localGrabbable.jointedBodies[i].velocity = Vector3.zero;
+                    localGrabbable.jointedBodies[i].linearVelocity = Vector3.zero;
                     localGrabbable.jointedBodies[i].angularVelocity = Vector3.zero;
                 }
             }

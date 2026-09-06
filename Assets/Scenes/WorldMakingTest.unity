@@ -4576,7 +4576,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1959804129}
   - component: {fileID: 1959804128}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Voxel Play Environment
   m_TagString: Untagged
   m_Icon: {fileID: 0}

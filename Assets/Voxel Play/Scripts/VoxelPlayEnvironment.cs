@@ -3419,7 +3419,7 @@ namespace VoxelPlay {
             if (!voxelGO.TryGetComponent(out Rigidbody rb)) {
                 return null;
             }
-            rb.velocity = direction * velocity;
+            rb.linearVelocity = direction * velocity;
             return voxelGO;
         }
 
@@ -4779,7 +4779,7 @@ namespace VoxelPlay {
                 return null;
             if (itemGO.TryGetComponent(out Rigidbody rb)) {
                 rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
-                rb.velocity = direction * velocity;
+                rb.linearVelocity = direction * velocity;
             }
             return itemGO;
         }

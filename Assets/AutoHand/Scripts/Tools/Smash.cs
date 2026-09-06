@@ -71,9 +71,9 @@ namespace Autohand.Demo{
                 Rigidbody rb;
                 if(applyVelocityOnSmash && ((rb = grabbable.body) || gameObject.CanGetComponent(out rb))){
                     ParticleSystem.VelocityOverLifetimeModule module = particles.velocityOverLifetime;
-                    module.x = rb.velocity.x;
-                    module.y = rb.velocity.y;
-                    module.z = rb.velocity.z;
+                    module.x = rb.linearVelocity.x;
+                    module.y = rb.linearVelocity.y;
+                    module.z = rb.linearVelocity.z;
                 }
             }
 

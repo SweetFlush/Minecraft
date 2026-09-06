@@ -204,9 +204,9 @@ namespace Autohand {
 
             Vector3 relativePoint;
             if(float.IsNaN(angularVelocity.x) || float.IsNaN(angularVelocity.y) || float.IsNaN(angularVelocity.z))
-                relativePoint = fingertipPoint + hand.body.velocity*Time.fixedDeltaTime;
+                relativePoint = fingertipPoint + hand.body.linearVelocity*Time.fixedDeltaTime;
             else 
-                relativePoint = Quaternion.Euler(angularVelocity)*leverArm + hand.body.velocity*Time.fixedDeltaTime;
+                relativePoint = Quaternion.Euler(angularVelocity)*leverArm + hand.body.linearVelocity*Time.fixedDeltaTime;
 
             var plane = new Plane(palmDirection, Vector3.zero);
             isForceOnTop = plane.GetSide(relativePoint);

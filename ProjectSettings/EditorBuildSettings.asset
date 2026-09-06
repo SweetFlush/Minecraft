@@ -9,7 +9,10 @@ EditorBuildSettings:
     path: Assets/Scenes/SelfMaking.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:
+    com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f,
+      type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 4d1c353793eb28e4ab6caf6b32fb6c1d,
       type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 630ae77745abbda44886f7602fabcf57,
       type: 2}
+  m_UseUCBPForAssetBundles: 0

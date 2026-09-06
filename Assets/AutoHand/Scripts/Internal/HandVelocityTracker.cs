@@ -48,7 +48,7 @@ namespace Autohand {
             }
 
             // Add current hand velocity to throw velocity list.
-            m_ThrowVelocityList.Add(new VelocityTimePair() { time = Time.realtimeSinceStartup, velocity = hand.holdingObj.body == null ? Vector3.zero : hand.holdingObj.body.velocity });
+            m_ThrowVelocityList.Add(new VelocityTimePair() { time = Time.realtimeSinceStartup, velocity = hand.holdingObj.body == null ? Vector3.zero : hand.holdingObj.body.linearVelocity });
 
             // Remove old entries from m_ThrowVelocityList.
             for(int i = m_ThrowVelocityList.Count - 1; i >= 0; --i) {

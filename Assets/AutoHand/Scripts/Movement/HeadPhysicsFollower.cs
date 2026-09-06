@@ -79,12 +79,12 @@ namespace Autohand{
             Vector3 currentPosition = transform.position;
             Vector3 currentHeadPosition = headCamera.transform.position;
             moveTo.position = Vector3.MoveTowards(currentPosition, currentHeadPosition, maxBodyDistance);
-            body.velocity = (moveTo.position - currentPosition) * followStrength;
+            body.linearVelocity = (moveTo.position - currentPosition) * followStrength;
             lastUpdateTime = Time.realtimeSinceStartup;
 
             var deltaTime = (Time.realtimeSinceStartup - lastUpdateTime);
-            transform.position = Vector3.MoveTowards(transform.position, moveTo.position, body.velocity.magnitude * deltaTime);
-            body.velocity = Vector3.MoveTowards(body.velocity, Vector3.zero, body.velocity.magnitude * deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, moveTo.position, body.linearVelocity.magnitude * deltaTime);
+            body.linearVelocity = Vector3.MoveTowards(body.linearVelocity, Vector3.zero, body.linearVelocity.magnitude * deltaTime);
             body.position = transform.position;
         }
 

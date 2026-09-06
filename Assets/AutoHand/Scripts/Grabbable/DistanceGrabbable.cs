@@ -110,7 +110,7 @@ namespace Autohand{
                 }
                     
                 lastGravitationVelocity = (target.position- transform.position).normalized*Time.fixedDeltaTime*gravitationVelocity;
-                body.velocity += lastGravitationVelocity*10;
+                body.linearVelocity += lastGravitationVelocity*10;
             }
             else{
                 gravitationMethodBegun = false;
@@ -125,7 +125,7 @@ namespace Autohand{
                     calculatedNecessaryVelocity = CalculateTrajectoryVelocity(transform.position, target.transform.position, archMultiplier);
 
                 timePassedSincePull = 0;
-                body.velocity = calculatedNecessaryVelocity;
+                body.linearVelocity = calculatedNecessaryVelocity;
                 gravitationEnabled = true;
                 pullStarted = false;
             }

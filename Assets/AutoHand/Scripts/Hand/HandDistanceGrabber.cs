@@ -311,7 +311,7 @@ namespace Autohand {
                 OnPull?.Invoke(primaryHand, selectingDistanceGrabbable.grabbable);
                 selectingDistanceGrabbable.OnPull?.Invoke(primaryHand, selectingDistanceGrabbable.grabbable);
                 if(selectingDistanceGrabbable.instantPull) {
-                    selectingDistanceGrabbable.grabbable.body.velocity = Vector3.zero;
+                    selectingDistanceGrabbable.grabbable.body.linearVelocity = Vector3.zero;
                     selectingDistanceGrabbable.grabbable.body.angularVelocity = Vector3.zero;
                     selectionHit.point = hitPoint.transform.position;
                     if (selectingDistanceGrabbable.grabbable.placePoint != null)
@@ -331,7 +331,7 @@ namespace Autohand {
                     selectingDistanceGrabbable.SetTarget(primaryHand.palmTransform);
                 }
                 else if(selectingDistanceGrabbable.grabType == DistanceGrabType.Linear) {
-                    selectingDistanceGrabbable.grabbable.body.velocity = Vector3.zero;
+                    selectingDistanceGrabbable.grabbable.body.linearVelocity = Vector3.zero;
                     selectingDistanceGrabbable.grabbable.body.angularVelocity = Vector3.zero;
                     selectionHit.point = hitPoint.transform.position;
                     if (selectingDistanceGrabbable.grabbable.placePoint != null)
@@ -390,7 +390,7 @@ namespace Autohand {
                     Ray ray = new Ray(hand.palmTransform.position, hitPoint.transform.position - hand.palmTransform.position);
                     if(Physics.SphereCast(ray, 0.03f, out var catchHit, catchAssistRadius * 2, LayerMask.GetMask(Hand.grabbableLayerNameDefault, Hand.grabbingLayerName))) {
                         if(catchHit.transform.gameObject == catchAssisted[i].grab.gameObject) {
-                            catchAssisted[i].grab.body.velocity = Vector3.zero;
+                            catchAssisted[i].grab.body.linearVelocity = Vector3.zero;
                             catchAssisted[i].grab.body.angularVelocity = Vector3.zero;
                             hand.Grab(catchHit, catchAssisted[i].grab);
                             CancelSelect();
@@ -425,7 +425,7 @@ namespace Autohand {
                             var hits = Physics.SphereCastAll(ray, 0.03f, catchAssistRadius * 2, LayerMask.GetMask(Hand.grabbableLayerNameDefault, Hand.grabbingLayerName));
                             for(int i = 0; i < hits.Length; i++) {
                                 if(hits[i].transform.gameObject == grab.gameObject) {
-                                    grab.grabbable.body.velocity = Vector3.zero;
+                                    grab.grabbable.body.linearVelocity = Vector3.zero;
                                     grab.grabbable.body.angularVelocity = Vector3.zero;
                                     hand.Grab(hits[i], grab.grabbable);
                                     grab.CancelTarget();

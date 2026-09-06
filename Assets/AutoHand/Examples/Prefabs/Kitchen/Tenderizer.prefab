@@ -132,6 +132,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -248,7 +250,6 @@ MonoBehaviour:
   isGrabbable: 1
   CopySettings: {fileID: 0}
   grabType: 0
-  grabPoseType: 0
   handType: 0
   singleHandOnly: 1
   instantGrab: 0
@@ -266,7 +267,6 @@ MonoBehaviour:
   ignoreReleaseTime: 0.25
   minHeldDrag: 1.5
   minHeldAngleDrag: 3
-  minHeldMass: 0.1
   maxHeldVelocity: 10
   heldPositionOffset: {x: 0, y: 0, z: 0}
   heldRotationOffset: {x: 35, y: 0, z: 0}
@@ -329,6 +329,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 1a275ef2521b85b4088a74c254ded17d, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 0.85

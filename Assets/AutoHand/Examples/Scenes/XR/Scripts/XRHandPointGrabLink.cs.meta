@@ -13,6 +13,6 @@ AssetOrigin:
   serializedVersion: 1
   productId: 165323
   packageName: Auto Hand - VR Interaction
-  packageVersion: 4.0.0
+  packageVersion: 4.0.4
   assetPath: Assets/AutoHand/Examples/Scenes/XR/Scripts/XRHandPointGrabLink.cs
-  uploadId: 672110
+  uploadId: 732375

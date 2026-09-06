@@ -12,7 +12,7 @@ namespace Autohand.Demo {
 
         public void OnCollisionEnter(Collision collision) {
             if(lastHitTime + delay < Time.fixedTime) {
-                collision.rigidbody?.AddForce(body.velocity * power);
+                collision.rigidbody?.AddForce(body.linearVelocity * power);
                 lastHitTime = Time.fixedTime;
             }
         }

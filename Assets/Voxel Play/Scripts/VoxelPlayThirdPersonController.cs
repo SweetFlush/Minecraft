@@ -1,4 +1,4 @@
-﻿// Third person controller. Derived and expanded version from Unity standard asset's third person controller
+// Third person controller. Derived and expanded version from Unity standard asset's third person controller
 
 using System.Collections;
 using UnityEngine;
@@ -56,9 +56,9 @@ namespace VoxelPlay {
         [FormerlySerializedAs("m_GravityMultiplier")]
         [Range(1f, 4f)] public float gravityMultiplier = 2f;
 
-        public string attackAnimationState;
         [SerializeField, HideInInspector]
-
+        public string attackAnimationState;
+        
         public override float GetCharacterHeight () {
             return capsuleHeight;
         }
@@ -519,7 +519,7 @@ namespace VoxelPlay {
                         if (!env.IsWallAtPosition(frontPos)) {
                             dir = moveDir;
                             dir.y = 1f;
-                            rb.velocity = dir * climbSpeed;
+                            rb.linearVelocity = dir * climbSpeed;
                             if (!climbing) {
                                 climbing = true;
                             }
@@ -535,9 +535,9 @@ namespace VoxelPlay {
             jump = false;
 
             if (isInWater) {
-                ProgressSwimCycle(rb.velocity, speed);
+                ProgressSwimCycle(rb.linearVelocity, speed);
             } else if (!climbing) {
-                ProgressStepCycle(rb.velocity.magnitude, speed);
+                ProgressStepCycle(rb.linearVelocity.magnitude, speed);
             }
         }
 
@@ -614,7 +614,7 @@ namespace VoxelPlay {
             animator.SetBool("Crouch", isCrouched);
             animator.SetBool("OnGround", isGrounded);
             if (!isGrounded && !isFlying) {
-                animator.SetFloat("Jump", rb.velocity.y);
+                animator.SetFloat("Jump", rb.linearVelocity.y);
             }
 
             // calculate which leg is behind, so as to leave that leg trailing in the jump animation
@@ -644,11 +644,11 @@ namespace VoxelPlay {
             Vector3 extraGravityForce = (Physics.gravity * gravityMultiplier) - Physics.gravity;
             extraGravityForce += moveDir * 4.0f;
             rb.AddForce(extraGravityForce);
-            groundCheckDistance = rb.velocity.y < 0 ? origGroundCheckDistance : 0.01f;
+            groundCheckDistance = rb.linearVelocity.y < 0 ? origGroundCheckDistance : 0.01f;
         }
 
         protected virtual void HandleFlyMovement (float up) {
-            rb.velocity = new Vector3(rb.velocity.x, up, rb.velocity.z);
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, up, rb.linearVelocity.z);
             animator.applyRootMotion = false;
         }
 
@@ -657,7 +657,7 @@ namespace VoxelPlay {
             // check whether conditions are right to allow a jump:
             if (jump && !isCrouched && animator.GetCurrentAnimatorStateInfo(0).IsName("Grounded")) {
                 // jump!
-                rb.velocity = new Vector3(rb.velocity.x, jumpPower, rb.velocity.z);
+                rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpPower, rb.linearVelocity.z);
                 isGrounded = false;
                 animator.applyRootMotion = false;
                 groundCheckDistance = 0.1f;
@@ -680,8 +680,8 @@ namespace VoxelPlay {
                 Vector3 v = (animator.deltaPosition * moveSpeedMultiplier) / Time.deltaTime;
 
                 // we preserve the existing y part of the current velocity.
-                v.y = rb.velocity.y;
-                rb.velocity = v;
+                v.y = rb.linearVelocity.y;
+                rb.linearVelocity = v;
             }
         }
 

@@ -19,14 +19,18 @@ MonoBehaviour:
     moistureMax: 1
   showInBiomeMap: 1
   biomeMapColor: {r: 1, g: 0, b: 0, a: 1}
-  voxelTop: {fileID: 11400000, guid: f14b382f52e83ea4e9bc79a98cafa34a, type: 2}
+  voxelTop: {fileID: 0}
   noteTopAdditional:
     dummy: 0
   voxelTopAdditional: []
-  voxelDirt: {fileID: 11400000, guid: 360f68e43ea12f6469ff32a76cebf492, type: 2}
+  voxelDirt: {fileID: 11400000, guid: 420289bfc28394d41b5aa4e28a62c91e, type: 2}
   noteDirtAdditional:
     dummy: 0
-  voxelDirtAdditional: []
+  voxelDirtAdditional:
+  - voxelDefinition: {fileID: 11400000, guid: 420289bfc28394d41b5aa4e28a62c91e, type: 2}
+    probability: 1
+    altitudeMin: -40
+    altitudeMax: 12
   voxelLakeBed: {fileID: 11400000, guid: 360f68e43ea12f6469ff32a76cebf492, type: 2}
   ores:
   - ore: {fileID: 11400000, guid: 0d398490c4c55439893b1e1c9057d551, type: 2}

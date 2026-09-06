@@ -23,7 +23,7 @@ namespace Autohand.Demo{
                 var body = smallerCopy.GetComponent<Rigidbody>();
                 body.ResetCenterOfMass();
                 body.ResetInertiaTensor();
-                body.velocity = GetComponent<Rigidbody>().velocity;
+                body.linearVelocity = GetComponent<Rigidbody>().linearVelocity;
                 body.AddRelativeForce(transform.rotation*(offsets[i]*force), ForceMode.Impulse);
                 body.AddRelativeTorque(transform.rotation*(offsets[i]*force + Vector3.one*(Random.value/3f)), ForceMode.Impulse);
                 body.mass /= 2;

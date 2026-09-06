@@ -105,7 +105,7 @@ namespace Autohand {
                         grab.body.isKinematic = true;
 
                     if(!grab.body.isKinematic) {
-                        grab.body.velocity = Vector3.zero;
+                        grab.body.linearVelocity = Vector3.zero;
                         grab.body.angularVelocity = Vector3.zero;
                     }
 

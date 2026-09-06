@@ -206,7 +206,7 @@ namespace VoxelPlay {
                 if (rb != null) {
                     rb.position = pos;
 		    if (!rb.isKinematic) {
-	                    rb.velocity = Misc.vector3zero;
+	                    rb.linearVelocity = Misc.vector3zero;
 			}
                 } else {
                     transform.position = pos;

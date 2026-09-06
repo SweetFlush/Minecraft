@@ -327,7 +327,7 @@ namespace VoxelPlay {
             }
             particlePool[index].rigidBody.freezeRotation = false;
             particlePool[index].rigidBody.constraints = RigidbodyConstraints.None;
-            particlePool[index].rigidBody.velocity = Misc.vector3zero;
+            particlePool[index].rigidBody.linearVelocity = Misc.vector3zero;
             particlePool[index].rigidBody.angularVelocity = Misc.vector3zero;
             particlePool[index].collider.size = Misc.vector3one;
             particlePool[index].used = true;
