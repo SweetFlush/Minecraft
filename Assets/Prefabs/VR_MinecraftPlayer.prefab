@@ -9901,12 +9901,12 @@ PrefabInstance:
         type: 3}
       propertyPath: handLeft
       value: 
-      objectReference: {fileID: 2183682972733886779}
+      objectReference: {fileID: 5447995432404210995}
     - target: {fileID: 8834320319295017360, guid: fdc3ba53f4e81a040b0471bbbafbb10a,
         type: 3}
       propertyPath: handRight
       value: 
-      objectReference: {fileID: 7619056902734749537}
+      objectReference: {fileID: 463852497316206250}
     - target: {fileID: 8834320319295017360, guid: fdc3ba53f4e81a040b0471bbbafbb10a,
         type: 3}
       propertyPath: headCamera
@@ -10469,7 +10469,7 @@ PrefabInstance:
     - target: {fileID: 4518574492651896358, guid: b023482e5c74f864eb7806d9f4d5ad9a,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5698700155137175422, guid: b023482e5c74f864eb7806d9f4d5ad9a,
         type: 3}
@@ -10611,7 +10611,7 @@ PrefabInstance:
     - target: {fileID: 3280423613852673305, guid: 3d606556a2b28d440a352e82b40ed145,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5040618553292990068, guid: 3d606556a2b28d440a352e82b40ed145,
         type: 3}
@@ -10963,7 +10963,7 @@ PrefabInstance:
     - target: {fileID: 4805486865076772358, guid: 2ff043c4542b8c440a4d4ff89ddf4c65,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4805486865076772359, guid: 2ff043c4542b8c440a4d4ff89ddf4c65,
         type: 3}
@@ -10973,7 +10973,7 @@ PrefabInstance:
     - target: {fileID: 4805486865076772359, guid: 2ff043c4542b8c440a4d4ff89ddf4c65,
         type: 3}
       propertyPath: enableIK
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4805486865076772359, guid: 2ff043c4542b8c440a4d4ff89ddf4c65,
         type: 3}
@@ -10983,20 +10983,8 @@ PrefabInstance:
     - target: {fileID: 4805486865076772359, guid: 2ff043c4542b8c440a4d4ff89ddf4c65,
         type: 3}
       propertyPath: enableMovement
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4805486865076772359, guid: 2ff043c4542b8c440a4d4ff89ddf4c65,
-        type: 3}
-      propertyPath: followPosition
-      value: 
-      objectReference: {fileID: 7604856239210187994, guid: f13bbbc9578242a44953eec81cfb27d4,
-        type: 3}
-    - target: {fileID: 4805486865076772359, guid: 2ff043c4542b8c440a4d4ff89ddf4c65,
-        type: 3}
-      propertyPath: followRotation
-      value: 
-      objectReference: {fileID: 7604856239210187994, guid: f13bbbc9578242a44953eec81cfb27d4,
-        type: 3}
     - target: {fileID: 4805486865076772359, guid: 2ff043c4542b8c440a4d4ff89ddf4c65,
         type: 3}
       propertyPath: usingHighlight
@@ -11318,7 +11306,7 @@ PrefabInstance:
     - target: {fileID: 1688351218388564394, guid: 47257a0bc2266e643a667b9efda1ad19,
         type: 3}
       propertyPath: enableIK
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1688351218388564394, guid: 47257a0bc2266e643a667b9efda1ad19,
         type: 3}
@@ -11328,20 +11316,8 @@ PrefabInstance:
     - target: {fileID: 1688351218388564394, guid: 47257a0bc2266e643a667b9efda1ad19,
         type: 3}
       propertyPath: enableMovement
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1688351218388564394, guid: 47257a0bc2266e643a667b9efda1ad19,
-        type: 3}
-      propertyPath: followPosition
-      value: 
-      objectReference: {fileID: 8019786935746428693, guid: f13bbbc9578242a44953eec81cfb27d4,
-        type: 3}
-    - target: {fileID: 1688351218388564394, guid: 47257a0bc2266e643a667b9efda1ad19,
-        type: 3}
-      propertyPath: followRotation
-      value: 
-      objectReference: {fileID: 8019786935746428693, guid: f13bbbc9578242a44953eec81cfb27d4,
-        type: 3}
     - target: {fileID: 1688351218388564394, guid: 47257a0bc2266e643a667b9efda1ad19,
         type: 3}
       propertyPath: usingHighlight
@@ -11355,7 +11331,7 @@ PrefabInstance:
     - target: {fileID: 1688351218388564395, guid: 47257a0bc2266e643a667b9efda1ad19,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

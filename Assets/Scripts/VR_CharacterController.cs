@@ -147,6 +147,8 @@ namespace VR_Minecraft
                     AutoHandPlayer.maxStepHeight = Mathf.Max(AutoHandPlayer.maxStepHeight, voxelStepHeight);
                     AutoHandPlayer.useSmoothStep = true;
                 }
+
+                EnsureHandFists();
             }
 
             InitCrosshair3D();
@@ -158,6 +160,39 @@ namespace VR_Minecraft
             else if (env != null)
             {
                 env.OnInitialized += () => LateInit();
+            }
+        }
+
+        /// <summary>
+        /// 손 모델이 교체되어도 맨손 타격 및 햅틱이 작동하도록 VR_VoxelFist 자동 확보 및 컨트롤러 추적 활성화 보장
+        /// </summary>
+        private void EnsureHandFists()
+        {
+            if (AutoHandPlayer == null) return;
+
+            SetupHand(AutoHandPlayer.handRight);
+            SetupHand(AutoHandPlayer.handLeft);
+
+            void SetupHand(Hand hand)
+            {
+                if (hand == null) return;
+
+                // 물리 이동이 비활성화되어 컨트롤러를 따라가지 못하는 현상 방지
+                if (!hand.enableMovement)
+                {
+                    hand.enableMovement = true;
+                }
+
+                var fist = hand.GetComponent<VR_VoxelFist>();
+                if (fist == null)
+                {
+                    fist = hand.gameObject.AddComponent<VR_VoxelFist>();
+                }
+                fist.hand = hand;
+                if (fist.player == null && player is VR_VoxelPlayer vrPlayer)
+                {
+                    fist.player = vrPlayer;
+                }
             }
         }
 
